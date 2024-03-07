@@ -8,7 +8,7 @@ int createPath(coordinates co, limit lim, pathdata *pdat) {
     if (co.y_1 < lim.lower_bound || co.y_1 > lim.y_upper_bound ||
         co.x_1 < lim.lower_bound || co.x_1 > lim.x_upper_bound ||
         lim.T_s <= 0) {
-        return 1; // Error: Invalid input
+        return 1; // Error: Invald input
     }
 
     float cl_1_value = co.x_1;
