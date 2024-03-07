@@ -37,17 +37,40 @@ int createPath(coordinates co, limit lim, pathdata *pdat) {
     // Calculate cable_length_over_time and update robot_pos_over_time accordingly
     float time;
     for (time = 0, i = 0; i < array_size; time += lim.T_s, i++) {
-        if (time <= pdat->t_swing) {
+
+
+
+        if (i <= ceil(array_size/2)) {
+            float cl = pdat->cl_1 + (pdat->cl_2 - pdat->cl_1) * (time / pdat->t_swing);
+            pdat->cable_length_over_time[i] = cl;
+            pdat->Object_y[i] = cl;
+        }
+        if (i <= ceil(array_size/2)) {
             float cl = pdat->cl_1 + (pdat->cl_2 - pdat->cl_1) * (time / pdat->t_swing);
             pdat->cable_length_over_time[i] = cl;
             pdat->Object_y[i] = cl;
         }
 
-        if (time >= pdat->t_swing && time <= pdat->t_swing * 2) {
+        if (i >= array_size && time <= ceil(array_size * 1.5)) {
+            pdat->robot_pos_over_time[i] = co.x_1 + (ceil(lim.x_upper_bound / 2) - co.x_1) * (time / pdat->t_swing);
+        }
+        if (i >= array_size && time <= ceil(array_size * 1.5)) {
             pdat->robot_pos_over_time[i] = co.x_1 + (ceil(lim.x_upper_bound / 2) - co.x_1) * (time / pdat->t_swing);
         }
     }
+
+
+    // MOVEMENT LAW USED FOR CABLE AND MOTOR IS bang-bang (minimum acceleration)
+    //s = distance(t) / distance_max;
+    //tau = time / t_swing;
+    distance(t)_1 = 2*distance_MAX * pow(time/t_swing_value,2)
+    distance(t)_2 = -2*distance_MAX * pow(time/t_swing_value,2) + 4*distance_max * pow(time/t_swing) - distance_max
+   
+   
     for (int i = 1; i < MAX_RANGE; i++) {
+        
+        for 
+
         // Calculate the position difference between consecutive time steps
         float position_difference_cl = pdat->cable_length_over_time[i] - pdat->cable_length_over_time[i - 1];
         float position_difference_robot = pdat->robot_pos_over_time[i] - pdat->robot_pos_over_time[i - 1];
