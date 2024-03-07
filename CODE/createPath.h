@@ -18,7 +18,8 @@ typedef struct input_robot_limitations {
     float lower_bound;
     float x_upper_bound;
     float y_upper_bound;
-    float MAX_motor_speed;
+    float MAX_robot_speed;
+    float MAX_cable_speed; 
 } limit;
 
 typedef struct output_PathData {

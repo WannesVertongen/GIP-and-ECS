@@ -4,7 +4,7 @@
 #include <stdlib.h> // Include stdlib.h for malloc
 
 
-int createPath(coordinates co, limit lim, pathdata *pdat) {
+int GenInitPath(coordinates co, limit lim, pathdata *pdat) {
     if (co.y_1 < lim.lower_bound || co.y_1 > lim.y_upper_bound ||
         co.x_1 < lim.lower_bound || co.x_1 > lim.x_upper_bound ||
         lim.T_s <= 0) {
@@ -22,7 +22,7 @@ int createPath(coordinates co, limit lim, pathdata *pdat) {
     pdat->t_swing = t_swing_value;
 
     // using constant motor speed.
-    if (fabs(pdat->cl_2 - pdat->cl_1) / t_swing_value > lim.MAX_motor_speed) {
+    if (fabs(pdat->cl_2 - pdat->cl_1) / t_swing_value > lim.MAX_cable_speed) {
         return 1;
         //Dit zou ik aanpassen aangezien we onze t_swing zelf kiezen. Als we buiten de limiet vallen moet tswing gewoon groter. We kunnen tswing ook kiezen
         //door te zeggen ga tot 0.8*MAX_speed ofzo
@@ -33,6 +33,8 @@ int createPath(coordinates co, limit lim, pathdata *pdat) {
     int i = 0;
 
     // Initialize robot_pos_over_time with co.x_1 values
+
+    //Wat is dit? Hele lijst robot positie aan x2 and kabel aan y2? 
     for (i = 0; i < MAX_RANGE; i++) {
         pdat->robot_pos_over_time[i] = co.x_2;
         pdat->cable_length_over_time[i] = co.y_2;
