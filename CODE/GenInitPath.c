@@ -24,6 +24,8 @@ int createPath(coordinates co, limit lim, pathdata *pdat) {
     // using constant motor speed.
     if (fabs(pdat->cl_2 - pdat->cl_1) / t_swing_value > lim.MAX_motor_speed) {
         return 1;
+        //Dit zou ik aanpassen aangezien we onze t_swing zelf kiezen. Als we buiten de limiet vallen moet tswing gewoon groter. We kunnen tswing ook kiezen
+        //door te zeggen ga tot 0.8*MAX_speed ofzo
     }
 
     int array_size = ceil(pdat->t_swing / lim.T_s);

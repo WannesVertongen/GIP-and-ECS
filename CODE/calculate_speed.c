@@ -19,7 +19,10 @@ int main() {
     int array_size = sizeof(positions) / sizeof(positions[0]);
     
     // Allocate memory for speeds array
+
+    //Kzou dit veranderen en de arrays dezelfde grootte geven door een begin snelheid mee te geven
     float speeds[array_size - 1];
+
     
     // Example time interval
     float time_interval = 0.1;  // Assume time interval is 0.1 seconds
