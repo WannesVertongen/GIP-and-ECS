@@ -49,7 +49,7 @@ int GenInitPath(coordinates co, limit lim, pathdata *pdat) {
         if (i < ceil(array_size/4)) {
             float cl = pdat->cl_1 + 2*distance_cl * pow(time/pdat->t_swing,2);
             pdat->cable_length_over_time[i] = cl;
-            pdat->Object_y[i] = cl;
+            pdat->Object_y[i] = cl; //Hoezo update de object coordinaat? Object staat toch nog stil hier?
         }
         if (i >= ceil(array_size/4) && i < ceil(array_size/2)) {
             float cl = pdat->cl_1 - 2*distance_cl * pow(time/pdat->t_swing,2)  + 4*distance_cl*(time/lim.T_s) - distance_cl;
