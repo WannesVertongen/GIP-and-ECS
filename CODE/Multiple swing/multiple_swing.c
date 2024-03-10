@@ -57,9 +57,7 @@ int Multiple_Swing_Trajectory(coordinates co, limit lim, pathdata *pdat)
         int moving_time = 5; //Abritary but is a magic number 
 
         //Bereken tot waar robot moet gaan voor single swing kan activeren. Denk goed na want dit moet gaan tot x_m snapje en dan ineens
-        //stoppen voor swing beweging
-        //Dit is moeilijk want je zou kunnen gaan tot waar de cl= cl_max, ma daarvoor heb je nieuwe x1 en nieuwe xm dus zou in een loop
-        //berekend moeten worden.
+        //Stoppen voor swing beweging
 
 
         // Update robot_position (cable_length stays constant)
