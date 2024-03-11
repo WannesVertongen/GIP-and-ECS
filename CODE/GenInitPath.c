@@ -18,21 +18,15 @@ int GenInitPath(coordinates co, limit lim, pathdata *pdat) {
     float distance_x = ceil(lim.x_upper_bound / 2) - co.x_1;
     float distance_cl = ceil(co.x_2-co.x_1);
 
-    int t_swing_value = 10; // arbitrary choice of 2 succesive motion, each 5 seconds.
+    float t_swing_value = fabs(pdat->cl_2 - pdat->cl_1) / (0.5 * lim.MAX_cable_speed) ; // arbitrary choice of 2 succesive motion, each 5 seconds.
     pdat->t_swing = t_swing_value;
 
-    // using constant motor speed.
-    if (fabs(pdat->cl_2 - pdat->cl_1) / t_swing_value > lim.MAX_cable_speed) {
-        return 1;
-        //Dit zou ik aanpassen aangezien we onze t_swing zelf kiezen. Als we buiten de limiet vallen moet tswing gewoon groter. We kunnen tswing ook kiezen
-        //door te zeggen ga tot 0.8*MAX_speed ofzo
-    }
-
+    
     int array_size = ceil(pdat->t_swing / lim.T_s);
     
     int i = 0;
 
-    // Initialize robot_pos_over_time with co.x_1 values
+    // Initialize robot_pos_over_time with co.x_2 values
 
     //Wat is dit? Hele lijst robot positie aan x2 and kabel aan y2? 
     for (i = 0; i < MAX_RANGE; i++) {

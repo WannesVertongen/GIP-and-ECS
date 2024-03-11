@@ -30,6 +30,6 @@ int main() {
     int array_size = sizeof(motorValues) / sizeof(motorValues[0]);
     int freq = 500; // Frequency in Hz
     startMotorControlTimer(motorValues, array_size, freq);
-
+    
     return 0;
 }
