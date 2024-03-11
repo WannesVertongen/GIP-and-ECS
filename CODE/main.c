@@ -9,7 +9,6 @@ int main() {
     float timesample = 1.0/UPDATE_FREQUENCY;
     limit input_2 = {.T_s = timesample, .lower_bound = 0, .x_upper_bound = 1000, .y_upper_bound = 500, .MAX_robot_speed = 1000, .MAX_cable_speed = 1000};
     float EPSILON = 1;
-
     // Input coordinates: different arrays for different parts of movement
     pathdata output_init;
     pathdata output_swing;
@@ -23,10 +22,10 @@ int main() {
     // Calculating the swing path
     int result2 = createPath(input_1, input_2, &output_swing);
     
-
+    printf("%f",output_init.cl_2);
     //Max buffer size kan hier berekend worden adhv resultaten?
 
-    
+
     //1. Initialize: cable length 
     MAX_BUFFER_SIZE = output_init.t_swing * UPDATE_FREQUENCY;
     int C_Values_init[MAX_BUFFER_SIZE]; // Array to hold velocity values
