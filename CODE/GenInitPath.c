@@ -12,8 +12,8 @@ int GenInitPath(coordinates co, limit lim, pathdata *pdat) {
 
     float cl_1_value = co.y_1;
     pdat->cl_1 = cl_1_value;
-    float distance_x = ceil(lim.x_upper_bound / 2) - co.x_1;
-    float distance_cl = ceil(co.x_2-co.x_1);
+    float distance_x = co.x_2 - co.x_1;
+    float distance_cl = (co.y_2-co.y_1);
 
     float t_swing_value = fabs(distance_cl) / (0.5 * lim.MAX_cable_speed) + fabs(distance_x) / (0.5 * lim.MAX_robot_speed) ; // arbitrary choice of 2 succesive motion, each 5 seconds.
     pdat->t_swing = t_swing_value;
