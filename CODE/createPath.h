@@ -40,6 +40,6 @@ typedef struct output_PathData {
 } pathdata;
 
 
-
-extern int calculate_speed(coordinates co, limit lim, pathdata *pdat);
+extern int createPath(coordinates co, limit lim, pathdata *pdat);
+extern int GenInitPath(coordinates co, limit lim, pathdata *pdat);
 #endif
