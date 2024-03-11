@@ -55,6 +55,10 @@ int createPath(coordinates co, limit lim, pathdata *pdat) {
         i++;
     }
 
+    //Initial velocity is zero
+    pdat->robot_speed_over_time[0] = 0;
+    pdat->cable_speed_over_time[0] = 0;
+
     // Calculating velocities
     for (int i = 1; i < array_size; i++) {
         // Calculate the robot position and cable length difference between consecutive time steps
@@ -72,8 +76,8 @@ int createPath(coordinates co, limit lim, pathdata *pdat) {
         }
  
         // Store the calculated speeds in the speed arrays
-        pdat->robot_speed_over_time[i - 1] = robot_speed;
-        pdat->cable_speed_over_time[i - 1] = cable_speed;
+        pdat->robot_speed_over_time[i] = robot_speed;
+        pdat->cable_speed_over_time[i] = cable_speed;
     }
 
     return 0;

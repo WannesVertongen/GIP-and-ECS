@@ -23,15 +23,7 @@ int GenInitPath(coordinates co, limit lim, pathdata *pdat) {
     
     int array_size = ceil(pdat->t_swing / lim.T_s);
     
-    int i = 0;
-
-    // Initialize robot_pos_over_time with co.x_2 values
-
-    //Wat is dit? Hele lijst robot positie aan x2 and kabel aan y2? 
-    for (i = 0; i < MAX_RANGE; i++) {
-        pdat->robot_pos_over_time[i] = co.x_2;
-        pdat->cable_length_over_time[i] = co.y_2;
-    }
+    int i;
 
     // Calculate cable_length_over_time and update robot_pos_over_time accordingly
     float time;
@@ -42,7 +34,7 @@ int GenInitPath(coordinates co, limit lim, pathdata *pdat) {
         if (i < ceil(array_size/4)) {
             float cl = pdat->cl_1 + 2*distance_cl * pow(time/pdat->t_swing,2);
             pdat->cable_length_over_time[i] = cl;
-            pdat->Object_y[i] = cl; //Hoezo update de object coordinaat? Object staat toch nog stil hier?
+            pdat->Object_y[i] = cl; //Object is here the gripper at the end of the cable, not the object that will be moved.
         }
         if (i >= ceil(array_size/4) && i < ceil(array_size/2)) {
             float cl = pdat->cl_1 - 2*distance_cl * pow(time/pdat->t_swing,2)  + 4*distance_cl*(time/lim.T_s) - distance_cl;
@@ -52,10 +44,14 @@ int GenInitPath(coordinates co, limit lim, pathdata *pdat) {
 
          // position of the motor after the cable also with a bang-bang motion 
         if (i >= ceil(array_size/2) && i < ceil(array_size * 0.75)) {
-            pdat->robot_pos_over_time[i] = co.x_1 + 2*distance_x * pow((time-array_size*lim.T_s)/pdat->t_swing,2);
+            float pos = co.x_1 + 2*distance_x * pow((time-array_size*lim.T_s)/pdat->t_swing,2);
+            pdat->robot_pos_over_time[i] = pos ;
+            pdat->Object_x[i] = pos;
         }
         if (i >= ceil(array_size * 0.75) && i < array_size) {
-            pdat->robot_pos_over_time[i] = co.x_1 -2*distance_x * pow((time-array_size*lim.T_s)/pdat->t_swing,2) + 4*distance_x*((time-array_size*lim.T_s)/pdat->t_swing) -distance_x;
+            float pos = co.x_1 -2*distance_x * pow((time-array_size*lim.T_s)/pdat->t_swing,2) + 4*distance_x*((time-array_size*lim.T_s)/pdat->t_swing) -distance_x;
+            pdat->robot_pos_over_time[i] = pos;
+            pdat->Object_x[i] = pos;
         }
     }
 

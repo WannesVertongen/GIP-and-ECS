@@ -29,8 +29,8 @@ typedef struct output_PathData {
     float Object_x[MAX_RANGE];
     float Object_y[MAX_RANGE];
     float theta[MAX_RANGE];
-    float robot_speed_over_time[MAX_RANGE-1];
-    float cable_speed_over_time[MAX_RANGE-1];
+    float robot_speed_over_time[MAX_RANGE];
+    float cable_speed_over_time[MAX_RANGE];
     float t_swing;
     float x_m;
     float cl_1;
