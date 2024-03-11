@@ -1,7 +1,6 @@
 #include "createPath.h"
 #include <math.h>
 #include <stdio.h>
-#include <stdlib.h> // Include stdlib.h for malloc
 
 
 int GenInitPath(coordinates co, limit lim, pathdata *pdat) {
