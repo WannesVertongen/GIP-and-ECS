@@ -5,7 +5,6 @@
 int main() {
     int MAX_BUFFER_SIZE;
     int UPDATE_FREQUENCY = 500;
-
     // General input
     limit input_2 = {.T_s = 1/UPDATE_FREQUENCY, .lower_bound = 0, .x_upper_bound = 1000, .y_upper_bound = 500, .MAX_robot_speed = 1000, .MAX_cable_speed = 1000};
     float EPSILON = 1;
@@ -18,21 +17,23 @@ int main() {
 
     //Initializing the robot position and cable length
     int result1 = GenInitPath(input_1, input_2, &output_init);
+ 
     
     // Calculating the swing path
     int result2 = createPath(input_1, input_2, &output_swing);
-
+    printf("%f",output_swing.t_swing);
+    printf("%f",output_swing.cl_1);
 
     //Max buffer size kan hier berekend worden adhv resultaten?
 
     
     //1. Initialize: cable length 
     MAX_BUFFER_SIZE = output_init.t_swing * UPDATE_FREQUENCY;
-    int C_Values[MAX_BUFFER_SIZE]; // Array to hold velocity values
+    int C_Values_init[MAX_BUFFER_SIZE]; // Array to hold velocity values
     VelocityBuffer cable_initialize; // Velocity buffer structure
 
     // Initialize the first buffer
-    initVelocityBuffer(&cable_initialize, C_Values, MAX_BUFFER_SIZE);
+    initVelocityBuffer(&cable_initialize, C_Values_init, MAX_BUFFER_SIZE);
 
     // Write the correct values to the buffer:  
     for (int i = 0; i < MAX_BUFFER_SIZE; ++i) {
@@ -46,11 +47,11 @@ int main() {
     }
 
     //2. Initialize: robot position 
-    int R_Values[MAX_BUFFER_SIZE]; // Array to hold velocity values
+    int R_Values_init[MAX_BUFFER_SIZE]; // Array to hold velocity values
     VelocityBuffer robot_initialize; // Velocity buffer structure
 
     // Initialize the first buffer
-    initVelocityBuffer(&robot_initialize, R_Values, MAX_BUFFER_SIZE);
+    initVelocityBuffer(&robot_initialize, R_Values_init, MAX_BUFFER_SIZE);
 
     // Write the correct values to the buffer:  
     for (int i = 0; i < MAX_BUFFER_SIZE; ++i) {
@@ -69,11 +70,12 @@ int main() {
 
     //4. Swing: cable length 
     MAX_BUFFER_SIZE = output_swing.t_swing*UPDATE_FREQUENCY;
-    int C_Values[MAX_BUFFER_SIZE]; // Array to hold velocity values
+
+    int C_Values_swing[MAX_BUFFER_SIZE]; // Array to hold velocity values
     VelocityBuffer cable_swing; // Velocity buffer structure
 
     // Initialize the first buffer
-    initVelocityBuffer(&cable_swing, C_Values, MAX_BUFFER_SIZE);
+    initVelocityBuffer(&cable_swing, C_Values_swing, MAX_BUFFER_SIZE);
 
     // Write the correct values to the buffer:  
     for (int i = 0; i < MAX_BUFFER_SIZE; ++i) {
@@ -87,12 +89,11 @@ int main() {
     }
 
     //5. Swing: robot position 
-    int R_Values[MAX_BUFFER_SIZE]; // Array to hold velocity values
+    int R_Values_swing[MAX_BUFFER_SIZE]; // Array to hold velocity values
     VelocityBuffer robot_swing; // Velocity buffer structure
 
     // Initialize the first buffer
-    initVelocityBuffer(&robot_swing, R_Values, MAX_BUFFER_SIZE);
-
+    initVelocityBuffer(&robot_swing, R_Values_swing, MAX_BUFFER_SIZE);
     // Write the correct values to the buffer:  
     for (int i = 0; i < MAX_BUFFER_SIZE; ++i) {
         float robot_velocity = output_swing.robot_speed_over_time[i] ;
