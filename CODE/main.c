@@ -7,23 +7,33 @@ int main() {
     int UPDATE_FREQUENCY = 500;
     // General input
     float timesample = 1.0/UPDATE_FREQUENCY;
-    limit input_2 = {.T_s = timesample, .lower_bound = 0, .x_upper_bound = 1000, .y_upper_bound = 500, .MAX_robot_speed = 1000, .MAX_cable_speed = 1000};
+    limit input_2 = {.T_s = timesample, .lower_bound = 0, .x_upper_bound = 1000, .y_upper_bound = 500, .MAX_robot_speed = 100, .MAX_cable_speed = 100};
     float EPSILON = 1;
     // Input coordinates: different arrays for different parts of movement
     pathdata output_init;
     pathdata output_swing;
 
-    coordinates input_1 = {.x_1 = 0, .y_1 = 20, .x_2 = 10, .y_2 = 15};
 
+    // x.1 and y.2 of of the input_1_init are measured from the robot.
+
+    coordinates input_1_init = {.x_1 = 100, .y_1 =120, .x_2 = 10, .y_2 = 40};
+    coordinates input_1_swing = {.x_1 = input_1_init.x_2, .y_1 = input_1_init.y_2, .x_2 = 350, .y_2 = 25};
     //Initializing the robot position and cable length
-    int result1 = GenInitPath(input_1, input_2, &output_init);
+    int result1 = GenInitPath(input_1_init, input_2, &output_init);
     
-    
+    printf("%f \n",output_init.t_swing);
+    printf("%f \n",output_init.cable_speed_over_time[100]);
+
+    printf("%f\n",output_init.cable_speed_over_time[0]);
+
+
     // Calculating the swing path
-    int result2 = createPath(input_1, input_2, &output_swing);
-    
-    printf("%f",output_init.cl_2);
-    //Max buffer size kan hier berekend worden adhv resultaten?
+    int result2 = createPath(input_1_swing, input_2, &output_swing);
+
+    printf("%f \n",output_swing.t_swing);
+    printf("%f \n",output_swing.cable_speed_over_time[100]);
+
+    printf("%f\n",output_swing.cable_speed_over_time[0]);
 
 
     //1. Initialize: cable length 
