@@ -55,6 +55,10 @@ int GenInitPath(coordinates co, limit lim, pathdata *pdat) {
         }
     }
 
+    //Initial velocity is zero:
+    pdat->cable_speed_over_time[0] = 0;
+    pdat->robot_speed_over_time[0] = 0;
+
 
     for (int i = 1; i < MAX_RANGE; i++) {
         
@@ -65,8 +69,8 @@ int GenInitPath(coordinates co, limit lim, pathdata *pdat) {
         float speed_cl = position_difference_cl / lim.T_s;
         float speed_robot = position_difference_robot / lim.T_s;
         // Store the calculated speed in the speeds array
-        pdat->cable_speed_over_time[i - 1] = speed_cl;
-        pdat->robot_speed_over_time[i - 1] = speed_robot;
+        pdat->cable_speed_over_time[i] = speed_cl;
+        pdat->robot_speed_over_time[i] = speed_robot;
     }
 
     return 0;
