@@ -6,7 +6,8 @@ int main() {
     int MAX_BUFFER_SIZE;
     int UPDATE_FREQUENCY = 500;
     // General input
-    limit input_2 = {.T_s = 1/UPDATE_FREQUENCY, .lower_bound = 0, .x_upper_bound = 1000, .y_upper_bound = 500, .MAX_robot_speed = 1000, .MAX_cable_speed = 1000};
+    float timesample = 1.0/UPDATE_FREQUENCY;
+    limit input_2 = {.T_s = timesample, .lower_bound = 0, .x_upper_bound = 1000, .y_upper_bound = 500, .MAX_robot_speed = 1000, .MAX_cable_speed = 1000};
     float EPSILON = 1;
 
     // Input coordinates: different arrays for different parts of movement
@@ -17,12 +18,11 @@ int main() {
 
     //Initializing the robot position and cable length
     int result1 = GenInitPath(input_1, input_2, &output_init);
- 
+    
     
     // Calculating the swing path
     int result2 = createPath(input_1, input_2, &output_swing);
-    printf("%f",output_swing.t_swing);
-    printf("%f",output_swing.cl_1);
+    
 
     //Max buffer size kan hier berekend worden adhv resultaten?
 

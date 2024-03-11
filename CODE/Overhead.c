@@ -31,7 +31,7 @@ int readFromBuffer(VelocityBuffer *buffer, int *velocity) {
 void sendVelocitiesToStepper(VelocityBuffer *buffer, int freq) {
     int velocity;
     while (readFromBuffer(buffer, &velocity) != -1) {
-        printf("Sending %d to stepper motor\n", velocity);
+        //printf("Sending %d to stepper motor\n", velocity);
         // Here we would send 'velocity' to the stepper motor
 
         // Sleep for the duration between velocity updates
