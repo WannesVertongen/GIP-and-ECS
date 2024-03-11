@@ -16,6 +16,6 @@ int main() {
 
     // Send velocities to stepper motor
     sendVelocitiesToStepper(&buffer, 500);
-
+    
     return 0;
 }
