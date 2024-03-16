@@ -1,3 +1,4 @@
+clear all
 % Define your constants
 m = 30; % robot mass
 M = 2; % object mass
@@ -23,6 +24,8 @@ initial_vtheta = 0; % initial angular velocity
 y0 = [initial_x; initial_vx; initial_theta; initial_vtheta];
 
 % Solve the system of equations
+t_start = 0;
+t_end = 10;
 [t, y] = ode45(@(t,y) [dxdt(t,y); dthetadt(t,y)], [t_start, t_end], y0);
 
 % Extract results
