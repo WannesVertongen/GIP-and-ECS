@@ -5,6 +5,7 @@
 ### Tasks:
 
 - [Learning to code in C] Task 1
+- [First schedule of the semester was drawn up indicating deadlines.] Task 2
 
 ## Week 2: February 19 - February 25, 2024
 
@@ -20,7 +21,7 @@
 - [ learning to implement a function ] Task 1
 - [ creating functions for initialization of the robot] Task 2
 - [ creating functions to send velocities to motors] Task 3
-
+- [Concretizing problem and forming a project proposal.] Task 4
 ## Week 4: March 4 - March 10, 2024
 
 ### Tasks:
