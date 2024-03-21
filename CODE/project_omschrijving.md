@@ -74,12 +74,11 @@ kabel met lengte moet aangepast worden zodat object terplekken blijft
 
 ## Stap 3: Landing
 
-Tekening van de landing 
+<img src="landing.svg" alt="Image failed to load" width="1000" height="600">
 
 MArge inrekenen dat object zeker hoog genoeg komt, maar $\theta_1 = \theta_2$, dus landingswand moet lager en meer naar links.
 
 ### marge:
-tekening van de hoek
 
 * volledige bak marge:  
     - $sin(\frac{\Delta \theta}{2}) = \frac{B}{2cl}$
