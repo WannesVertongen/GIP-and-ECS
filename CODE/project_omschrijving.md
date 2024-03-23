@@ -4,11 +4,12 @@
 
 ### Afmetingen  
 * Gelijke hoogte begin en eind
-* 1m x 2m  -> kleine hoeken swing +hanger
+* $\Delta x$ = 1m,  $\Delta y$ = 2m  -> kleine hoeken swing 
+
 ### Toleranties:
-* positie (x_3,y_3)
-* hoogte schuine wand rechts
-* ondersteuning tegen kantelen links
+* Positie landingssteun ($x_3,y_2$)
+* Hoogte landingssteun
+* Ondersteuning tegen kantelen bij start swing
 
 
 ## Stap 1: initialisatie
@@ -27,24 +28,22 @@
 
 ### 1. Bak hijsen 
 * $\Delta E  = mg\Delta h$
-* tijd T = 5s (zelf gekozen)
-* P(W) = $\frac{\Delta E}{t}$
+* tijd T = $\frac{\Delta E}{P_{nom}}$
 
 * Bewegingswet keuze:
     - Minimal rms acceleration (3rd degree polynomial)
     - $s(\tau) = 3\tau^2-2\tau^3$
     - $S(t) = \Delta h* s(\tau)$ met $\tau=\frac{t}{T}$
-    - $a_{max} = 4$
+    - $a_{max} = 6\frac{m}{s^2}$
     
     
 
 * Bewegingswet verantwoording:
     - Bak ophijsen -> torque-beperking op motor -> beperk versnelling
-    - Snelheidsbeperking niet van belang
     - Minimal rms acceleration zorgt voor laagste gemiddelde torque en dus laagste stroomverbruik
 
 * Maximale belasting:
-    - $a_{max} = \frac{dS^2}{dt^2}_{max} = \frac{\Delta h}{T^2} * 4$
+    - $a_{max} = \frac{dS^2}{dt^2}_{max} = \frac{\Delta h}{T^2} * 6$
     - $F_{max}$ = massa  bak * $a_{max} $ 
 
 ### Bak kantelen 
@@ -56,7 +55,7 @@
 
 ### 2. Verplaatsing in x
 * Theoretisch gezien: geen vermogenverbruik want kracht staat loodrecht op verplaatsing. Vereenvoudiging geldig als beweging gebeurt zonder schommelen van de massa.
-* Tijd T = 5s (zelf gekozen)
+* Tijd T = 5s (zelf gekozen, moet traag genoeg gebeuren)
 * Afstand $\Delta x_{tot} = \Delta x_{1->2} + \Delta x_{kantel}$
 
 * Bewegingswet keuze:
@@ -67,21 +66,34 @@
 * Beweginswet verantwoording:
     - Lage eindsnelheid nodig voor tijdens het kantelen van de bak.
     - Beperkte versnelling en jerk nodig zodat bak niet schommelt en/of kabel niet trilt.
-    - In vergelijking met andere 3e graads continue functies: laagste piek snelheid, piek versnelling en rms versnelling.
+    - In vergelijking met andere functies van continuïteits graad 3: laagste piek snelheid, piek versnelling en rms versnelling.
 
-MISSCHIEN VERMELDEN DAT IN DE PRAKTIJK BAK HIJSEN EN NAAR RECHTS BRENGEN WSS TEGELIJKERTIJD GAAT GEBEUREN OM TIJD TE BESPAREN?
+
 
 
 
 
 ### 3. Robot naar Xm = $\frac{x2-x1}{2}$
 * Robot wordt exact in het midden tussen start en eind geplaatst zodat er zich een eenvoudige pendulum beweging voordoet.
-* Tijdens het verplaatsen van de robot naar $x_m$ moet de kabel verlengen zodat het object op zijn huidige positie blijft liggen.
+* Tijdens het verplaatsen van de robot naar $x_m$ moet de kabel zich zo verlengen dat het object op zijn huidige positie blijft liggen.
+* Verplaatsing robot $\Delta x_{robot}$ = 0.5m.
+* Tijd verplaatsing = 5s (gekozen voor het experiment)
 
-* verplaatsing robot = ( hier moet een bewegingswet komen vanuit de lessen beweging en trillingen )
+* Bewegingswet robot keuze:
+    - Minimal rms acceleration (3rd degree polynomial)
+    - $s(\tau) = 3\tau^2-2\tau^3$
+    - $S(t) = \Delta x_{robot}* s(\tau)$ met $\tau=\frac{t}{T}$
 
-* kabel lengte: cl(t) = $\sqrt{x(t)^2+y^2}$
-* Eind positie: cl = $\sqrt{x_1^2+y_1^2}$ & $\theta_1 = tan^{-1}(\frac{y_1}{x_m})$
+* Bewegingswet robot verantwoording:
+    - Kabelmotor heeft constante load dus geen dynamische koppel-restricties
+    - Laagste rms versnelling dus minste stroomverbruik
+    - Lage pieksnelheid zodat snelheidsbeperking motor niet wordt overschreden
+
+* Bewegingswet kabel:
+    - De kabel moet ten alle tijden lichtjes gespannen zijn, zodat het object niet valt maar ook niet beweegt. De kabel zal daarom verlengen aan de hand van volgende vergelijking: cl(t) = $\sqrt{x(t)^2+y^2}$, waarbij x(t) de lineaire beweging van de robot is en y de hoogte van het object.
+    - De eindlengte van de kabel is dan cl = $\sqrt{x_1^2+y_1^2}$  
+    - De hoek tussen de verticale en de kabel is dan $\theta_1 = bgtan(\frac{y_1}{x_m})$
+
 
 ## Stap 2 : swing
 
@@ -89,58 +101,70 @@ MISSCHIEN VERMELDEN DAT IN DE PRAKTIJK BAK HIJSEN EN NAAR RECHTS BRENGEN WSS TEG
 <img src="swing.svg" alt="Image failed to load" width="1000" height="600"> 
 
 ### 1 -> 2
-* kabel lengte in korten: $\Delta cl = h + marge$
-* cl(t) =  ( hier moet een bewegingswet komen vanuit de lessen beweging en trillingen )
-* begeleiding zodat bak niet fout omkantelt 
+* De kabel lengte moet kort ingetrokken worden om de bak van de steun te krijgen en aan de swing beweging te kunnen laten starten. Een begeleidingsstaaf zal zorgen dat de bak niet omkantelt rond zijn contactpunt met de schuine steun.
+* Totale inkorting: $\Delta cl = h + marge$. Schuine steun is juist 'h' groot, maar mogelijkheid dat bak niet exact juist ligt. We kiezen daarom een marge van grootte h/4 (25%).
+* $\Delta E = mg \Delta h = mg (\Delta cl* cos(\theta_1))$
+* Duratie inkorting T = $\frac{\Delta E}{P_{nom}}$
+
+* Bewegingswet keuze: 
+    - Minimum jerk
+    - $s(\tau) = \frac{16}{3}\tau^3    (0<\tau<0.25)$
+    - $s(\tau) = -\frac{16}{3}\tau^3 + 8\tau^2 - 2\tau + \frac{1}{6} (0.25<\tau<0.75)$
+    - $s(\tau) = \frac{16}{3}\tau^3 - 16\tau^2 + 16\tau -\frac{13}{3} (0.75<\tau<1)$
+    - -> $cl(t) = cl_2 + \Delta cl* s(\tau)$
+
+* Bewegingswet verantwoording: 
+    - Inkorting gebeurt op korte tijd dus zal als een schok gebeuren. Om te zorgen dat er geen ongewenste trillingen in het systeem komen, is er gekozen voor minimale ruk.
+    - De versnelling is hoog, wat zorgt voor een groot genoege kracht om de wrijving van de steun te overwinnen. Deze wrijvingskracht is niet groot aangezien de hoek $\theta_1$ groot is.
 
 ### 2 -> 3
 * $\theta_1 = \theta_2$
 * Duratie swing halve periode: $T/2 = \pi \sqrt{\frac{cl}{g}}$ 
-* Kritisch koppel 
+* Kritische belasting 
     - $ F_t - G = m* a_r$
     - $a_r = v^2/cl$
     - $v = \sqrt{2g(cl-y_1)} $ 
     - $F_t = m(\frac{2g(cl-y_1)}{cl} + g) $
-    - T = ?
-    - P = ? (geen positieverandering van de motor)
+   
 ## Stap 3: Landing
 
 <img src="landing.svg" alt="Image failed to load" width="1000" height="600">
 
-Marge inrekenen dat object zeker hoog genoeg komt, maar $\theta_1 = \theta_2$, dus landingswand moet lager en meer naar links.
+* Er moet marge ingerekend worden zodat object zeker hoog genoeg komt, maar $\theta_1 = \theta_2$, dus landingswand moet lager en meer naar links.
 
+* Voor de eerste marge laten we de bak een halve breedte verder doorvliegen. Dit resulteert in een nieuwe eindhoek $\theta_3$:
+    - halve breedte marge: 
+        - $\Delta \theta = 2 sin^{-1}(\frac{B}{4cl}) $ 
+        - $\theta_3 = \theta_2 - \Delta \theta$
 
-### marge:
-
-* volledige bak marge:  
-    - $sin(\frac{\Delta \theta}{2}) = \frac{B}{2cl}$
-    - $\Delta \theta = 2 sin^{-1}(\frac{B}{2cl}) $ 
-* hale breedte marge: 
-    - $\Delta \theta = 2 sin^{-1}(\frac{B}{4cl}) $ 
-    - $\theta_3 = \theta_2 - \Delta \theta$
-
-* tijd tussen $\theta_2$ en $\theta_3$:
+* Tijd tussen $\theta_2$ en $\theta_3$:
     - $\theta(t) = \theta_0 cos(\sqrt{g/l}t)$
     - $t_2 = \pi \sqrt{\frac{cl}{g}}$ 
     - $\Delta t = \sqrt{l/g}*cos^{-1}(\frac{\theta_3}{\theta_2})$
     - $t_3 = t_2 + \Delta t$
 
-* positie landplatform:
-    - $x_3 = x_M + cl*sin(\theta_3)$
-    - $y_3 = cl*cos(\theta_3)$
-    - $x_p = x_3 - \frac{B}{2}*cos(\theta_3)$
-    - $y_p = y_3 + \frac{B}{2}*sin(\theta_3)$
+* De coordinaat van de linker-onderhoek van de bak bij $\theta_3$ is dan:
+    - $x_3 = x_M + cl*sin(\theta_3) - \frac{B}{2}*cos(\theta_3)$
+    - $y_3 = cl*cos(\theta_3) + \frac{B}{2}*sin(\theta_3)$
+   
 
-* Beweging van $(x_2,y_2) -> (x_3,y_3)$:
+* Ten slotte wordt er nog een marge ingerekend zodat de bak niet tegen de rand van de steunwand bots in de heenzwaai:
     - $marge_1$ = afstand dat bak boven platvorm komt. = $\frac{h}{3}$ (arbitrair)
-    - $marge_2$ = afstand dat bak nog verder dan halve hoogte verder moet zakken. = $marge_1$
+    - $marge_2$ = afstand dat bak nog verder dan halve hoogte verder moet zakken = $marge_1$
+
+* De kabel verlenging tussen $\theta_2$ en $\theta_3$ is dan:
     - $\Delta cl = marge_1 + \frac{h}{2} + marge_2$
     - $\tau = \frac{t}{\sqrt{l/g}*cos^{-1}(\frac{\theta_3}{\theta_2})}$
 
-    deze beweging moet zo snel gebeuren en zal door het snel zakken een grote schok creëren. Daarom wordt er gekozen voor een beweging met minimale acceleratie(bang-bang) voor de spanning op het koord te minimaliseren.
+* Bewegingswet keuze:
+    - Minimal acceleration (bang-bang)
     - $s(\tau) = 2\tau^2 (0<\tau<5)$
     - $s(\tau) = -2\tau^2 + 4\tau -1 (0.5<\tau<1)$
     - $cl = cl_2 + s(\tau)*\Delta cl(t_2<t<t_3)$
+
+* Bewegingswet verantwoording:
+    - De beweging gebeurt snel. Om de schok te minimaliseren wordt voor een minimale versnellingen gekozen.
+    
 
 
 
