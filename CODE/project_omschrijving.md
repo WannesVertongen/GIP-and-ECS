@@ -160,7 +160,7 @@
     - Minimal acceleration (bang-bang)
     - $s(\tau) = 2\tau^2 (0<\tau<5)$
     - $s(\tau) = -2\tau^2 + 4\tau -1 (0.5<\tau<1)$
-    - $cl = cl_2 + s(\tau)*\Delta cl(t_2<t<t_3)$
+    - $cl = cl_2 + s(\tau)*\Delta cl (t_2<t<t_3)$
 
 * Bewegingswet verantwoording:
     - De beweging gebeurt snel. Om de schok te minimaliseren wordt voor een minimale versnellingen gekozen.
