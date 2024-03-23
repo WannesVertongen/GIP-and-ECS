@@ -81,7 +81,7 @@ MISSCHIEN VERMELDEN DAT IN DE PRAKTIJK BAK HIJSEN EN NAAR RECHTS BRENGEN WSS TEG
 * verplaatsing robot = ( hier moet een bewegingswet komen vanuit de lessen beweging en trillingen )
 
 * kabel lengte: cl(t) = $\sqrt{x(t)^2+y^2}$
-* Eind positie: cl = $\sqrt{x_1^2+y_1^2}$ & $\theta_1 = bgtan(\frac{y_1}{x_m})$
+* Eind positie: cl = $\sqrt{x_1^2+y_1^2}$ & $\theta_1 = tan^{-1}(\frac{y_1}{x_m})$
 
 ## Stap 2 : swing
 
@@ -103,36 +103,45 @@ MISSCHIEN VERMELDEN DAT IN DE PRAKTIJK BAK HIJSEN EN NAAR RECHTS BRENGEN WSS TEG
     - $F_t = m(\frac{2g(cl-y_1)}{cl} + g) $
     - T = ?
     - P = ? (geen positieverandering van de motor)
-
 ## Stap 3: Landing
 
 <img src="landing.svg" alt="Image failed to load" width="1000" height="600">
 
-MArge inrekenen dat object zeker hoog genoeg komt, maar $\theta_1 = \theta_2$, dus landingswand moet lager en meer naar links.
+Marge inrekenen dat object zeker hoog genoeg komt, maar $\theta_1 = \theta_2$, dus landingswand moet lager en meer naar links.
+
 
 ### marge:
 
 * volledige bak marge:  
     - $sin(\frac{\Delta \theta}{2}) = \frac{B}{2cl}$
-    - $\Delta \theta = 2 bgsin(\frac{B}{2cl}) $ 
+    - $\Delta \theta = 2 sin^{-1}(\frac{B}{2cl}) $ 
 * hale breedte marge: 
-    - $\Delta \theta = 2 bgsin(\frac{B}{4cl}) $ 
+    - $\Delta \theta = 2 sin^{-1}(\frac{B}{4cl}) $ 
     - $\theta_3 = \theta_2 - \Delta \theta$
 
-* tijd tussen $\theta_2 en \theta_3$: 
+* tijd tussen $\theta_2$ en $\theta_3$:
     - $\theta(t) = \theta_0 cos(\sqrt{g/l}t)$
-    - $t = \sqrt{l/g} *bgcos(\frac{\theta_3}{\theta_2})$
+    - $t_2 = \pi \sqrt{\frac{cl}{g}}$ 
+    - $\Delta t = \sqrt{l/g}*cos^{-1}(\frac{\theta_3}{\theta_2})$
+    - $t_3 = t_2 + \Delta t$
 
 * positie landplatform:
-    - hoek = $\theta_3$
     - $x_3 = x_M + cl*sin(\theta_3)$
     - $y_3 = cl*cos(\theta_3)$
-    - $\Delta x = sin(\theta_2) - sin(\theta_3)$
-    - $\Delta y = cos(\theta_2) - cos(\theta_3)$
+    - $x_p = x_3 - \frac{B}{2}*cos(\theta_3)$
+    - $y_p = y_3 + \frac{B}{2}*sin(\theta_3)$
 
 * Beweging van $(x_2,y_2) -> (x_3,y_3)$:
+    - $marge_1$ = afstand dat bak boven platvorm komt. = $\frac{h}{3}$ (arbitrair)
+    - $marge_2$ = afstand dat bak nog verder dan halve hoogte verder moet zakken. = $marge_1$
+    - $\Delta cl = marge_1 + \frac{h}{2} + marge_2$
+    - $\tau = \frac{t}{\sqrt{l/g}*cos^{-1}(\frac{\theta_3}{\theta_2})}$
 
-
+    deze beweging moet zo snel gebeuren en zal door het snel zakken een grote schok creëren. Daarom wordt er gekozen voor een beweging met minimale ruk.
+    - $s(\tau) = \frac{16}{3}\tau^3 (0<\tau<0.25)$
+    - $s(\tau) = -\frac{16}{3}\tau^3 + 8\tau^2 - 2\tau + \frac{1}{6} (0.25<\tau<0.75)$
+    - $s(\tau) = \frac{16}{3}\tau^3 - 16\tau^2 + 16\tau -\frac{13}{3} (0.75<\tau<1)$
+    - $cl = cl_2 + s(\tau)*\Delta cl(t_2<t<t_3)$
 
 
 
