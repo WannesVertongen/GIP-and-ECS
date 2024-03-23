@@ -137,10 +137,9 @@ Marge inrekenen dat object zeker hoog genoeg komt, maar $\theta_1 = \theta_2$, d
     - $\Delta cl = marge_1 + \frac{h}{2} + marge_2$
     - $\tau = \frac{t}{\sqrt{l/g}*cos^{-1}(\frac{\theta_3}{\theta_2})}$
 
-    deze beweging moet zo snel gebeuren en zal door het snel zakken een grote schok creëren. Daarom wordt er gekozen voor een beweging met minimale ruk.
-    - $s(\tau) = \frac{16}{3}\tau^3 (0<\tau<0.25)$
-    - $s(\tau) = -\frac{16}{3}\tau^3 + 8\tau^2 - 2\tau + \frac{1}{6} (0.25<\tau<0.75)$
-    - $s(\tau) = \frac{16}{3}\tau^3 - 16\tau^2 + 16\tau -\frac{13}{3} (0.75<\tau<1)$
+    deze beweging moet zo snel gebeuren en zal door het snel zakken een grote schok creëren. Daarom wordt er gekozen voor een beweging met minimale acceleratie(bang-bang) voor de spanning op het koord te minimaliseren.
+    - $s(\tau) = 2\tau^2 (0<\tau<5)$
+    - $s(\tau) = -2\tau^2 + 4\tau -1 (0.5<\tau<1)$
     - $cl = cl_2 + s(\tau)*\Delta cl(t_2<t<t_3)$
 
 
