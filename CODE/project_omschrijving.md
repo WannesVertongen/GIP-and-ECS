@@ -16,31 +16,62 @@
 
 <img src="initialisatie.svg" alt="Image failed to load" width="1000" height="600">
 
-
-### bak hijsen 
- * $\Delta E  = mg\Delta h$
- * tijd t = 5s (zelf gekozen)
- * P(W) = $\frac{\Delta E}{t}$
-
-### verplaatsing in x
-
-theoretisch gezien geen arbeid want kracht staat loodrecht op verplaatsing
-
-###
-bak kantelen 
-
-* $x_2-x_1 = \frac{b}{2}$
-* $x_3 - x_2 = R*cos(\alpha+\theta_1)$
-* $\Delta x_{tot} = \frac{b}{2} + R*cos(\alpha + \theta_1)$
-
 ### bak dimensies
 
 * h = 24cm
 * B = 30cm
 * d = 40cm
 
-* $ h = \sqrt{B^2/4 + h^2}$
+* $ R = \sqrt{B^2/4 + h^2}$
 * $\alpha$ = $bgtan(\frac{B}{2h}) $
+
+### 1. Bak hijsen 
+* $\Delta E  = mg\Delta h$
+* tijd T = 5s (zelf gekozen)
+* P(W) = $\frac{\Delta E}{t}$
+
+* Bewegingswet keuze:
+    - Minimal rms acceleration (3rd degree polynomial)
+    - $s(\tau) = 3\tau^2-2\tau^3$
+    - $S(t) = \Delta h* s(\tau)$ met $\tau=\frac{t}{T}$
+    - $a_{max} = 4$
+    
+    
+
+* Bewegingswet verantwoording:
+    - Bak ophijsen -> torque-beperking op motor -> beperk versnelling
+    - Snelheidsbeperking niet van belang
+    - Minimal rms acceleration zorgt voor laagste gemiddelde torque en dus laagste stroomverbruik
+
+* Maximale belasting:
+    - $a_{max} = \frac{dS^2}{dt^2}_{max} = \frac{\Delta h}{T^2} * 4$
+    - $F_{max}$ = massa  bak * $a_{max} $ 
+
+### Bak kantelen 
+* Om te weten hoe ver de robot zich moet verplaatsen volgens de x-as om de start positie te bereiken, wordt er eerst uitgerekend hoeveel de robot moet bewegen om de bak van rechte positie tot schuine positie op de start wand te brengen (zie onderaan tekening initialisatie).
+
+* $x_2-x_1 = \frac{b}{2}$
+* $x_3 - x_2 = R*cos(\alpha+\theta_1)$
+* $\Delta x_{kantel} = \frac{b}{2} + R*cos(\alpha + \theta_1)$
+
+### Verplaatsing in x
+* Theoretisch gezien: geen vermogenverbruik want kracht staat loodrecht op verplaatsing. Vereenvoudiging geldig als beweging gebeurt zonder schommelen van de massa.
+* Tijd T = 5s (zelf gekozen)
+* Afstand $\Delta x_{tot} = \Delta x_{1->2} + \Delta x_{kantel}$
+
+* Bewegingswet keuze:
+    - 5th degree polynomial 
+    - $s(\tau) = 6\tau^5 -15\tau^4 +10\tau^3$
+    - S(t) = $\Delta x_{tot}* s(\tau)$ met $\tau=\frac{t}{T}$
+
+* Beweginswet verantwoording:
+    - Lage eindsnelheid nodig voor tijdens het kantelen van de bak.
+    - Beperkte versnelling en jerk nodig zodat bak niet schommelt en/of kabel niet trilt.
+    - In vergelijking met andere 3e graads continue functies: laagste piek snelheid, piek versnelling en rms versnelling.
+
+MISSCHIEN VERMELDEN DAT IN DE PRAKTIJK BAK HIJSEN EN NAAR RECHTS BRENGEN WSS TEGELIJKERTIJD GAAT GEBEUREN OM TIJD TE BESPAREN?
+
+
 
 
 ### robot naar Xm = $\frac{x2-x1}{2}$
