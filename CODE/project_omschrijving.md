@@ -54,7 +54,7 @@
 * $x_3 - x_2 = R*cos(\alpha+\theta_1)$
 * $\Delta x_{kantel} = \frac{b}{2} + R*cos(\alpha + \theta_1)$
 
-### Verplaatsing in x
+### 2. Verplaatsing in x
 * Theoretisch gezien: geen vermogenverbruik want kracht staat loodrecht op verplaatsing. Vereenvoudiging geldig als beweging gebeurt zonder schommelen van de massa.
 * Tijd T = 5s (zelf gekozen)
 * Afstand $\Delta x_{tot} = \Delta x_{1->2} + \Delta x_{kantel}$
@@ -74,8 +74,9 @@ MISSCHIEN VERMELDEN DAT IN DE PRAKTIJK BAK HIJSEN EN NAAR RECHTS BRENGEN WSS TEG
 
 
 
-### robot naar Xm = $\frac{x2-x1}{2}$
-kabel met lengte moet aangepast worden zodat object terplekken blijft
+### 3. Robot naar Xm = $\frac{x2-x1}{2}$
+* Robot wordt exact in het midden tussen start en eind geplaatst zodat er zich een eenvoudige pendulum beweging voordoet.
+* Tijdens het verplaatsen van de robot naar $x_m$ moet de kabel verlengen zodat het object op zijn huidige positie blijft liggen.
 
 * verplaatsing robot = ( hier moet een bewegingswet komen vanuit de lessen beweging en trillingen )
 
