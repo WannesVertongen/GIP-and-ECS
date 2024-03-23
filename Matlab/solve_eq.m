@@ -6,9 +6,9 @@ eq1 = (M+m)*a + M*l*cos(theta)*atheta == F + M*l*vtheta^2*sin(theta);
 eq2 = cos(theta)*a + l*atheta == -g*sin(theta);
 
 % Solve the equations
-solution = solve([eq1, eq2], [a, F]);
+solution = solve([eq1, eq2], [a, atheta]);
 
 % Extract the solutions
 a_solution = simplify(solution.a)
-F_solution = simplify(solution.F)
+atheta_solution = simplify(solution.atheta)
 
