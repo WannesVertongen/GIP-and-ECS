@@ -28,8 +28,6 @@
 
 - [Completion of specification ] Task 1
 - [Constructing experiment] Task 2
-- [Functional Decomposition of gripper] Task 3
-
 
 ## Week 5: March 11 - March 17, 2024
 
@@ -44,17 +42,17 @@
 
 ### Tasks:
 
-- [ ] Task 1
-- [ ] Task 2
-- [ ] Task 3
+- [Redesign of project] Task 1
+- [Making the specifications for the project and seperating in different parts] Task 2
+- [Choosing motion laws for each movement] Task 3
 
 
 ## Week 7: March 25 - March 31, 2024
 
 ### Tasks:
 
-- [ ] Task 1
-- [ ] Task 2
+- [adding solutions for  'bad possibilities' ] Task 1
+- [Presentation with current work & Future work] Task 2
 - [ ] Task 3
 
 
