@@ -95,10 +95,10 @@
     - De hoek tussen de verticale en de kabel is dan $\theta_1 = bgtan(\frac{y_1}{x_m})$
 
 ### 4. Mogelijke problemen
-* bak slingert te hard waardoor grote krachten op wand wat problemen kan geven. 
-    * duratie van de beweging verlengen of bewegingswet aanpassen. 
+* Bak slingert te hard waardoor er grote krachten op de wand kunnen komen bij contact. 
+    * Duratie van de beweging verlengen of bewegingswet aanpassen. 
 * Bij het bewegen van de slede van positie 3 naar positie $x_m$, kan de bak verplaatsen van zijn startpositie.
-    * installeren van steun waarop bak kan rusten.
+    * Installeren van extra steun loodrecht op de schuine wand waarop bak kan rusten.
 
 ## Stap 2 : swing
 
@@ -135,7 +135,7 @@
 ### 3. Mogelijke problemen
 * Schok tijdens kabel inkorting niet snel genoeg waardoor bak al kantelt voor slingerbeweging. Dit creeërt een lokale periodische beweging dat de slingerbeweging beïnvloed.
     * Beweging van de kabel aanpassen naar een sneller verloop indien haalbaar, of kabel inkorting laten aanhouden over grote afstand.
-    * werk met 2 kabels aan de bak.
+    * Werk met 2 kabels aan de bak om orientatie te controleren.
 * Ideale eindpositie wordt niet bereikt wegens verliezen tijdens slinger beweging.
     * Breng verliezen mee in rekening bij bepalen eindpositie.
 
@@ -198,7 +198,7 @@
 
 
     - Minimal acceleration (bang-bang)
-    - $s(\tau) = 2\tau^2 (0<\tau<5)$
+    - $s(\tau) = 2\tau^2 (0<\tau<0.5)$
     - $s(\tau) = -2\tau^2 + 4\tau -1 (0.5<\tau<1)$
     - $cl = cl_3 + s(\tau)*\Delta cl (t_3<t<t_4)$
 
@@ -209,10 +209,15 @@
 
     
 ### Mogelijke problemen:
-* Bak landt te hard
-    * marges verkleinen.
+* Duratie van beweging 2->3 te kort waardoor de kabel mogelijk niet meer gespannen is.
+    * Pas posities ($x_3$,$y_3$) aan zodat er genoeg tijd is om deze beweging uit te voeren met gespannen kabel. 
+    
+* Bak komt te hard neer op de landingssteun waardoor flesjes beschadigd geraken.
+    * Marges verkleinen zodat 'val'afstand verkleint.
+
 * Orientatie van de bak is niet correct.
-    * Slinger bak tegen extra muur om in bepaalde positie te forceren.
+    * Voeg extra steun toe aan rechterkant om juiste oriëntatie op te leggen.
+
 * Momenteel geen rekening gehouden met wrijving op de wand voor het berekenen van de val duur. 
     * Wrijving wel in rekening nemen. 
 
