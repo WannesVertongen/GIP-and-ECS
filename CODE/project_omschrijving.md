@@ -94,13 +94,18 @@
     - De eindlengte van de kabel is dan cl = $\sqrt{x_1^2+y_1^2}$  
     - De hoek tussen de verticale en de kabel is dan $\theta_1 = bgtan(\frac{y_1}{x_m})$
 
+### 4. Mogelijke problemen
+* bak slingert te hard waardoor grote krachten op wand wat problemen kan geven. 
+    * duratie van de beweging verlengen of bewegingswet aanpassen. 
+* Bij het bewegen van de slede van positie 3 naar positie $x_m$, kan de bak verplaatsen van zijn startpositie.
+    * installeren van steun waarop bak kan rusten.
 
 ## Stap 2 : swing
 
 
 <img src="swing.svg" alt="Image failed to load" width="1000" height="600"> 
 
-### 1 -> 2
+### 1. 1 -> 2
 * De kabel lengte moet kort ingetrokken worden om de bak van de steun te krijgen en aan de swing beweging te kunnen laten starten. Een begeleidingsstaaf zal zorgen dat de bak niet omkantelt rond zijn contactpunt met de schuine steun.
 * Totale inkorting: $\Delta cl = h + marge$. Schuine steun is juist 'h' groot, maar mogelijkheid dat bak niet exact juist ligt. We kiezen daarom een marge van grootte h/4 (25%).
 * $\Delta E = mg \Delta h = mg (\Delta cl* cos(\theta_1))$
@@ -117,7 +122,7 @@
     - Inkorting gebeurt op korte tijd dus zal als een schok gebeuren. Om te zorgen dat er geen ongewenste trillingen in het systeem komen, is er gekozen voor minimale ruk.
     - De versnelling is hoog, wat zorgt voor een groot genoege kracht om de wrijving van de steun te overwinnen. Deze wrijvingskracht is niet groot aangezien de hoek $\theta_1$ groot is.
 
-### 2 -> 3
+### 2. 2 -> 3
 * $\theta_1 = \theta_2$
 * Duratie swing halve periode: $T/2 = \pi \sqrt{\frac{cl}{g}}$ 
 * Kritische belasting 
@@ -125,11 +130,22 @@
     - $a_r = v^2/cl$
     - $v = \sqrt{2g(cl-y_1)} $ 
     - $F_t = m(\frac{2g(cl-y_1)}{cl} + g) $
+
+
+### 3. Mogelijke problemen
+* Schok tijdens kabel inkorting niet snel genoeg waardoor bak al kantelt voor slingerbeweging. Dit creeërt een lokale periodische beweging dat de slingerbeweging beïnvloed.
+    * Beweging van de kabel aanpassen naar een sneller verloop indien haalbaar, of kabel inkorting laten aanhouden over grote afstand.
+    * werk met 2 kabels aan de bak.
+* Ideale eindpositie wordt niet bereikt wegens verliezen tijdens slinger beweging.
+    * Breng verliezen mee in rekening bij bepalen eindpositie.
+
+
    
 ## Stap 3: Landing
 
 <img src="landing.svg" alt="Image failed to load" width="1000" height="600">
 
+### 1. Berekening platform positie:
 * Er moet marge ingerekend worden zodat object zeker hoog genoeg komt, maar $\theta_1 = \theta_2$, dus landingswand moet lager en meer naar links.
 
 * Voor de eerste marge laten we de bak een halve breedte verder doorvliegen. Dit resulteert in een nieuwe eindhoek $\theta_3$:
@@ -152,6 +168,8 @@
     - $marge_1$ = afstand dat bak boven platvorm komt. = $\frac{h}{3}$ (arbitrair)
     - $marge_2$ = afstand dat bak nog verder dan halve hoogte verder moet zakken = $marge_1$
 
+### 2. Beweging van positie 2 -> 3:
+
 * De kabel verlenging tussen $\theta_2$ en $\theta_3$ is dan:
     - $\Delta cl = marge_1 + \frac{h}{2} + marge_2$
     - $\tau = \frac{t}{\sqrt{l/g}*cos^{-1}(\frac{\theta_3}{\theta_2})}$
@@ -164,7 +182,18 @@
 
 * Bewegingswet verantwoording:
     - De beweging gebeurt snel. Om de schok te minimaliseren wordt voor een minimale versnellingen gekozen.
+
+### 3. Beweging van positie 3 -> eind positie:
     
+### Mogelijke problemen:
+* Bak landt te hard
+    * marges verkleinen.
+* Orientatie van de bak is niet correct.
+    * Slinger bak tegen extra muur om in bepaalde positie te forceren.
+
+* Bij verlengen van kabel kan geen druk gezet worden. 
+    * Zorg dat er altijd trek is (versnelling langsheen touw mag niet groter worden dan val versnelling langsheen het touw)
 
 
+ 
 
