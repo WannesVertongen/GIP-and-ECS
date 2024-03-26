@@ -7,73 +7,59 @@
 
 
 // DOEL van de functie 
-// 1) schok voor touw in te korten op basis van
+// 1) schok voor touw in te korten op basis van Δcl=h+marge.  
+// ΔE=mgΔh=mg(Δcl∗cos(θ_1​))
+// Duratie inkorting T = $\frac{\Delta E}{P_{nom}}$
+// * Bewegingswet keuze: 
+//    - Minimum jerk
+//    - $s(\tau) = \frac{16}{3}\tau^3    (0<\tau<0.25)$
+//    - $s(\tau) = -\frac{16}{3}\tau^3 + 8\tau^2 - 2\tau + \frac{1}{6} (0.25<\tau<0.75)$
+//    - $s(\tau) = \frac{16}{3}\tau^3 - 16\tau^2 + 16\tau -\frac{13}{3} (0.75<\tau<1)$
+//    - -> $cl(t) = cl_2 + \Delta cl* s(\tau)$
+// 2 -> 3
+//* $\theta_1 = \theta_2$
+//* Duratie swing halve periode: $T/2 = \pi \sqrt{\frac{cl}{g}}$ 
 
-int swingPath(coordinates co, limit lim, pathdata *pdat) {
-    const float g = 9.81;
-    float time;
 
-    float x_t = co.x_2 - co.x_1;
+// - halve breedte marge: 
+//        - $\Delta \theta = 2 sin^{-1}(\frac{B}{4cl}) $ 
+//        - $\theta_3 = \theta_2 - \Delta \theta$
+// Tijd tussen $\theta_2$ en $\theta_3$:
+//    - $\theta(t) = \theta_0 cos(\sqrt{g/l}t)$
+//    - $t_2 = \pi \sqrt{\frac{cl}{g}}$ 
+//    - $\Delta t = \sqrt{l/g}*cos^{-1}(\frac{\theta_3}{\theta_2})$
+//    - $t_3 = t_2 + \Delta t$
+
+//* De coordinaat van de linker-onderhoek van de bak bij $\theta_3$ is dan:
+//    - $x_3 = x_M + cl*sin(\theta_3) - \frac{B}{2}*cos(\theta_3)$
+//    - $y_3 = cl*cos(\theta_3) + \frac{B}{2}*sin(\theta_3)$
+
+//* De kabel verlenging tussen $\theta_2$ en $\theta_3$ is dan:
+//    - $\Delta cl = marge_1 + \frac{h}{2} + marge_2$
+//    - $\tau = \frac{t}{\sqrt{l/g}*cos^{-1}(\frac{\theta_3}{\theta_2})}$
+
+//* Bewegingswet keuze:
+//    - Minimal acceleration (bang-bang)
+//    - $s(\tau) = 2\tau^2 (0<\tau<5)$
+//    - $s(\tau) = -2\tau^2 + 4\tau -1 (0.5<\tau<1)$
+//    - $cl = cl_2 + s(\tau)*\Delta cl (t_2<t<t_3)$
+
+// * Eindpositie:
+//    * $L_p$ = Lengte platform
+//    * $x_e = x_3 + L_p * cos(\theta_3)$
+//   * $y_e = y_3 + L_p * sin(\theta_3)$
+//* Aanpassing kabel lengte:
+//    * $\Delta cl = \sqrt{(x_e-x_3)^2 + (y_e -y3)^2}$
+
+//* Bewegingswet keuze: Bang-Bang
+//   - max acceleratie: $\frac{dS^2}{dt^2}_{max} = \frac{L}{T^2}*a_{max}$
+//    - tijd: $T = \sqrt{\frac{a_{max}*L_p}{g*sin(\theta_3)}}$ 
+//    - $t_4 = t_3 + T$
 
 
-    float cl_1_value = sqrt(pow((pdat->x_m - co.x_1), 2) + pow(co.y_1, 2));
-    float cl_2_value = sqrt(pow((pdat->x_m - co.x_2), 2) + pow(co.y_2, 2));
-    pdat->cl_1 = cl_1_value;
-    pdat->cl_2 = cl_2_value;
+//    - Minimal acceleration (bang-bang)
+//    - $s(\tau) = 2\tau^2 (0<\tau<5)$
+//    - $s(\tau) = -2\tau^2 + 4\tau -1 (0.5<\tau<1)$
+//    - $cl = cl_3 + s(\tau)*\Delta cl (t_3<t<t_4)$
 
-    float theta_1_value = -atan2(pdat->x_m, co.y_1);
-    float theta_2_value = atan2(x_t - pdat->x_m, co.y_2);
-    pdat->theta_1 = theta_1_value;
-    pdat->theta_2 = theta_2_value;
-
-    float t_swing_value = PI * (sqrt(pdat->cl_1 / g) + sqrt(pdat->cl_2 / g)) / 2;
-    pdat->t_swing = t_swing_value;
-
-    int array_size = ceil(pdat->t_swing / lim.T_s);
-
-    //Calculating positions
-    int i = 0;
-    for (time = 0; time < pdat->t_swing; time += lim.T_s) {
-        float cl = pdat->cl_1 + (pdat->cl_2 - pdat->cl_1) * (time / t_swing_value);
-        float current_angle = pdat->theta_1 * cos(sqrt(g / cl) * time);
-
-        // Assign values to arrays
-
-        //Robot
-        pdat->cable_length_over_time[i] = cl;
-        pdat->theta[i] = current_angle;
-        pdat->robot_pos_over_time[i] = pdat->x_m;
-
-        //Object
-        pdat->Object_x[i] = (pdat->robot_pos_over_time[i]) + cl * sin(pdat->theta[i]);
-        pdat->Object_y[i] = cl * cos(pdat->theta[i]);
-        i++;
-    }
-
-    //Initial velocity is zero
-    pdat->robot_speed_over_time[0] = 0;
-    pdat->cable_speed_over_time[0] = 0;
-
-    // Calculating velocities
-    for (int i = 1; i < array_size; i++) {
-        // Calculate the robot position and cable length difference between consecutive time steps
-        float position_difference = pdat->robot_pos_over_time[i] - pdat->robot_pos_over_time[i - 1];
-        float cable_difference = pdat->cable_length_over_time[i] - pdat->cable_length_over_time[i-1];
-
-        // Calculate the speed by numerical differentiation
-        float robot_speed = position_difference / lim.T_s;
-        float cable_speed = cable_difference / lim.T_s;
-
-        //Check for speed limitations
-        if(robot_speed > lim.MAX_robot_speed || cable_speed > lim.MAX_cable_speed)
-        {
-            return 1;
-        }
- 
-        // Store the calculated speeds in the speed arrays
-        pdat->robot_speed_over_time[i] = robot_speed;
-        pdat->cable_speed_over_time[i] = cable_speed;
-    }
-
-    return 0;
-}
+// nodige inputs: theta_1 h_bak, m_bak, P_nom, cl_init cl_1 = \srt(5), theta_2, T_swing, theta_3, B_bak, L_p -> x_e ,y_e, a_max
