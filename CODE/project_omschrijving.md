@@ -184,15 +184,37 @@
     - De beweging gebeurt snel. Om de schok te minimaliseren wordt voor een minimale versnellingen gekozen.
 
 ### 3. Beweging van positie 3 -> eind positie:
+ * Eindpositie:
+    * $L_p$ = Lengte platform
+    * $x_e = x_3 + L_p * cos(\theta_3)$
+    * $y_e = y_3 + L_p * sin(\theta_3)$
+* Aanpassing kabel lengte:
+    * $\Delta cl = \sqrt{(x_e-x_3)^2 + (y_e -y3)^2}$
+
+* Bewegingswet keuze: Bang-Bang
+    - max acceleratie: $\frac{dS^2}{dt^2}_{max} = \frac{L}{T^2}*a_{max}$
+    - tijd: $T = \sqrt{\frac{a_{max}*L_p}{g*sin(\theta_3)}}$ 
+    - $t_4 = t_3 + T$
+
+
+    - Minimal acceleration (bang-bang)
+    - $s(\tau) = 2\tau^2 (0<\tau<5)$
+    - $s(\tau) = -2\tau^2 + 4\tau -1 (0.5<\tau<1)$
+    - $cl = cl_3 + s(\tau)*\Delta cl (t_3<t<t_4)$
+
+* Bewegingswet verantwoording:
+    - De beweging gebeurt snel. Gekozen om laagste piek stroom in motor te creëren.
+    - Tijd is gekozen om onder de val versnelling langsheen het platform te blijven. 
+
+
     
 ### Mogelijke problemen:
 * Bak landt te hard
     * marges verkleinen.
 * Orientatie van de bak is niet correct.
     * Slinger bak tegen extra muur om in bepaalde positie te forceren.
-
-* Bij verlengen van kabel kan geen druk gezet worden. 
-    * Zorg dat er altijd trek is (versnelling langsheen touw mag niet groter worden dan val versnelling langsheen het touw)
+* Momenteel geen rekening gehouden met wrijving op de wand voor het berekenen van de val duur. 
+    * Wrijving wel in rekening nemen. 
 
 
  
