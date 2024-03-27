@@ -63,4 +63,12 @@ waarbij L = afstand van de beweging en T = duratie van de beweging. De kracht in
 
 $F(t) = \frac{M L}{T^2}(120 (\frac{t}{T})^3 - 180 (\frac{t}{T})^2 + 60 (\frac{t}{T}))$
 
+Door dit in te geven kunnen de verlopen $x(t)$ en $\theta(t)$ gevonden worden. Ook de positie van het object is dan gekend door de volgende verbanden:
 
+$x_{object}(t) = x(t) + l*sin(\theta(t))$ 
+
+$y_{object}(t) = l*cos(\theta(t))$
+
+Door deze te plotten kan er nagegaan worden hoe het object zich theoretisch gezien zal verplaatsen. De oplossing is nog afhankelijk van L en T. Als de verhouding $\frac{L}{T^2}$ constant wordt gehouden, is de vorm van de oplossing ook constant. Er kan voor 1 bepaalde afstand L gezocht worden wat de minimaal nodige tijd T is om de beweging gecontroleerd uit te voeren. Als de afstand L dan verandert, wat het geval zal zijn in de praktijk, kan eenvoudig de nieuwe duratie T van de beweging gevonden worden.
+
+## 5. Zoeken van minimale tijd T
