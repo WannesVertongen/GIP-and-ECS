@@ -96,45 +96,42 @@ plot(t,xobj)
 title('x')
 
 %% 
+
+% Plot x(t) and theta(t)
+figure;
+subplot(2,1,1);
+plot(t, x);
+xlabel('Time [s]');
+ylabel('Position x [m]');
+title('Position vs Time');
+
+subplot(2,1,2);
+plot(t, theta);
+xlabel('Time [s]');
+ylabel('\theta [rad]');
+title('Angle vs Time');
+
 % Plot F(t)
-subplot(2,2,1)
+figure;
 plot(t, F_t(t));
 xlabel('Time [s]');
 ylabel('F [N]');
 title('Force vs Time');
 
-% Plot x(t) and theta(t)
-
-subplot(2,2,2);
-plot(t, x);
-xlabel('Time [s]');
-ylabel('x-position robot [m]');
-title('Robot position vs Time');
-
-subplot(2,2,3);
-plot(t, theta);
-xlabel('Time [s]');
-ylabel('\theta cable [rad]');
-title('Cable angle vs Time');
-
-
 %Plot movement object
-subplot(2,2,4)
+figure
 plot(xobj,yobj)
 xlabel('x-axis [m]')
 ylabel('y-axis [m]')
 title('Object movement')
-ylim([2.04,2.08])
-
+axis equal
 
 figure
 plot(t,xobj)
 xlabel('time [s]')
-ylabel('x displacement [m]]')
-title('Object displacement in x')
+ylabel('y-axis [m]')
+title('Object x displa')
 
 figure
 plot(t,yobj)
-xlabel('time [s]')
-ylabel('y displacement [m]]')
-title('Object displacement in y')
+title('y')

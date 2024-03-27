@@ -3,3 +3,5 @@ max_x = [0.356;0.277;0.1944;0.1199;0.0624;0.0202;0.0045;0.017;0.0199;0.0153;0.00
 
 figure
 plot(tijd, max_x)
+xlabel('Tijd [s]')
+ylabel('Maximum oscilation amplitude of x [m]')

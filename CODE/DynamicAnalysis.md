@@ -72,3 +72,12 @@ $y_{object}(t) = l*cos(\theta(t))$
 Door deze te plotten kan er nagegaan worden hoe het object zich theoretisch gezien zal verplaatsen. De oplossing is nog afhankelijk van L en T. Als de verhouding $\frac{L}{T^2}$ constant wordt gehouden, is de vorm van de oplossing ook constant. Er kan voor 1 bepaalde afstand L gezocht worden wat de minimaal nodige tijd T is om de beweging gecontroleerd uit te voeren. Als de afstand L dan verandert, wat het geval zal zijn in de praktijk, kan eenvoudig de nieuwe duratie T van de beweging gevonden worden.
 
 ## 5. Zoeken van minimale tijd T
+Voor een gekozen afstand $L = 0.5m$ wordt de oplossing gezochht voor verschillende tijden T. Als criterium van een 'gecontroleerd' beweging wordt gekeken naar de maximale horizontale oscillatie van het object nadat de slede tot stilstand is gekomen. Dit werd gedaan voor $T = [2:0.5:10]$. Het resultaat is hieronder te zien:
+
+<img src="max_amp_x.svg" alt="Image failed to load" width="600" height="400">
+
+Hieruit blijkt dat voor $T=5s$ de maximale oscillatie amplitude slechts 0.0045m betreft. Dit is volgens ons klein genoeg. Als uit het experiment blijkt dat dit nog te groot is, kan voor een $T=7.5s$ of $T=10s$ gekozen worden die nog kleinere amplitudes vertonen. Voor $T=5s$ is de verhouding $\frac{L}{T^2} = 0.02$. De resultaten van de simulatie met $L=0.5m$ en $T=5s$ zijn hieronder te zien:
+
+<img src="results_analysis.svg" alt="Image failed to load" width="750" height="500">
+
+De kracht is eerst gegeven door de formule zoals hierboven beschreven. Vervolgens valt de kracht weg en staat de slede stil. Zo kan er gekeken worden naar de oscilaties na de beweging. De slede volgt de gewenste bewegingswet. De hoek $\theta$ blijft zeer beperkt. Het object verplaatst zich op een zo goed als rechte lijn. 
