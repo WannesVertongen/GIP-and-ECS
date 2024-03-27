@@ -55,7 +55,7 @@
 
 ### 2. Verplaatsing in x
 * Theoretisch gezien: geen vermogenverbruik want kracht staat loodrecht op verplaatsing. Vereenvoudiging geldig als beweging gebeurt zonder schommelen van de massa.
-* Tijd T = 5s (zelf gekozen, moet traag genoeg gebeuren)
+* Tijd T = 5s (minimale tijd voor kleine swing)
 * Afstand $\Delta x_{tot} = \Delta x_{1->2} + \Delta x_{kantel}$
 
 * Bewegingswet keuze:
@@ -77,7 +77,7 @@
 * Robot wordt exact in het midden tussen start en eind geplaatst zodat er zich een eenvoudige pendulum beweging voordoet.
 * Tijdens het verplaatsen van de robot naar $x_m$ moet de kabel zich zo verlengen dat het object op zijn huidige positie blijft liggen.
 * Verplaatsing robot $\Delta x_{robot}$ = 0.5m.
-* Tijd verplaatsing = 5s (gekozen voor het experiment)
+* Tijd verplaatsing = 5s (minimale tijd voor kleine swing)
 
 * Bewegingswet robot keuze:
     - Minimal rms acceleration (3rd degree polynomial)
