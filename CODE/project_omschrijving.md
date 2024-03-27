@@ -100,6 +100,16 @@
 * Bij het bewegen van de slede van positie 3 naar positie $x_m$, kan de bak verplaatsen van zijn startpositie.
     * Installeren van extra steun loodrecht op de schuine wand waarop bak kan rusten.
 
+### 5. Rust platform:
+<img src="opzetstuk.svg" alt="Image failed to load" width="500" height="300"> 
+
+* sinusregel om a (=lengte platform) te berekenen:
+    * $R = \frac{\sqrt{B^2+h^2}}{2}$
+    * $\phi = tan^{-1}(\frac{h}{B})$
+    * $\frac{a}{sin(\theta_1 -\phi)} = \frac{\sqrt{B^2+h^2}}{2*sin(180 - \theta_1)}$
+    * $a = \frac{\sqrt{B^2+h^2}*sin(\theta_1 -\phi)}{2*sin(180 - \theta_1)}$
+
+
 ## Stap 2 : swing
 
 
