@@ -1,0 +1,83 @@
+clear all
+close all
+
+% Define constants
+m = 30;             % Robot mass
+M = 5;              % Object mass
+l = 2.06;           % Cable length
+g = 9.81;           % Gravitational acceleration
+omega = sqrt(g/l);  % Natural frequency
+T = 2*pi/omega;     % Swing period
+t_swing = T/2;      % Swing time
+h = 0.24;           % Crate height
+B = 0.3;            % Crate width
+d = 0.4;            % Crate depth
+
+
+R = sqrt(B^2/4 + h^2);
+alpha = atan2(B,2*h);
+
+% Initial conditions
+initial_x = 0;          % Initial position
+initial_vx = 0;         % Initial velocity in the x-direction
+initial_theta = 0;      % Initial angle
+initial_vtheta = 0;     % Initial angular velocity
+y0 = [initial_x; initial_vx; initial_theta; initial_vtheta];
+
+% Horizontal movement of robot
+time = 8.5;           % Adjustable
+L12 = 0.5;          % Adjustable
+theta1 = -atan2(2,L12);
+Lkantel = B/2 + R*cos(alpha+abs(theta1));
+Ltot = L12 + Lkantel;
+
+
+
+
+% Define time-varying force function
+F_t = @(t) (t <= time) .* (m * Ltot / time^2 .* (120*(t/time).^3 - 180*(t/time).^2 + 60*(t/time)));
+
+% Define functions f and g
+f = @(x, theta, vx, vtheta, t) (F_t(t) + M * l * vtheta^2 * sin(theta) + M * g * sin(theta) * cos(theta)) / (M + m - M * cos(theta)^2);
+g = @(x, theta, vx, vtheta, t) ((F_t(t) + M * l * vtheta^2 * sin(theta)) * -cos(theta) - (m + M) * g * sin(theta)) / (l * (M + m - M * cos(theta)^2));
+
+% Define system of equations
+dxdt = @(t, y) [y(2); f(y(1), y(3), y(2), y(4), t)];
+dthetadt = @(t, y) [y(4); g(y(1), y(3), y(2), y(4), t)];
+
+% Solve system of equations
+t_start = 0;
+t_end = time + 10;   % End time
+[t, y] = ode45(@(t,y) [dxdt(t,y); dthetadt(t,y)], [t_start, t_end], y0);
+
+% Extract results
+x = y(:,1);
+theta = y(:,3);
+
+% Object position
+xobj = x + l*sin(theta);
+yobj = l*cos(theta);
+
+last_10_percent_time = t_end - 0.5 * (t_end - t_start);
+last_10_percent_indices = t >= last_10_percent_time;
+xobj_last_10_percent = xobj(last_10_percent_indices);
+average_xobj_last_10_percent = mean(xobj_last_10_percent);
+
+
+disp_value = abs(max(xobj));
+
+difference = abs(disp_value-average_xobj_last_10_percent);
+
+disp(['Maximum x value: ', num2str(disp_value)])
+disp(['Average last 50% of the time: ', num2str(average_xobj_last_10_percent)])
+disp(['This is the difference:', num2str(difference)])
+
+
+figure
+subplot(2,1,1)
+plot(t,xobj)
+title('x')
+
+subplot(2,1,2)
+plot(t,x)
+
