@@ -30,7 +30,10 @@ y0 = [initial_x; initial_vx; initial_theta; initial_vtheta];
 time = 5; %adjustable
 L12 = 0.5; %adjustable
 Lkantel = B/2 + R*cos(alpha+abs(theta1));
-Ltot = L12+Lkantel;
+Ltot = (L12+Lkantel);
+
+% Verhouding waarde 
+ratio = Ltot/time
 
 
 %%
@@ -47,7 +50,9 @@ Ltot = L12+Lkantel;
 %d^2S/dt^2 = (Ltot/time^2)*s''(t/time)
 
 %F_t = @(t) m*Ltot/(time^2) *(120*(t/time).^3 - 180*(t/time).^2 + 60*(t/time));
-F_t = @(t) piecewise(t)
+
+%Force= piecewise function
+F_t = @(t) (t <= time) .* (m*Ltot./(time^2) .* (120*(t/time).^3 - 180*(t/time).^2 + 60*(t/time)));
 %% 
 
 % Define your functions f and g
@@ -61,7 +66,7 @@ dthetadt = @(t, y) [y(4); g(y(1), y(3), y(2), y(4), t)];
 
 % Solve the system of equations
 t_start = 0;
-t_end = time; % Example end time
+t_end = time+5; % Example end time
 [t, y] = ode45(@(t,y) [dxdt(t,y); dthetadt(t,y)], [t_start, t_end], y0);
 
 % Extract results

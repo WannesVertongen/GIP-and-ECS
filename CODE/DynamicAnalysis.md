@@ -49,4 +49,18 @@ $\dot x_3  = \frac{F + Ml(x_4)^2 sin(x_2) + Mg sin(x_2)cos(x_2)}{M+m-M(cos(x_2))
 $\dot x_4 = \frac{-((F + Ml(x_4)^2 sin(x_2))cos(x_2) + (m+M)g sin(x_2))}{l(M+m-M(cos(x_2))^2)}$
 
 ## 4. Vergelijkingen oplossen
-Deze vergelijkingen kunnen opgelost worden naar $x(t)$ en $\theta(t)$ als de kracht op het systeem gekend is met behulp van Matlab. Deze vergelijkingen kunnen door ons gebruikt worden op de momenten wanneer de kabel een constante lengte heeft in ons ontwerp, met name tijdens de eerste stap van de initialisatie en tijdens de swing beweging wanneer de slede stilstaat op een vaste positie.
+Deze vergelijkingen kunnen opgelost worden naar $x(t)$ en $\theta(t)$ als de kracht op het systeem gekend is met behulp van Matlab. Deze vergelijkingen kunnen door ons gebruikt worden om de horizontale verplaatsing tijdens de initialisatie te simuleren. Hieruit kan gevonden worden hoe snel de beweging uitgevoerd kan worden zonder te grote oscillaties op te wekken.
+
+De bewegingswet voor deze horizontale verplaatsing van de slede wordt gegeven door:
+
+$s(\tau) = 6\tau^5 -15\tau^4 +10\tau^3$
+
+De kracht moet als input meegegeven worden. Dit wordt gedaan door de versnelling te vinden uit de bewegingswet om vervolgens $F(t) = M*a(t)$ te gebruiken. De versnelling van de beweging wordt gegeven door:
+
+$\frac{dS^2}{dt^2} = \frac{L}{T^2} \frac{ds^2}{d \tau ^2}$ met $\tau = \frac{t}{T}$
+
+waarbij L = afstand van de beweging en T = duratie van de beweging. De kracht in verloop van de tijd wordt dan gegeven door:
+
+$F(t) = \frac{M L}{T^2}(120 (\frac{t}{T})^3 - 180 (\frac{t}{T})^2 + 60 (\frac{t}{T}))$
+
+

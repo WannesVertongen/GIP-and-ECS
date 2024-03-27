@@ -27,11 +27,18 @@ initial_vtheta = 0; % initial angular velocity
 y0 = [initial_x; initial_vx; initial_theta; initial_vtheta];
 
 % Horizontal movement of robot
-time = 5; %adjustable
-L12 = 0.5; %adjustable
+time = 2*5; %adjustable
+L12 = 4*0.5; %adjustable
 Lkantel = B/2 + R*cos(alpha+abs(theta1));
-Ltot = L12+Lkantel;
+Ltot = (L12+Lkantel);
 
+% Verhouding waarde 
+
+%kweet niet welke ratio gelijk moet blijven, want vooraan in de formule vd
+%kracht staat wel Ltot/time^2 ma idk
+
+%ratio = Ltot/(time)^2
+%ratio = Ltot/time
 
 %%
 
@@ -47,6 +54,8 @@ Ltot = L12+Lkantel;
 %d^2S/dt^2 = (Ltot/time^2)*s''(t/time)
 
 %F_t = @(t) m*Ltot/(time^2) *(120*(t/time).^3 - 180*(t/time).^2 + 60*(t/time));
+
+%Force= piecewise function
 F_t = @(t) (t <= time) .* (m*Ltot./(time^2) .* (120*(t/time).^3 - 180*(t/time).^2 + 60*(t/time)));
 %% 
 
