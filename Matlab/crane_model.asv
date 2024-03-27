@@ -11,8 +11,7 @@ t_swing = T/2;
 % Initial conditions
 initial_x = 0; % initial position
 initial_vx = 0; % initial velocity in the x-direction
-%initial_theta = -1.32; % initial angle
-initial_theta = 0;
+initial_theta = -1.32; % initial angle
 initial_vtheta = 0; % initial angular velocity
 y0 = [initial_x; initial_vx; initial_theta; initial_vtheta];
 
@@ -22,8 +21,7 @@ ar_t = @(t) l*initial_theta^2*omega^2*sin(omega * t)^2;
 % Define your time-varying force function
 %F_t = @(t) 2 * t + 0.5*sin(10 * t); % Example of a sinusoidal force with an amplitude of 100
 %F_t = @(t) 0;
-F_t = @(t) 10;
-
+F_t = @(t) ar_t*sin(theta_t) + M*
 % Define your functions f and g
 f = @(x, theta, vx, vtheta, t) (F_t(t) + M * l * vtheta^2 * sin(theta) + M * g * sin(theta) * cos(theta)) / (M + m - M * cos(theta)^2);
 g = @(x, theta, vx, vtheta, t) ((F_t(t) + M * l * vtheta^2 * sin(theta)) * -cos(theta) - (m + M) * g * sin(theta)) / (l * (M + m - M * cos(theta)^2));
@@ -44,7 +42,7 @@ theta = y(:,3);
 
 %Object position
 xobj = x + l*sin(theta);
-yobj = l*cos(theta);
+yobj = -l*cos(theta);
 
 % Plot x(t) and theta(t)
 figure;
