@@ -45,7 +45,7 @@
 
 ### 2. Verplaatsing in x
 
-* Tijd T = 5s (zelf gekozen, moet traag genoeg gebeuren)
+* Tijd T = 5s (zie dynamische analyse)
 * Afstand $\Delta x_{tot} = \Delta x_{1->2} + \Delta x_{kantel}$
 
 * Bewegingswet keuze:
@@ -58,8 +58,8 @@
 
 
 ### 3. Robot naar Xm = $\frac{x2-x1}{2}$
-* Verplaatsing robot $\Delta x_{robot}$ = 0.5m.
-* Tijd verplaatsing = 5s = (zie dynamische analyse)
+* Verplaatsing robot $\Delta x_{robot}$ = 0.5m. (zie opstelling)
+* Tijd verplaatsing: zo snel mogelijk
 
 * Bewegingswet robot keuze:
     - Minimal rms acceleration (3rd degree polynomial)
