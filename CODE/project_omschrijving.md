@@ -184,6 +184,9 @@ De bak kan op dit platform steunen wanneer de slede horizontaal beweegt naar pos
     - $\Delta cl = marge_1 + \frac{h}{2} + marge_2$
     - $\tau = \frac{t}{\sqrt{l/g}*cos^{-1}(\frac{\theta_3}{\theta_2})}$
 
+* Kijk of maximale versnelling val versnelling niet overschrijdt.
+    - max acceleratie: $\frac{dS^2}{dt^2}_{max} = \frac{L}{T^2}*a_{max}$   < g 
+    - $a_{max} = 4 (tabel)
 * Bewegingswet keuze:
     - Minimal acceleration (bang-bang)
     - $s(\tau) = 2\tau^2 (0<\tau<5)$
@@ -203,6 +206,7 @@ De bak kan op dit platform steunen wanneer de slede horizontaal beweegt naar pos
 
 * Bewegingswet keuze: Bang-Bang
     - max acceleratie: $\frac{dS^2}{dt^2}_{max} = \frac{L}{T^2}*a_{max}$
+    - $a_{max} = 4$ (tabel)
     - tijd: $T = \sqrt{\frac{a_{max}*L_p}{g*sin(\theta_3)}}$ 
     - $t_4 = t_3 + T$
 
@@ -219,9 +223,7 @@ De bak kan op dit platform steunen wanneer de slede horizontaal beweegt naar pos
 
     
 ### Mogelijke problemen:
-* Duratie van beweging 2->3 te kort waardoor de kabel mogelijk niet meer gespannen is.
-    * Pas posities ($x_3$,$y_3$) aan zodat er genoeg tijd is om deze beweging uit te voeren met gespannen kabel. 
-    
+
 * Bak komt te hard neer op de landingssteun waardoor flesjes beschadigd geraken.
     * Marges verkleinen zodat 'val'afstand verkleint.
 
