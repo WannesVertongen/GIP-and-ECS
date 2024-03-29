@@ -59,7 +59,7 @@
 
 ### 3. Robot naar Xm = $\frac{x2-x1}{2}$
 * Verplaatsing robot $\Delta x_{robot}$ = 0.5m. (zie opstelling)
-* Tijd verplaatsing: zo snel mogelijk
+* Tijd verplaatsing: $ T = \frac{\int{m*v^2}}{2 * P_{nom}}$
 
 * Bewegingswet robot keuze:
     - Minimal rms acceleration (3rd degree polynomial)
@@ -92,8 +92,8 @@
 <img src="swing.svg" alt="Image failed to load" width="1000" height="600"> 
 
 ### 1. 1 -> 2
-* Totale inkorting: $\Delta cl = h + marge$.
-* $\Delta E = mg \Delta h = mg (\Delta cl* cos(\theta_1))$
+* Totale inkorting: $\Delta cl = \frac{h}{2} + marge$.
+* $\Delta E = mg \Delta h = mg (\Delta cl* sin(\theta_1))$
 * Duratie inkorting T = $\frac{\Delta E}{P_{nom}}$
 
 * Bewegingswet keuze: 
@@ -167,7 +167,7 @@
     * $x_e = x_3 + L_p * cos(\theta_3)$
     * $y_e = y_3 + L_p * sin(\theta_3)$
 * Aanpassing kabel lengte:
-    * $\Delta cl = \sqrt{(x_e-x_3)^2 + (y_e -y3)^2}$
+    * $\Delta cl = \sqrt{(x_e-x_3)^2 + (y_e -y_3)^2}$
 
 * Bewegingswet keuze: Bang-Bang
     - max acceleratie: $\frac{dS^2}{dt^2}_{max} = \frac{L}{T^2}*a_{max}$
