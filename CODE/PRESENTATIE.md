@@ -1,4 +1,4 @@
-## Proef opstelling  
+## Proefopstelling  
 
 <img src="proefopstelling.svg" alt="Image failed to load" width="750" height="500">
 
@@ -6,7 +6,7 @@
 * Gelijke hoogte begin en eind
 * $\Delta x$ = 1m,  $\Delta y$ = 2m  -> kleine hoeken swing 
 
-### Toleranties:
+
 
 ## Stap 1: initialisatie
 
