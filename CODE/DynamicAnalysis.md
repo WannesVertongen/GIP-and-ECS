@@ -1,8 +1,6 @@
 # DYNAMISCHE ANALYSE
 ## 1.Opstelling
-VOEG HIER TEKENING TOE VAN OPSTELLING!!
-+ beschrijven vd verschillende variabelen (m,M,L,...)
-+ zeg kabel lengte constant id analyse anders enkel numeriek oplosbaar
+<img src="dynamicfigure.jpg" alt="Image failed to load" width="1000" height="600">
 
 ## 2. Langrangiaan opstellen
 De Langrangiaan L van het systeem wordt gegeven door L = T - V, waarbij T = de kinetische energie en V = de potentiële energie van het systeem. 
