@@ -42,8 +42,41 @@ Swing wint tijd want geen snelheidslimiet op horizontale verplaatsing. Maar wel 
 #### 4. Servo in start wand
 * Zie papier Pieter: verschillende opties
 
+* Begeleidende staaf (rollement)
+
+<img src="staafke.png" alt="Image failed to load" width="400" height="500">
+
+
 #### 5. Bakken schuin in eindpositie
-* Simpel op te lossen door zelfde soort paal te gebruiken als bij start: bovenaan een schuin stuk, gevolgd door een verticaal stuk. Touw zal ervoor zorgen dat de bak tegen de wand aan wordt geduwd bij het verticaal naar beneden schuiven.
+* Simpel op te lossen door zelfde soort paal te gebruiken als bij start zonder steun platform: bovenaan een schuin stuk, gevolgd door een verticaal stuk. Touw zal ervoor zorgen dat de bak tegen de wand aan wordt geduwd bij het verticaal naar beneden schuiven.
 
 * Loopband toevoegen: orientatie bak in eindpositie niet meer zo strict. Wel alle bakken zelfde hoogte --> daarna moeten deze nog gestapeld worden (afhankelijk van de toepassing)
+
+#### 6. Gripper
+* Spring clips
+* Carabiners
+* Spreader beams
+* Magnet
+
+* hook system with spring. Automatic attachement and release
+
+<img src="spring_hook.png" alt="Image failed to load" width="400" height="500">
+<img src="spring_hook_sys.png" alt="Image failed to load" width="400" height="500">
+
+* hook updated so that it can clamp from the inside of the box only
+
+<img src="spring_hook-inside.png" alt="Image failed to load" width="400" height="500">
+
+* Hook system without springs. Now in need for motion in y:
+
+<img src="hook_sys.png" alt="Image failed to load" width="400" height="500">
+
+* System based on carabiners with servo lock instead of spring that clamp from inside of the crate
+
+<img src="servo_click.png" alt="Image failed to load" width="400" height="500">
+
+* System that is driven by 1 servo where the load is taken by the hooks and not the servo's
+
+<img src="servo_hanger.png" alt="Image failed to load" width="400" height="500">
+
 
