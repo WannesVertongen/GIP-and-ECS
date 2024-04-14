@@ -35,7 +35,7 @@ Lkantel = B/2 + R*cos(alpha+abs(theta1));
 Ltot = (L12+Lkantel);
 
 % Verhouding waarde 
-ratio = Ltot/(time)^2
+ratio = Ltot/(time)^2;
 
 
 
@@ -137,10 +137,19 @@ figure
 plot(t,yobj)
 xlabel('time [s]')
 ylabel('y displacement [m]]')
-title('Object displacement in y')
+title('Object displacement in y');
 
 %% Transfer function
-sys = tf([-1 0 0], [l 0 g]);
+clc
+g = 9.81;
+%sys = tf([-1 0 0], [l 0 g]);  % Define transfer function with correct arguments
+sys = tf([2.22 0 0], [1 1.25*0.0001003302 21.8]); 
+
+
+%den = [1 19.84 113.6 523.8 2267];
+%num = [0 2.388 44.94 334.2 147.7];
+%sys = tf(num, den)
+
 % figure
 % step(sys)
 % xlim([0,10])
@@ -155,37 +164,50 @@ sys = tf([-1 0 0], [l 0 g]);
 x = 0:0.1:5; %m
 time = 0:0.01:10; %s
 
-
-for i = 1:4
+iterations = 4;
+indicators = zeros(iterations,2)';
+for i = 1:iterations
     % snelheid robot = v
     v = i; %m/s
+    indicators(1,i) =v;
 
     % t = x/v: tijd vd beweging vd robot
     t = x(end)/v; %s
-   
+    
+    
     ramp = v*time(1:ceil(t/0.01)); 
 
     input = zeros(length(time),1); 
+    
     %ramp
     input(1:ceil(t/0.01)) = ramp;
     %constant position at x=5m
     input(ceil(t/0.01):end) = 5;
+    
  
     [theta,time] = lsim(sys, input, time); 
     
     x_obj = input + l*sin(theta);
     y_obj = l*(1-cos(theta));
-
+    
+    
+    indicators(2,i) = 2*max(y_obj*2*g/(v^2));
+    
 
     figure
     subplot(2,1,1)
     plot(time,theta)
+    hold on
+    xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
     title('Ramp response v=', i)
 
     subplot(2,1,2)
     plot(x_obj,y_obj)
+    hold on
+    xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
     title('Object position')
 end
+disp(indicators)
 
 %% 
 
