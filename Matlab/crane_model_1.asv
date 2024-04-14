@@ -173,17 +173,15 @@ for i = 1:4
  
     [theta,time] = lsim(sys, input, time); 
     
-    x_obj = input + l*sin(theta);
-    y_obj = l*(1-cos(theta));
+    x = input + l*sin(theta);
+    y = l(1-cos(theta));
 
 
     figure
-    subplot(2,1,1)
-    plot(time,theta)
+    subplot(2,1,1,time,theta)
     title('Ramp response v=', i)
 
-    subplot(2,1,2)
-    plot(x_obj,y_obj)
+    subplot(2,1,2, x,y)
     title('Object position')
 end
 
