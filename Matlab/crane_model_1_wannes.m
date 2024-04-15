@@ -142,72 +142,51 @@ title('Object displacement in y');
 %% Transfer function
 clc
 g = 9.81;
-%sys = tf([-1 0 0], [l 0 g]);  % Define transfer function with correct arguments
-sys = tf([2.22 0 0], [1 1.25*0.0001003302 21.8]); 
+l = 1; % assuming l is defined somewhere
 
+sys = tf([-1 0 0], [l 0 g]);  % Define transfer function with correct arguments
 
-%den = [1 19.84 113.6 523.8 2267];
-%num = [0 2.388 44.94 334.2 147.7];
-%sys = tf(num, den)
+x = 0:0.01:0.5; % m
+time = 0:0.01:10; % s
 
-% figure
-% step(sys)
-% xlim([0,10])
-% 
-% figure 
-% impulse(sys)
-% xlim([0,10])
+iterations = 5;
+indicators = zeros(2, iterations);
 
-% af te leggen horizontale afstand = x. Nog te bepalen wat die exact moet
-% zijn, afhankelijk van hoe groot de hoek theta is!
-
-x = 0:0.1:5; %m
-time = 0:0.01:10; %s
-
-iterations = 4;
-indicators = zeros(iterations,2)';
+v = linspace(0.1, 0.3, iterations);
 for i = 1:iterations
-    % snelheid robot = v
-    v = i; %m/s
-    indicators(1,i) =v;
+    V = v(i); % m/s
+    indicators(1, i) = V;
 
-    % t = x/v: tijd vd beweging vd robot
-    t = x(end)/v; %s
+    t = x(end) / V; % s
+    ramp_length = ceil(t / 0.01);
+    ramp = V * time(1:ramp_length);
     
-    
-    ramp = v*time(1:ceil(t/0.01)); 
+    input = zeros(length(time), 1);
+    input(1:ramp_length) = ramp;
+    input(ramp_length:end) = 5;
 
-    input = zeros(length(time),1); 
-    
-    %ramp
-    input(1:ceil(t/0.01)) = ramp;
-    %constant position at x=5m
-    input(ceil(t/0.01):end) = 5;
-    
- 
-    [theta,time] = lsim(sys, input, time); 
-    
-    x_obj = input + l*sin(theta);
-    y_obj = l*(1-cos(theta));
-    
-    
-    indicators(2,i) = 2*max(y_obj*2*g/(v^2));
-    
+    [theta, ~] = lsim(sys, input, time);
+
+    x_obj = input + l * sin(theta);
+    y_obj = l * (1 - cos(theta));
+
+    indicators(2, i) = 2 * max(y_obj * 2 * g / (V ^ 2));
 
     figure
-    subplot(2,1,1)
-    plot(time,theta)
+    subplot(2, 1, 1)
+    plot(time, theta)
     hold on
-    xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
-    title('Ramp response v=', i)
+    xline(t, 'Color', 'r', 'LineStyle', '--');
+    yline(pi / 4, 'Color', 'b', 'LineStyle', '--');
+    title(['Ramp response v = ', num2str(i)])
 
-    subplot(2,1,2)
-    plot(x_obj,y_obj)
+    subplot(2, 1, 2)
+    plot(x_obj, y_obj)
     hold on
     xline(x(end), 'Color', 'r', 'LineStyle', '--');
+    yline(l * (1 - cos(pi / 4)), 'Color', 'b', 'LineStyle', '--');
     title('Object position')
 end
 disp(indicators)
 
-%% 
 
