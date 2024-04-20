@@ -22,10 +22,11 @@ time = 0:0.01:10; %s
 % Choose desired input: 
 
 % 1 = ramp input constant speed
-% 2 = bang-bang motion law
-% 3 = minimal rms
+% 2 = bang-bang motion law (1e orde continu)
+% 3 = minimal rms (2e orde continu)
+% 4 = 7de graads polynoom (4e orde continu)
 
-input_type = 1;
+input_type = 3;
 
 
 % Loop for different velocities
@@ -127,11 +128,13 @@ for i = 1:iterations
         subplot(3,1,1)
         plot(time, input)
         xlabel('Time [s]')
-        ylabel('')
+        ylabel('Distance [m]')
         title('Robot position for v=', i)
 
         subplot(3,1,2)
         plot(time,theta)
+        xlabel('Time [s]')
+        ylabel('Angle [rad]')
         hold on
         xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
         yline(pi/4, 'Color', 'g', 'LineStyle', '--');
@@ -139,6 +142,8 @@ for i = 1:iterations
         
         subplot(3,1,3)
         plot(x_obj,y_obj)
+        xlabel('x-distance [m]')
+        ylabel('y-distance [m]')
         hold on
         xline(x(end), 'Color', 'r', 'LineStyle', '--');
         title('Object position')
@@ -152,18 +157,23 @@ for i = 1:iterations
         figure
         subplot(3,1,1)
         plot(time, input)
-        title('Robot position for T=',T)
+        xlabel('Time [s]')
+        ylabel('Distance [m]')
+        title('Robot position for T=', T)
 
-       
         subplot(3,1,2)
         plot(time,theta)
+        xlabel('Time [s]')
+        ylabel('Angle [rad]')
         hold on
-        xline(T, 'Color', 'r', 'LineStyle', '--');
+        xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
         yline(pi/4, 'Color', 'g', 'LineStyle', '--');
-        title('Theta response for T=', T)
+        title('Theta for T=', T)
         
         subplot(3,1,3)
         plot(x_obj,y_obj)
+        xlabel('x-distance [m]')
+        ylabel('y-distance [m]')
         hold on
         xline(x(end), 'Color', 'r', 'LineStyle', '--');
         title('Object position')
@@ -173,17 +183,23 @@ for i = 1:iterations
         figure
         subplot(3,1,1)
         plot(time, input)
+        xlabel('Time [s]')
+        ylabel('Distance [m]')
         title('Robot position for T=', T)
-        
+
         subplot(3,1,2)
         plot(time,theta)
+        xlabel('Time [s]')
+        ylabel('Angle [rad]')
         hold on
-        xline(T, 'Color', 'r', 'LineStyle', '--');
+        xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
         yline(pi/4, 'Color', 'g', 'LineStyle', '--');
-        title('Theta response for T=', T)
+        title('Theta for T=', T)
         
         subplot(3,1,3)
         plot(x_obj,y_obj)
+        xlabel('x-distance [m]')
+        ylabel('y-distance [m]')
         hold on
         xline(x(end), 'Color', 'r', 'LineStyle', '--');
         title('Object position')

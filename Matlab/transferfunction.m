@@ -22,10 +22,12 @@ time = 0:0.01:10; %s
 % Choose desired input: 
 
 % 1 = ramp input constant speed
-% 2 = bang-bang motion law
-% 3 = minimal rms
+% 2 = bang-bang motion law (1e orde continu)
+% 3 = minimal rms (2e orde continu)
+% 4 = 7de graads polynoom (4e orde continu, heel smooth dus eig hoop ik dat
+% dit minder goed werkt)
 
-input_type = 1;
+input_type = 4;
 
 
 % Loop for different velocities
@@ -80,6 +82,22 @@ for i = 1:iterations
         tau = time(1:ceil(T/0.01))/T;
         % minimal rms
         S = dx_robot*(3*tau.^2 - 2*tau.^3);
+
+        
+        %motion law input
+        input(1:ceil(T/(0.01))) = S;
+        
+        %constant position at end
+        input(ceil(T/0.01):end) = dx_robot;
+    end
+
+    if input_type == 4
+
+        % Duratie beweging zelf te kiezen. Neem zelfde tijden als ramp
+        T = dx_robot/i;
+        tau = time(1:ceil(T/0.01))/T;
+        % 7th degree polynomial
+        S = dx_robot*(-20*tau.^7+70*tau.^6-84*tau.^5+35*tau.^4);
 
         
         %motion law input
@@ -179,6 +197,32 @@ for i = 1:iterations
     end
 
     if input_type == 3
+        figure
+        subplot(3,1,1)
+        plot(time, input)
+        xlabel('Time [s]')
+        ylabel('Distance [m]')
+        title('Robot position for T=', T)
+
+        subplot(3,1,2)
+        plot(time,theta)
+        xlabel('Time [s]')
+        ylabel('Angle [rad]')
+        hold on
+        xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
+        yline(pi/4, 'Color', 'g', 'LineStyle', '--');
+        title('Theta for T=', T)
+        
+        subplot(3,1,3)
+        plot(x_obj,y_obj)
+        xlabel('x-distance [m]')
+        ylabel('y-distance [m]')
+        hold on
+        xline(x(end), 'Color', 'r', 'LineStyle', '--');
+        title('Object position')
+    end
+
+    if input_type == 4
         figure
         subplot(3,1,1)
         plot(time, input)
