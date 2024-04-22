@@ -159,3 +159,4 @@ nieuwe waarden
 <img src="trade_off.png" alt="Image failed to load" width="500" height="375">
 
 - the ideal angle is 57.3°
+
