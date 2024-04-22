@@ -54,7 +54,7 @@ nieuwe waarden
  - $\Delta h =1.05m$
  - $v_{eind} = 4.54 m/s$
   
-### Optimalization using matlab.
+## Optimalization using matlab.
 
 #### Setting up variables:
 - `theta_max`: An array of angles ranging from 0 to 90 degrees
@@ -82,22 +82,29 @@ nieuwe waarden
   $
   - This formula calculates the change in y-coordinate $(\Delta y)$ based on the lift coefficient $(cl)$ and the angle of the platform $(theta_{\text{platform}})$.
 
-#### Plotting Delta y:
+#### Plotting Delta y which is the height loss:
 - This plots the calculated `dy` against `theta_max`.
 
 <img src="dy.png" alt="Image failed to load" width="500" height="375">
 
-#### Calculating y_eind:
+#### Calculating y_end:
 - Formula:
   $
   y_{\text{eind}} = cl - \cos(\theta_{\text{max}}) - \Delta y
   $
   - This formula calculates the final y-coordinate $y_{\text{eind}}$ based on the lift coefficient $cl$, the maximum angle of the platform $\theta_{\text{max}}$, and the change in y-coordinate $\Delta y$.
 
-#### Plotting y_eind:
-- This plots the calculated `y_eind` against `theta_max`, highlighting the maximum point.
+#### Plotting y_end:
+- This plots the calculated `y_end` against `theta_max`, highlighting the maximum point.
 
 <img src="hoogte_verschil.png" alt="Image failed to load" width="500" height="375">
 
-#### Printing the maximum angle:
-- This prints the angle (\(\theta_{\text{max}}\)) corresponding to the maximum `y_eind`.
+####  the maximum angle:
+- The maximum is at angle $90°$
+
+#### optimal angle:
+- to find the optimal angle, we must do a trade off between tot height gain and height loss. So we will make a variable called `trade_off`that shows the ratio between height loss and height gain. The value of this should be as low as possible. 
+
+<img src="trade_off.png" alt="Image failed to load" width="500" height="375">
+
+- the ideal angle is 57.3°
