@@ -73,6 +73,8 @@ nieuwe waarden
 #### Plotting theta_platform:
 - This plots the calculated `theta_platform` against `theta_max`.
 
+<img src="theta_platform.png" alt="Image failed to load" width="500" height="375">
+
 #### Calculating Delta y:
 - Formula:
   $
@@ -83,6 +85,8 @@ nieuwe waarden
 #### Plotting Delta y:
 - This plots the calculated `dy` against `theta_max`.
 
+<img src="dy.png" alt="Image failed to load" width="500" height="375">
+
 #### Calculating y_eind:
 - Formula:
   $
@@ -92,6 +96,8 @@ nieuwe waarden
 
 #### Plotting y_eind:
 - This plots the calculated `y_eind` against `theta_max`, highlighting the maximum point.
+
+<img src="hoogte_verschil.png" alt="Image failed to load" width="500" height="375">
 
 #### Printing the maximum angle:
 - This prints the angle (\(\theta_{\text{max}}\)) corresponding to the maximum `y_eind`.
