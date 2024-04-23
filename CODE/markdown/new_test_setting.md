@@ -34,7 +34,13 @@ hoek met de verticale
 
 * De bak zou dan nog moeten gekantelt worden zodat wanneer deze op de loopband terecht komt dat door zwaartekracht recht wordt gezet. 
     - zwaartepunt in midden dus helling van platform is dan kleiner dan $\frac{\pi}{4}$ met de verticale. 
-    - neem helling platform 40° met verticale. (een marge van 5°)
+    - neem helling platform $\phi_{platform} = 40°$ met verticale. (een marge van 5°)
+
+
+
+<img src="fig_optimal_angle.svg" alt="Image failed to load" width="750" height="500">
+
+
 
 
 * De tijd en afstand 
@@ -47,6 +53,7 @@ De snelheid waarmee de bak dan op het plaform terecht komt is afhankelelijk van 
 
 #### Toegepast op onze proefopstelling
 gegevens
+ - $\theta_{opt} = 90°$
  - $cl = 2m$
  - $H_{bak}=24cm$ 
 nieuwe waarden
@@ -54,61 +61,62 @@ nieuwe waarden
  - $\Delta h =1.05m$
  - $v_{eind} = 4.54 m/s$
   
-### Optimalization using matlab.
+### Optimalisatie met behulp van MATLAB om de beste $\theta_{opt}$ te vinden.
 
-#### Setting up variables:
-- $\theta_{opt}$: An array of angles ranging from 0 to 90 degrees
+#### Variabelen instellen:
+- $\theta_{opt}$: Een array van hoeken variërend van 0 tot 90 graden
 
-#### Constants:
-- `cl`: cable length, a constant value.
-- `h_bak`: Height, another constant value.
+#### Constanten:
+- `cl`: Kabellengte, een constante waarde.
+- `h_bak`: Hoogte, nog een constante waarde.
 
-#### Calculating the platform angle:
-- Formula: 
+#### Berekening van de platformhoek:
+- Formule: 
   
-  $\theta_{\text{platform}} = \arcsin\left(\frac{cl \times \sin(\theta_{\text{max}}) - h_{\text{bak}}}{cl}\right)$
+  $\theta_{\text{platform}} = \arcsin\left(\frac{cl \times \sin(\theta_{\text{opt}}) - h_{\text{bak}}}{cl}\right)$
   
-  - This formula calculates the angle of the platform $ ((\theta_{\text{platform}}))$ based on the maximum angle of the platform $((\theta_{\text{max}}))$, the lift coefficient $ ((cl))$, and the height $ ((h_{\text{bak}}))$.
+  - Deze formule berekent de hoek van het platform $ \theta_{\text{platform}}$ op basis van de optimale hoek van de slingerbeweging $\theta_{\text{opt}}$, de kabellengte $ cl $, en de hoogte $ h_{\text{bak}}$.
 
-#### Plotting theta_platform:
-- This plots the calculated `theta_platform` against `theta_max`.
+#### Plotten van theta_platform:
+- Hier wordt `theta_platform` geplot tegen `theta_max`.
 
-<img src="theta_platform.png" alt="Image failed to load" width="500" height="375">
+<img src="theta_platform.png" alt="Afbeelding kon niet worden geladen" width="500" height="375">
 
-#### Calculating Delta y:
-- Formula:
+#### Berekening van Delta y:
+- Formule:
   $
   \Delta y = cl - cl \times \cos(\theta_{\text{platform}})
   $
-  - This formula calculates the change in y-coordinate $(\Delta y)$ based on the lift coefficient $(cl)$ and the angle of the platform $(theta_{\text{platform}})$.
+  - Deze formule berekent de verandering in de y-coördinaat $(\Delta y)$ op basis van de kabellengte $(cl)$ en de hoek van het platform $(theta_{\text{platform}})$.
 
-#### Plotting Delta y which is the height loss:
-- This plots the calculated `dy` against `theta_max`.
+#### Plotten van Delta y, wat hoogteverlies is:
+- Hier wordt `dy` geplot tegen `theta_max`.
 
-<img src="dy.png" alt="Image failed to load" width="500" height="375">
+<img src="dy.png" alt="Afbeelding kon niet worden geladen" width="500" height="375">
 
-#### Calculating y_end:
-- Formula:
+#### Berekening van y_eind:
+- Formule:
   $
   y_{\text{eind}} = cl - \cos(\theta_{\text{max}}) - \Delta y
   $
-  - This formula calculates the final y-coordinate $y_{\text{eind}}$ based on the lift coefficient $cl$, the maximum angle of the platform $\theta_{\text{max}}$, and the change in y-coordinate $\Delta y$.
+  - Deze formule berekent de uiteindelijke y-coördinaat $y_{\text{eind}}$ op basis van de kabellengte $cl$, de maximale hoek van het platform $\theta_{\text{max}}$, en de verandering in y-coördinaat $\Delta y$.
 
-#### Plotting y_end:
-- This plots the calculated `y_end` against `theta_max`, highlighting the maximum point.
+#### Plotten van y_eind:
+- Hier wordt `y_eind` geplot tegen `theta_max`, waarbij het maximale punt wordt gemarkeerd.
 
-<img src="hoogte_verschil.png" alt="Image failed to load" width="500" height="375">
+<img src="hoogte_verschil.png" alt="Afbeelding kon niet worden geladen" width="500" height="375">
 
-####  the maximum angle:
-- The maximum is at angle $90°$
+#### De maximale hoek:
+- Het maximum ligt bij hoek $90°$
 
-#### optimal angle:
-- to find the optimal angle, we must do a trade off between tot height gain and height loss. So we will make a variable called `trade_off`that shows the ratio between height loss and height gain. The value of this should be as low as possible. 
+#### Optimale hoek:
+- Om de optimale hoek te vinden, moeten we een afweging maken tussen totale hoogtewinst en hoogteverlies. Daarom maken we een variabele genaamd `trade_off` die de verhouding tussen hoogteverlies en hoogtewinst laat zien. De waarde hiervan moet zo laag mogelijk zijn.
 
-<img src="trade_off.png" alt="Image failed to load" width="500" height="375">
+$\frac{Hoogte Verlies}{Hoogte Winst}
 
-- the ideal angle is 57.3°
+<img src="trade_off.png" alt="Afbeelding kon niet worden geladen" width="500" height="375">
 
+- De ideale hoek is 57.3°
 
 
 
