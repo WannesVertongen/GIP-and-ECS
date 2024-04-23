@@ -3,14 +3,14 @@ clear all
 clc
 g = 9.81;
 c = 0.0001003302; %damping
-l = 1.80; %cable length
+l = 2; %cable length
 
 sys = tf([-1 0 0], [l 0 g]);  
 
 % Experiment opstelling:
-theta_f = pi/4; %gewenste eindhoek kabel
-dx_object = 4; %horizontale verplaatsing bak
-dx_robot = dx_object - l*sin(theta_f); 
+theta_f = 57.3*pi/180; %optimale eindhoek kabel [rad]
+dx_object = 4; %horizontale verplaatsing bak [m]
+dx_robot = dx_object - l*sin(theta_f);  %horizontale verplaatsing robot [m]
 
 
 
@@ -154,7 +154,7 @@ for i = 1:iterations
         ylabel('Angle [rad]')
         hold on
         xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
-        yline(pi/4, 'Color', 'g', 'LineStyle', '--');
+        yline(theta_f, 'Color', 'g', 'LineStyle', '--');
         title('Theta for v=', i)
         
         subplot(3,1,3)
@@ -184,7 +184,7 @@ for i = 1:iterations
         ylabel('Angle [rad]')
         hold on
         xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
-        yline(pi/4, 'Color', 'g', 'LineStyle', '--');
+        yline(theta_f, 'Color', 'g', 'LineStyle', '--');
         title('Theta for T=', T)
         
         subplot(3,1,3)
@@ -210,7 +210,7 @@ for i = 1:iterations
         ylabel('Angle [rad]')
         hold on
         xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
-        yline(pi/4, 'Color', 'g', 'LineStyle', '--');
+        yline(theta_f, 'Color', 'g', 'LineStyle', '--');
         title('Theta for T=', T)
         
         subplot(3,1,3)
@@ -236,7 +236,7 @@ for i = 1:iterations
         ylabel('Angle [rad]')
         hold on
         xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
-        yline(pi/4, 'Color', 'g', 'LineStyle', '--');
+        yline(theta_f, 'Color', 'g', 'LineStyle', '--');
         title('Theta for T=', T)
         
         subplot(3,1,3)
