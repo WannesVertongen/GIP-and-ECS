@@ -2,15 +2,14 @@
 clear all
 clc
 g = 9.81;
-c = 0.0001003302; %damping
 l = 2; %cable length
 
 sys = tf([-1 0 0], [l 0 g]);  
 
 % Experiment opstelling:
-theta_f = 57.3*pi/180; %optimale eindhoek kabel [rad]
+theta_opt = 61.982*pi/180; %optimale eindhoek kabel [rad]
 dx_object = 4; %horizontale verplaatsing bak [m]
-dx_robot = dx_object - l*sin(theta_f);  %horizontale verplaatsing robot [m]
+dx_robot = dx_object - l*sin(theta_opt);  %horizontale verplaatsing robot [m]
 
 
 
@@ -27,14 +26,14 @@ time = 0:0.01:10; %s
 % 4 = 7de graads polynoom (4e orde continu, heel smooth dus eig hoop ik dat
 % dit minder goed werkt)
 
-input_type = 4;
+input_type = 2;
 
 
 % Loop for different velocities
 iterations = 4;
 indicators = zeros(iterations,2)';
 
-for i = 1:iterations
+for i = 2:2:2*iterations
     input = zeros(length(time),1);
 
     if input_type == 1
@@ -114,25 +113,19 @@ for i = 1:iterations
     x_obj = input + l*sin(theta);
     y_obj = l*(1-cos(theta));
     
-    % At which time does the object reach it's destination
-
-    % Object final x position is 4m
-    search_range_min = dx_object-0.05;
-    search_range_max = dx_object+0.05;
-
-    % Find indices where the value falls within the specified range
-    indices = find(x_obj >= search_range_min & x_obj <= search_range_max);
-
-    % Height at the destination (should always be the same!!)
-    height = y_obj(indices);
+    % Does the object reach the optimal angle at this speed
+    max_angle = max(theta);
 
     %time = timeindex / 100
-    disp('Input iteration = ')
+    disp('SPEED = ')
     disp(i)
-    if length(indices) ~= 0 
-        disp('The moment(s) the object arrives at destination is/are')
-        disp(indices/100)
+    
+    if max_angle >= theta_opt
+        disp('VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV')
+        disp('Destination can be reached at this speed')
+        
     else
+        disp('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
         disp('Destination is not reached, speed too low')
     end
 
@@ -154,7 +147,7 @@ for i = 1:iterations
         ylabel('Angle [rad]')
         hold on
         xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
-        yline(theta_f, 'Color', 'g', 'LineStyle', '--');
+        yline(theta_opt, 'Color', 'g', 'LineStyle', '--');
         title('Theta for v=', i)
         
         subplot(3,1,3)
@@ -184,7 +177,7 @@ for i = 1:iterations
         ylabel('Angle [rad]')
         hold on
         xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
-        yline(theta_f, 'Color', 'g', 'LineStyle', '--');
+        yline(theta_opt, 'Color', 'g', 'LineStyle', '--');
         title('Theta for T=', T)
         
         subplot(3,1,3)
@@ -210,7 +203,7 @@ for i = 1:iterations
         ylabel('Angle [rad]')
         hold on
         xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
-        yline(theta_f, 'Color', 'g', 'LineStyle', '--');
+        yline(theta_opt, 'Color', 'g', 'LineStyle', '--');
         title('Theta for T=', T)
         
         subplot(3,1,3)
@@ -236,7 +229,7 @@ for i = 1:iterations
         ylabel('Angle [rad]')
         hold on
         xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
-        yline(theta_f, 'Color', 'g', 'LineStyle', '--');
+        yline(theta_opt, 'Color', 'g', 'LineStyle', '--');
         title('Theta for T=', T)
         
         subplot(3,1,3)

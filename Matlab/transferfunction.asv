@@ -3,12 +3,12 @@ clear all
 clc
 g = 9.81;
 c = 0.0001003302; %damping
-l = 1.80; %cable length
+l = 2; %cable length
 
 sys = tf([-1 0 0], [l 0 g]);  
 
 % Experiment opstelling:
-theta_f = 57.3*pi/180; %optimale eindhoek kabel [rad]
+theta_f = 61.982*pi/180; %optimale eindhoek kabel [rad]
 dx_object = 4; %horizontale verplaatsing bak [m]
 dx_robot = dx_object - l*sin(theta_f);  %horizontale verplaatsing robot [m]
 
@@ -27,14 +27,14 @@ time = 0:0.01:10; %s
 % 4 = 7de graads polynoom (4e orde continu, heel smooth dus eig hoop ik dat
 % dit minder goed werkt)
 
-input_type = 2;
+input_type = 1;
 
 
 % Loop for different velocities
 iterations = 4;
 indicators = zeros(iterations,2)';
 
-for i = 1:iterations
+for i = 2:iterations+1
     input = zeros(length(time),1);
 
     if input_type == 1
@@ -130,8 +130,8 @@ for i = 1:iterations
     disp('Input iteration = ')
     disp(i)
     if length(indices) ~= 0 
-        disp('The moment(s) the object arrives at destination is/are')
-        disp(indices/100)
+        disp('Destinat')
+        
     else
         disp('Destination is not reached, speed too low')
     end
