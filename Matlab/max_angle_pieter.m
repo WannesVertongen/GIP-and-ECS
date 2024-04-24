@@ -5,8 +5,8 @@ cl1 = 2;
 h = 0.24;
 B = 0.4;
 
-
-theta_opt = [linspace(0,90,1000)]*pi/180;
+%% Analyse lukt enkel voor groot genoege hoeken
+theta_opt = [linspace(30,90,1000)]*pi/180;
 theta_opt_plot = theta_opt;
 
 % Theta_pl ifv theta_opt: recursief functievoorschrift:
@@ -30,7 +30,7 @@ title('\theta platform')
 %cl2 is ook niet exact juist want exacte formule werkt enkel met juiste
 %theta_pl
 % cl2 = cl1*(sin(theta_opt)/sin(asin(((cl1-h)*sin(theta_opt))/cl1)));
-cl2 = cl1+ sqrt(2)*h*sin(theta_platform);
+cl2 = cl1+ sqrt(2)*h*sin(theta_opt);
 figure
 plot(theta_opt*180/pi, cl2)
 title('cl2')
@@ -45,7 +45,7 @@ title('\Delta y')
 % yeind kan volgens mij op 2 manieren
 
 %manier 1
-y_eind = cl2.*(1-cos(theta_platform));
+y_eind = cl1 - cl2.*cos(theta_platform);
 [M,I]= max(y_eind);
 plot(theta_opt*180/pi,y_eind)
 hold on
@@ -69,13 +69,16 @@ best_angle_2 = theta_opt(I2)*180/pi
 
 %% 
 
-trade_off = abs(dy)./y_eind;
+%trade_off = (-dy)./y_eind;
+trade_off = y_eind./(-dy);
+ylim([0,3])
 [M,I]= min(trade_off);
 figure
 plot(theta_opt*180/pi,trade_off)
 hold on
 scatter(theta_opt(I)*180/pi , trade_off(I))
-ylim([0,10])
+xlim([30,90])
+
 hold off
 title('Trade Off')
 

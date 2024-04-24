@@ -7,14 +7,14 @@ l = 2; %cable length
 sys = tf([-1 0 0], [l 0 g]);  
 
 % Experiment opstelling:
-theta_opt = 61.982*pi/180; %optimale eindhoek kabel [rad]
+theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
 dx_object = 4; %horizontale verplaatsing bak [m]
 dx_robot = dx_object - l*sin(theta_opt);  %horizontale verplaatsing robot [m]
 
 
 
 x = 0:0.1:dx_robot; %m
-time = 0:0.01:10; %s
+time = 0:0.01:3; %s
 
 
 
@@ -33,7 +33,7 @@ input_type = 2;
 iterations = 4;
 indicators = zeros(iterations,2)';
 
-for i = 2:2:2*iterations
+for i = 2:iterations+1
     input = zeros(length(time),1);
 
     if input_type == 1
@@ -123,10 +123,12 @@ for i = 2:2:2*iterations
     if max_angle >= theta_opt
         disp('VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV')
         disp('Destination can be reached at this speed')
+        disp('VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV')
         
     else
         disp('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
         disp('Destination is not reached, speed too low')
+        disp('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     end
 
     disp('----------------------------------------------------------')

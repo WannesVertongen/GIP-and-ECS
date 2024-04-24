@@ -7,7 +7,11 @@ $ k_{kabel} = \frac{F}{\Delta x}=\frac{m*g}{l_2-l_1}$
 Het experiment kan voor verschillende massa's herhaald worden voor een nauwkeuriger resutaat.
 
 ### 2. Robot aansturing
+<<<<<<< Updated upstream
 Essentieel aan de opstelling is het vinden van een geschikt verplaatsingsprofiel $x(t)$ of snelheidsprofiel $v(t)$ voor de beweging van de robot, om de gewenste beweging van het object te bereiken. Verschillende soorten profielen worden hiervoor eerst in Matlab gesimuleerd om een eerste voorspelling van de respons van het object te maken. Dit werd gedaan voor de eerder beschreven opstelling, met een kabellengte van 1.8m en $\theta_{opt} = 60.85° $. 
+=======
+Essentieel aan de opstelling is het vinden van een geschikt verplaatsingsprofiel $x(t)$ of snelheidsprofiel $v(t)$ voor de beweging van de robot, om de gewenste beweging van het object te bereiken. Verschillende soorten profielen worden hiervoor eerst in Matlab gesimuleerd om een eerste voorspelling van de respons van het object te maken. Dit werd gedaan voor de eerder beschreven opstelling, met een kabellengte van 1.8m en $\theta_{opt} = 60.8° $. 
+>>>>>>> Stashed changes
 
 De plots van alle resultaten kunnen gevonden worden in de volgende map: [Plots](https://github.com/WannesVertongen/GIP-and-ECS/tree/main/Matlab/Plots). Hieronder worden enkele van de resultaten besproken.
 
@@ -16,7 +20,11 @@ Een eerste profiel dat getest wordt is dat van een 'ramp input', ofwel een beweg
 
 <img src="fig_rampv5.svg" alt="Image failed to load" width="750" height="500">
 
+<<<<<<< Updated upstream
 Onder elkaar worden respectievelijk de robot positie en hoek $\theta$ in de tijd en het verloop van het object geplot. De rode stippellijn op de onderste twee plots duidt het moment of de plaats aan waarop de robot niet meer beweegt, maar stilstaat op zijn eindpositie. De groene stippellijn staat op een hoogte van $\theta_{opt} = 60.85° $. We zien dat het object wordt meegesleurd met de robot en dan oscilleert rondom het rustpunt van de robot. Voor een ramp input is dit de laagste snelheid van de robot waarbij het object nog net de gewenste horizontale en verticale verplaatsing bereikt. Het verloop van de hoek is wel niet bepaald glad wat voor trillingen in de kabel kan zorgen en liefst vermeden wordt.
+=======
+Onder elkaar worden respectievelijk de robot positie en hoek $\theta$ in de tijd en het verloop van het object geplot. De rode stippellijn op de onderste twee plots duidt het moment of de plaats aan waarop de robot niet meer beweegt, maar stilstaat op zijn eindpositie. De groene stippellijn staat op een hoogte van $\theta_{opt} = 60.8° $. We zien dat het object wordt meegesleurd met de robot en dan oscilleert rondom het rustpunt van de robot. Voor een ramp input is dit de laagste snelheid van de robot waarbij het object nog net de gewenste horizontale en verticale verplaatsing bereikt. Het verloop van de hoek is wel niet bepaald glad wat voor trillingen in de kabel kan zorgen en liefst vermeden wordt.
+>>>>>>> Stashed changes
 
 De resultaten tonen ook meteen dat er geen demping of luchtwrijving in de dynamische vergelijkingen is inbegrepen. Of dit weldegelijk een correcte vereenvoudiging is, dient nagegaan te worden door het experiment. De 'ramp input' dient opgelegd te worden en vervolgens kan er gekeken worden naar het effectieve verloop van het object. Behaalt het object wel de vereiste hoogte? Blijft het touw wel gestrekt tijdens de zwaaibeweging?
 

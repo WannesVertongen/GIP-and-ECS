@@ -45,29 +45,48 @@ title('\Delta y')
 % yeind kan volgens mij op 2 manieren
 
 %manier 1
-y_eind = cl2*(1-cos())
+y_eind = cl1 - cl2*cos;
 [M,I]= max(y_eind);
 plot(theta_opt*180/pi,y_eind)
 hold on
 scatter(theta_opt(I)*180/pi , y_eind(I))
 hold off
 title('y_{eind}')
-theta_opt(I)*180/pi
+best_angle_1 = theta_opt(I)*180/pi
 
-trade_off = dy./y_eind;
+%manier 2
+y_eind2 = cl1*(1-cos(theta_opt))+dy; %+dy want dy is negatief
+[M2,I2]= max(y_eind2);
+figure
+plot(theta_opt*180/pi,y_eind2)
+hold on
+scatter(theta_opt(I2)*180/pi , y_eind2(I))
+hold off
+title('y_{eind}')
+best_angle_2 = theta_opt(I2)*180/pi
+
+%eerste resultaat lijkt het best 
+
+%% 
+
+trade_off = abs(dy)./y_eind;
 [M,I]= min(trade_off);
+figure
 plot(theta_opt*180/pi,trade_off)
 hold on
 scatter(theta_opt(I)*180/pi , trade_off(I))
 ylim([0,10])
 hold off
 title('Trade Off')
+
 optimal_angle = theta_opt(I)*180/pi
 platform_angle = theta_platform(I)*180/pi
+final_height = y_eind(I)
+height_drop = dy(I)
 end_position_platform = [x_m + round(cl1*sin(theta_platform(I)),2);y_g + round(cl1-cl1*cos(theta_platform(I)),2)]
 
-
-plot(cl1*cos(theta_opt_plot(1:I)),-cl1*sin(theta_opt_plot(1:I)))
+figure
+plot(cl1*cos(theta_opt(1:I)),-cl1*sin(theta_opt(1:I)))
 axis equal
 
 

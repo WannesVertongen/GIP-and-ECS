@@ -19,22 +19,21 @@ Uit dynamische vergelijking hebben we  transfer function $\frac{\Theta}{X}(s) = 
 
 * De totale hoogte dat het object zal 'winnen' tijdens de beweging is $\Delta h = \Delta h_1 + \Delta h_2$ met $\Delta h_1$ eerder beschreven en $\Delta h_2 = cl*(1-cos(\theta_f))$.
 
-## Optimalisatie met behulp van MATLAB om de beste $\theta_{opt}$ te vinden.
+## Optimalisatie met behulp van MATLAB om $\theta_{opt}$ te vinden.
 
 
 <img src="fig_optimal_angle.svg" alt="Image failed to load" width="750" height="500">
 
 
 #### Constanten:
-- `cl`: Kabellengte, een constante waarde.
-- `h_bak`: Hoogte, nog een constante waarde.
+- `cl_1`: kabellengte.
+- `h_bak`: hoogte van de bak.
 
 #### Berekening van de hoek waar het platform zal kunnen staan:
 - Formule: 
   $\theta_{\text{platform}} = \arcsin\left(\frac{\sin(\theta_{\text{opt}}) \times  (cl - h_{\text{bak}})}{cl}\right)$
 
-  - Deze formule berekent de hoek van het platform $ \theta_{\text{platform}}$ op basis van de optimale hoek van de slingerbeweging $\theta_{\text{opt}}$, de kabellengte $ cl $, en de hoogte $ h_{\text{bak}}$.
-  Deze formule en dus ook de verdergaande analyse is benadert en geldt enkel voor grotere hoeken. 
+  - Deze formule berekent de hoek van het platform $ \theta_{\text{platform}}$ op basis van de optimale hoek van de slingerbeweging $\theta_{\text{opt}}$, de kabellengte $ cl $, en de hoogte $ h_{\text{bak}}$ aan de hand van de geometrie van het probleem. De formule en dus ook de verdergaande analyse is een benadering en geldt enkel voor grotere hoeken ($\theta > 25°)$. 
 
 #### Plotten van theta_platform:
 - Hier wordt `theta_platform` geplot tegen `theta_opt`.
@@ -43,19 +42,17 @@ Uit dynamische vergelijking hebben we  transfer function $\frac{\Theta}{X}(s) = 
 
 #### Berekening van $cl_2$
 
-De bak valt verticaal naar beneden dus zou de $cl_2*\sin(\theta_{platform})$ gelijk moeten blijven aan $cl_1*\sin(\theta_{opt})$. Dan krijg je volgende formule:
+Na het bereiken van het hoogste punt ($\theta = \theta_{opt}$), wordt de kabel verlengd zodat de bak verticaal naar beneden valt. Door deze verticale val geldt het volgende verband voor de kabellengtes:
 
 $cl_2 = cl_1 * \frac{\sin(\theta_{opt})}{\sin(\theta_{platform})}$
 
-Aangezien $\theta_{platform}$ een benadering is, rechtstreeks afhankelijk van $\theta_{opt}$ zal $cl_2$ met deze formule een constante zijn. Deze is dan onafhankelijk van $\theta_{opt}$. Daarom is er ook voor $cl_2$ een benadering gevonden die wel afhankelijk is en een realistisch verloop toont. 
+Aangezien $\theta_{platform}$ een benadering is en lineair afhankelijk van $\theta_{opt}$ is, zal $cl_2$ met deze formule een constante zijn, wat niet overeenstemt met de realiteit. Daarom is er ook voor $cl_2$ een benadering gevonden die wel afhankelijk is van de hoek en een realistisch verloop toont. 
 
 $cl_2 = cl_1 + \sqrt{2}*h_{bak}*\sin(\theta_{opt})$
 
-Deze geeft volgend realistisch verloop:
+Deze geeft volgend verloop:
 
 <img src="fig_cl_2.png" alt="Afbeelding kon niet worden geladen" width="500" height="375">
-
-We zien hier duidelijk da de kabel lengte naar 2 gaat richting hoeken van 0°. Eerst verandert de kabellengte snel en naarmate voor grotere hoeken daalt de snelheid van deze verandering. 
 
 
 #### Berekening van Delta y:
@@ -63,10 +60,10 @@ We zien hier duidelijk da de kabel lengte naar 2 gaat richting hoeken van 0°. E
   $
   \Delta y = cl_2* cos(\theta_{platform}) - cl_1*cos(\theta_{opt})
   $
-  - Deze formule berekent de verandering in de y-coördinaat $(\Delta y)$ op basis van de kabellengte $(cl)$ en de hoek van het platform $(\theta_{\text{platform}})$.
+  - Deze formule berekent de verandering in de y-coördinaat $(\Delta y)$ op basis van de kabellengte $(cl)$ en de hoek van het platform $(\theta_{\text{platform}})$. Deze $\Delta y$ kan gezien worden als hoogteverlies. Het platform moet zo veel lager staan om de bak te kunnen opvangen maar niet in het pad van de cirkelbeweging te liggen.
 
-#### Plotten van Delta y, wat hoogteverlies is:
-- Hier wordt `dy` geplot tegen `theta_max`.
+#### Plotten van Delta y:
+- Hier wordt `dy` geplot tegen `theta_opt`.
 
 <img src="fig_delta_y.png" alt="Afbeelding kon niet worden geladen" width="500" height="375">
 
@@ -75,10 +72,10 @@ We zien hier duidelijk da de kabel lengte naar 2 gaat richting hoeken van 0°. E
   $
   y_{\text{eind}} = cl_1 - cl_2 \times \cos(\theta_{\text{platform}})
   $
-  - Deze formule berekent de uiteindelijke y-coördinaat $y_{\text{eind}}$ op basis van de kabellengte $cl$, de maximale hoek van het platform $\theta_{\text{max}}$, en de verandering in y-coördinaat $\Delta y$.
+  - Deze formule berekent de uiteindelijke y-coördinaat $y_{\text{eind}}$ op basis van de kabellengte $cl$, de maximale hoek van het platform $\theta_{\text{max}}$, en de verandering in y-coördinaat $\Delta y$. Deze waarde wordt berekend ten opzichte van het laagste punt van de cirkelbeweging.
 
 #### Plotten van y_eind:
-- Hier wordt `y_eind` geplot tegen `theta_max`, waarbij het maximale punt wordt gemarkeerd.
+- Hier wordt `y_eind` geplot tegen `theta_opt`, waarbij het maximale punt wordt gemarkeerd.
 
 <img src="fig_y_end.png" alt="Afbeelding kon niet worden geladen" width="500" height="375">
 
@@ -86,28 +83,24 @@ We zien hier duidelijk da de kabel lengte naar 2 gaat richting hoeken van 0°. E
 - Het maximum ligt bij een hoek van $90°$
 
 #### Optimale hoek:
-- Om de optimale hoek te vinden, moeten we een afweging maken tussen totale hoogtewinst en hoogteverlies. Daarom maken we een variabele genaamd `trade_off` die de verhouding tussen hoogtewinst en hoogteverlies laat zien. De waarde hiervan moet zo hoog mogelijk zijn. Bij deze relatie kan er een resultaat komen waarbij het object grote $\Delta y$ kan heeft. Dit zou met zware gewichten zoals bakken bier leiden tot grote schokken in het platform. Daarom krijgt hoogte verlies een gewicht van $150\%$.
+- Om de optimale hoek te vinden, moeten we een afweging maken tussen totale hoogtewinst en hoogteverlies. Daarom maken we een variabele genaamd `trade_off` die de verhouding tussen hoogtewinst en hoogteverlies laat zien. De waarde hiervan moet zo groot mogelijk zijn. Bij deze relatie kan er een resultaat komen waarbij het object grote $\Delta y$ kan heeft. Dit zou met zware gewichten zoals bakken bier leiden tot grote schokken in het platform. Daarom krijgt het hoogte verlies een groter gewicht van $150\%$ zodat een optimaal resultaat met een kleinere hoogteval bekomen wordt.
 
-- $\frac{Hoogte\_Winst}{Hoogte\_Verlies^{1.5}}$
+- Trade-off = $\frac{Hoogte\_Winst}{Hoogte\_Verlies^{1.5}}$
 
 <img src="fig_trade_off.png" alt="Afbeelding kon niet worden geladen" width="500" height="375">
 
 - De ideale hoek is 60.85°
 
-#### Toegepast op onze proefopstelling
-gegevens
+#### Samenvatting eindresultaten
  - $\theta_{opt} = 60.85°$
  - $cl_1 = 2m$
- - $h_{bak}=24cm$ 
-nieuwe waarden
+ - $cl_2 = 2.8m$
  - $\theta_{platform} = 50.22°$
  - $y_{eind} = 0.531m$
 
 #### Helling platform
-* De bak zou dan nog moeten gekantelt worden zodat wanneer deze op de loopband terecht komt. Dit zou door de zwaartekracht moeten gebeuren.
-    - zwaartepunt in midden dus helling van platform is kleiner dan $\frac{\pi}{4}$ met de verticale. 
-    - neem helling platform $\phi_{platform} = 40°$ met verticale. (een marge van 5°)
-
+* De bak komt gekanteld op het platform terecht en moet uiteindelijk van zelf recht op de loopband komen te staan. Als het massacentrum in het midden van de bak genomen wordt, moet de helling van het platform kleiner zijn dan 45°. Hier moet nog een extra marge (= kleinere hellingshoek) genomen worden voor eventuele onevenwichten in de bak.
+  
 ## Experimenten
 ### 1. Stijfheid kabel
 De kabel waar het object aan hangt heeft een zekere axiale stijfheid $k_{kabel}$. Eerst wordt lengte $l_1$ van de kabel gemeten zonder last. Vervolgens wordt er een last aan de kabel gehangen met gekende massa m. De nieuwe lengte $l_2$ van de kabel wordt nogmaals gemeten. De stijfheid wordt dan vervolgens gevonden door:
