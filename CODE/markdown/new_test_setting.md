@@ -151,7 +151,7 @@ De experimenten brengen enkele trade-off met zich mee:
 
 
 
-## Energieverbruik 
+
 
 
 
