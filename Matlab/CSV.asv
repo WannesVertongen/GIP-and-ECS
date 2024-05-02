@@ -76,7 +76,7 @@ position(1+ceil(T/timestep):end) = dx_robot;
 V = v*(-7*20*tau.^6 + 6*70*tau.^5 -5*84*tau.^4 +4*35*tau.^3);
 
 velocity(1:1+ceil(T/(timestep))) = V;      
-velocity(1+ceil(T/timestep):end) = 0;
+velocity(1ceil(T/timestep):end) = 0;
 
 writematrix(position,'poly_position.csv')
 writematrix(velocity,'poly_velocity.csv')

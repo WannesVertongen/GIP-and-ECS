@@ -2,14 +2,15 @@
 clear all
 clc
 g = 9.81;
-l = 2; %cable length
+l = 1; %cable length
 
 sys = tf([-1 0 0], [l 0 g]);  
 
 % Experiment opstelling:
-theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
-dx_object = 4; %horizontale verplaatsing bak [m]
-dx_robot = dx_object - l*sin(theta_opt);  %horizontale verplaatsing robot [m]
+%theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
+theta_opt = pi/4;
+dx_robot = 1;  %horizontale verplaatsing robot [m]
+dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 
 
 
@@ -26,7 +27,7 @@ time = 0:0.01:3; %s
 % 4 = 7de graads polynoom (4e orde continu, heel smooth dus eig hoop ik dat
 % dit minder goed werkt)
 
-input_type = 2;
+input_type = 1;
 
 
 % Loop for different velocities
