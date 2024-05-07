@@ -2,7 +2,7 @@
 clc
 clear all
 
-frequency = 500;
+frequency = 50;
 timestep = 1/frequency;
 time = 0:timestep:5;
 
@@ -14,7 +14,7 @@ dx_robot = 1;  %horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 
 %% 1. RAMP INPUT 
-v = 4;
+v = 2;
 t_eind = dx_robot/v;
 ramp = v*[0:timestep:t_eind];
 
@@ -31,7 +31,7 @@ writematrix(position,'ramp_position.csv')
 writematrix(velocity,'ramp_velocity.csv')
 
 %% 2. BANG BANG INPUT
-v = 4;
+v = 2;
 T = dx_robot/v;
 
 tau1 = (0:timestep:T/2)/T;
@@ -60,7 +60,7 @@ writematrix(velocity,'bangbang_velocity.csv')
 
 %% 3. POLYNOOM INPUT
 
-v = 4;
+v = 2;
 T = dx_robot/v;
 
 tau = (0:timestep:T)/T;
