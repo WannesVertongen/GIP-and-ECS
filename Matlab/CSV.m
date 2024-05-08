@@ -10,7 +10,7 @@ time = 0:timestep:15;
 l = 1; %cable length
 theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
 %theta_opt = pi/4;
-dx_robot = 1;  %horizontale verplaatsing robot [m]
+dx_robot = 0.5;  %horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 
 %% 1. RAMP INPUT 
@@ -41,7 +41,7 @@ tau2 = (T/2:timestep:T)/T;
 S1 = dx_robot*2*(tau1).^2;
 S2 = dx_robot*(-2*tau2.^2+4*tau2-1);
 
-position(1:1+ceil(T/(2*timestep))) = S1;
+position(1:ceil(T/(2*timestep))) = S1;
 position(ceil(T/(2*timestep)):ceil(T/(timestep))) = S2;        
 position(ceil(T/timestep):end) = dx_robot;
 
@@ -51,7 +51,7 @@ position(ceil(T/timestep):end) = dx_robot;
 V1 = v*4*tau1;
 V2 = v*(-4*tau2 + 4);
 
-velocity(1:1+ceil(T/(2*timestep))) = V1;
+velocity(1:ceil(T/(2*timestep))) = V1;
 velocity(ceil(T/(2*timestep)):ceil(T/(timestep))) = V2;        
 velocity(ceil(T/timestep):end) = 0;
 
