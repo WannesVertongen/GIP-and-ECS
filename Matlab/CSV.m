@@ -4,17 +4,17 @@ clear all
 
 frequency = 50;
 timestep = 1/frequency;
-time = 0:timestep:5;
+time = 0:timestep:15;
 
 % Experiment opstelling:
 l = 1; %cable length
-%theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
-theta_opt = pi/4;
+theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
+%theta_opt = pi/4;
 dx_robot = 1;  %horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 
 %% 1. RAMP INPUT 
-v = 2;
+v = 0.2;
 t_eind = dx_robot/v;
 ramp = v*[0:timestep:t_eind];
 
@@ -25,13 +25,13 @@ velocity = zeros(1,length(time));
 velocity(1,1:round(t_eind/timestep)+1) = v;
 
 
-%plot(time,velocity)
+plot(time,velocity)
 
 writematrix(position,'ramp_position.csv')
 writematrix(velocity,'ramp_velocity.csv')
 
 %% 2. BANG BANG INPUT
-v = 2;
+v = 0.2;
 T = dx_robot/v;
 
 tau1 = (0:timestep:T/2)/T;
@@ -41,7 +41,7 @@ tau2 = (T/2:timestep:T)/T;
 S1 = dx_robot*2*(tau1).^2;
 S2 = dx_robot*(-2*tau2.^2+4*tau2-1);
 
-position(1:ceil(T/(2*timestep))) = S1;
+position(1:1+ceil(T/(2*timestep))) = S1;
 position(ceil(T/(2*timestep)):ceil(T/(timestep))) = S2;        
 position(ceil(T/timestep):end) = dx_robot;
 
@@ -51,16 +51,18 @@ position(ceil(T/timestep):end) = dx_robot;
 V1 = v*4*tau1;
 V2 = v*(-4*tau2 + 4);
 
-velocity(1:ceil(T/(2*timestep))) = V1;
+velocity(1:1+ceil(T/(2*timestep))) = V1;
 velocity(ceil(T/(2*timestep)):ceil(T/(timestep))) = V2;        
 velocity(ceil(T/timestep):end) = 0;
+
+plot(time,velocity)
 
 writematrix(position,'bangbang_position.csv')
 writematrix(velocity,'bangbang_velocity.csv')
 
 %% 3. POLYNOOM INPUT
 
-v = 2;
+v = 0.2;
 T = dx_robot/v;
 
 tau = (0:timestep:T)/T;
