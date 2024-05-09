@@ -24,11 +24,11 @@ position(1,1:round(t_eind/timestep)+1) = ramp;
 velocity = zeros(1,length(time));
 velocity(1,1:round(t_eind/timestep)+1) = v;
 
-
+figure
 plot(time,velocity)
 
-writematrix(position,'ramp_position.csv')
-writematrix(velocity,'ramp_velocity.csv')
+% writematrix(position,'ramp_position.csv')
+% writematrix(velocity,'ramp_velocity.csv')
 
 %% 2. BANG BANG INPUT
 v = 0.2;
@@ -54,11 +54,11 @@ V2 = v*(-4*tau2 + 4);
 velocity(1:ceil(T/(2*timestep))) = V1;
 velocity(ceil(T/(2*timestep)):ceil(T/(timestep))) = V2;        
 velocity(ceil(T/timestep):end) = 0;
-
+figure
 plot(time,velocity)
 
-writematrix(position,'bangbang_position.csv')
-writematrix(velocity,'bangbang_velocity.csv')
+% writematrix(position,'bangbang_position.csv')
+% writematrix(velocity,'bangbang_velocity.csv')
 
 %% 3. POLYNOOM INPUT
 
@@ -80,5 +80,5 @@ V = v*(-7*20*tau.^6 + 6*70*tau.^5 -5*84*tau.^4 +4*35*tau.^3);
 velocity(1:1+ceil(T/(timestep))) = V;      
 velocity(1+ceil(T/timestep):end) = 0;
 
-writematrix(position,'poly_position.csv')
-writematrix(velocity,'poly_velocity.csv')
+% writematrix(position,'poly_position.csv')
+% writematrix(velocity,'poly_velocity.csv')

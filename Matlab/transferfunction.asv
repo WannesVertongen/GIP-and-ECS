@@ -2,19 +2,21 @@
 clear all
 clc
 g = 9.81;
-l = 1; %cable length
+l = 0.; %cable length
 
 
 % Experiment opstelling:
-%theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
-theta_opt = pi/4;
-dx_robot = 1;  %horizontale verplaatsing robot [m]
+theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
+%theta_opt = pi/4;
+dx_robot = 1.5;  %horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 
-theta_init = pi/4;
+%Initial conditions
+theta_init = -pi/6;
+omega_init = 0;
 
 x = 0:0.1:dx_robot; %m
-time = 0:0.01:3; %s
+time = 0:0.01:15; %s
 
 
 
@@ -31,15 +33,15 @@ input_type = 1;
 
 % Loop for different velocities
 iterations = 4;
-indicators = zeros(iterations,2)';
 
-for i = 2:iterations+1
+
+for i = 0.1:0.1:0.4
     input = zeros(length(time),1);
 
     if input_type == 1
         % snelheid robot = v
         v = i; %m/s
-        indicators(1,i) =v;
+        
 
         % t = x/v: tijd vd beweging vd robot voor constante v
         t = dx_robot/v; %s
@@ -116,7 +118,7 @@ for i = 2:iterations+1
     B = [0; 1];
     C = [1 0]; % Measure only theta
     D = 0;
-    X0 = [theta_init];
+    X0 = [theta_init,omega_init];
     % Create state-space system
     sys_ss = ss(A, B, C, D);
 
@@ -175,7 +177,7 @@ for i = 2:iterations+1
         xline(x(end), 'Color', 'r', 'LineStyle', '--');
         title('Object position')
 
-        indicators(2,i) = 2*max(y_obj*2*g/(v^2));
+        
 
        
     end
@@ -258,4 +260,4 @@ for i = 2:iterations+1
         title('Object position')
     end
 end
-%disp(indicators)
+

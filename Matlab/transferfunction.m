@@ -2,13 +2,13 @@
 clear all
 clc
 g = 9.81;
-l = 1.5; %cable length
+l = 0.4; %cable length
 
 
 % Experiment opstelling:
 theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
 %theta_opt = pi/4;
-dx_robot = 1;  %horizontale verplaatsing robot [m]
+dx_robot = 1.5;  %horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 
 %Initial conditions
@@ -161,7 +161,7 @@ for i = 0.1:0.1:0.4
         title('Robot position for v=', i)
 
         subplot(3,1,2)
-        plot(time,theta)
+        plot(time,theta*180/pi)
         xlabel('Time [s]')
         ylabel('Angle [rad]')
         hold on
