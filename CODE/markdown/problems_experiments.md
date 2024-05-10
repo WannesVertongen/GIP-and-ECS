@@ -16,3 +16,4 @@ Feedback Boris
 ## New approach
 Begin met starthoek
 Lagere snelheid
+angle loggen in c
