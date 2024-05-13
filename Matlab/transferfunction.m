@@ -2,13 +2,13 @@
 clear all
 clc
 g = 9.81;
-l = 0.4; %cable length
+l = 1; %cable length
 
 
 % Experiment opstelling:
 theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
 %theta_opt = pi/4;
-dx_robot = 1.5;  %horizontale verplaatsing robot [m]
+dx_robot = 0.8;  %horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 
 %Initial conditions
@@ -28,14 +28,15 @@ time = 0:0.01:15; %s
 % 4 = 7de graads polynoom (4e orde continu, heel smooth dus eig hoop ik dat
 % dit minder goed werkt)
 
-input_type = 1;
+input_type = 2;
 
 
 % Loop for different velocities
 iterations = 4;
 
 
-for i = 0.1:0.1:0.4
+%for i = 0.1:0.1:0.4
+for i = 0.2:0.2
     input = zeros(length(time),1);
 
     if input_type == 1
@@ -108,10 +109,7 @@ for i = 0.1:0.1:0.4
         input(ceil(T/0.01):end) = dx_robot;
     end
     
-    % numerator_coeffs = [-1 0 0];
-    % denominator_coeffs = [l 0 g];
-    % sys = tf(numerator_coeffs, denominator_coeffs);
-    % sys_ss = tf2ss(sys);
+   
     
    % Define system matrices
     A = [0 1; -g/l 0];
@@ -119,12 +117,15 @@ for i = 0.1:0.1:0.4
     C = [1 0]; % Measure only theta
     D = 0;
     X0 = [theta_init,omega_init];
+   
     % Create state-space system
     sys_ss = ss(A, B, C, D);
 
 
     % Simulation
-    [theta,time] = lsim(sys_ss, input, time, X0); 
+    %[theta,time] = lsim(sys_ss, input, time, X0); 
+    sys = tf([-1 0 0], [l 0 g]);
+    [theta, time] = lsim(sys, input, time);
     
     % Object position in time
     x_obj = input + l*sin(theta);
