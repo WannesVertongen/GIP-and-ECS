@@ -6,13 +6,13 @@ frequency = 50;
 timestep = 1/frequency;
 time = 0:timestep:15;
 
-v_max = 0.6;
+v_max = 1;
 if v_max == 0.2
     offset = 1;
 else
     offset = 0;
 end
-
+offset = 0;
 
 % Experiment opstelling:
 l = 1; %cable length
@@ -124,7 +124,7 @@ velocity_abrupt = zeros(1,ceil(T/(timestep)));
 velocity_abrupt(1:ceil(T/(timestep*2))) = velocity(1:ceil(T/(timestep*2)));
 
  writematrix(position,'poly_position.csv')
- writematrix(velocity_abrupt,'poly_velocity_abrupt_06.csv')
+ writematrix(velocity_abrupt,'poly_velocity_abrupt_10.csv')
 figure
 plot(time(1:ceil(T/(timestep))),velocity_abrupt)
 title("velocity profile poly")
