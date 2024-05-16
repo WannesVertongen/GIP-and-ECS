@@ -8,7 +8,7 @@ l = 1; %cable length
 % Experiment opstelling:
 theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
 %theta_opt = pi/4;
-dx_robot = 0.8;  %horizontale verplaatsing robot [m]
+dx_robot = 0.7;  %horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 
 %Initial conditions
@@ -28,15 +28,15 @@ time = 0:0.01:15; %s
 % 4 = 7de graads polynoom (4e orde continu, heel smooth dus eig hoop ik dat
 % dit minder goed werkt)
 
-input_type = 2;
+input_type = 4;
 
 
 % Loop for different velocities
 iterations = 4;
 
 
-%for i = 0.1:0.1:0.4
-for i = 0.2:0.2
+for i = 0.1:0.1:0.4
+
     input = zeros(length(time),1);
 
     if input_type == 1
