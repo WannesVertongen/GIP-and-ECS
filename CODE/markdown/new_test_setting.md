@@ -145,7 +145,7 @@ De experimenten brengen enkele trade-off met zich mee:
 
 1. Voor elk profiel geldt dat een hogere gemiddelde snelheid zorgt voor een grotere maximale hoek. Er kan gekozen worden voor een $\theta > \theta_{opt}$ om een marge in te bouwen, maar dit gaat wel ten koste van de energie-efficiëntie.
 
-2. Een eenvoudige maar niet onbelangrijke trade-off is de afweging dus duratie van de beweging en energieverbruik, die tegengestelde eisen stellen aan de snelheid.
+2. Een eenvoudige maar niet onbelangrijke trade-off is de afweging dus duratie van de beweging en energieverbruik, die tegengestelde eisen stellen aan de snelheid. De meer complexe profielen hebben hogere piek- en rms stromen!!
 
 3. Een eenvoudiger profiel voor de aansturing resulteert in een hogere vereiste snelheid om het doel te halen. Een complexer profiel is dus aantrekklijker op vlak van energie-efficiëntie, maar kan eventueel zorgen voor een moeilijkere aansturing/controller van de robot.
 
