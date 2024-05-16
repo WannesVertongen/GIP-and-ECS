@@ -120,13 +120,13 @@ V = v*(-7*20*tau.^6 + 6*70*tau.^5 -5*84*tau.^4 +4*35*tau.^3);
 
 velocity(1:ceil(T/(timestep))+offset) = V;      
 velocity(1+ceil(T/timestep):end) = 0;
-velocity_abrupt = zeros(1,ceil(T/(timestep)));
-velocity_abrupt(1:ceil(T/(timestep*2))) = velocity(1:ceil(T/(timestep*2)));
+velocity_abrpt = zeros(1,ceil(T/(timestep*2))+1);
+velocity_abrupt = velocity(1:ceil(T/(timestep*2)));
 
  writematrix(position,'poly_position.csv')
  writematrix(velocity_abrupt,'poly_velocity_abrupt_06.csv')
 figure
-plot(time(1:ceil(T/(timestep))),velocity_abrupt)
+plot(time(1:ceil(T/(timestep*2))),velocity_abrupt)
 title("velocity profile poly")
 figure 
 plot(time,position)
