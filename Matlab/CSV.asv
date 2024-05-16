@@ -105,7 +105,8 @@ T = dx_robot/v;
 
 tau = (0:timestep:T)/T;
 
-
+disp(offset);
+offset = 1;
 
 
 % Position 
@@ -113,7 +114,7 @@ S = dx_robot*(-20*tau.^7+70*tau.^6-84*tau.^5+35*tau.^4);
 
 
 
-disp(size(1:ceil(T/(timestep))+offset));
+disp(size(1:ceil(T/(2*timestep)+1)));
 disp(size(S));
 
 position(1:ceil(T/(timestep))+offset) = S;       
@@ -125,9 +126,6 @@ V = v*(-7*20*tau.^6 + 6*70*tau.^5 -5*84*tau.^4 +4*35*tau.^3);
 
 velocity(1:ceil(T/(timestep))+offset) = V;      
 velocity(1+ceil(T/timestep):end) = 0;
-
-disp(size(1:ceil(T/(timestep))+offset));
-disp(size(velocity));
 
  writematrix(position,'poly_position.csv')
  writematrix(velocity,'poly_velocity.csv')
