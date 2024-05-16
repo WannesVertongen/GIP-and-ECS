@@ -12,6 +12,8 @@ if v_max == 0.2
 else
     offset = 0;
 end
+offset =0 ;
+
 
 % Experiment opstelling:
 l = 1; %cable length
@@ -20,27 +22,27 @@ theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
 dx_robot = 0.8;  %horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 
-% %% 1. RAMP INPUT 
-% v = v_max;
-% t_eind = dx_robot/v;
-% ramp = v*[0:timestep:t_eind];
-% 
-% position = dx_robot*ones(1,length(time));
-% position(1,1:round(t_eind/timestep)+1) = ramp;
-% 
-% velocity = zeros(1,length(time));
-% velocity(1,1:round(t_eind/timestep)+1) = v;
-% 
-% figure
-% plot(time,velocity)
-% title("velocity profile ramp")
-% figure 
-% plot(time,position)
-% title("position profile ramp ")
-% 
-% 
-%  writematrix(position,'ramp_position.csv')
-%  writematrix(velocity,'ramp_velocity.csv')
+%% 1. RAMP INPUT 
+v = v_max;
+t_eind = dx_robot/v;
+ramp = v*[0:timestep:t_eind];
+
+position = dx_robot*ones(1,length(time));
+position(1,1:round(t_eind/timestep)+offset) = ramp;
+
+velocity = zeros(1,length(time));
+velocity(1,1:round(t_eind/timestep)+offset) = v;
+
+figure
+plot(time,velocity)
+title("velocity profile ramp")
+figure 
+plot(time,position)
+title("position profile ramp ")
+
+
+ writematrix(position,'ramp_position.csv')
+ writematrix(velocity,'ramp_velocity.csv')
 
 % %% 2. BANG BANG INPUT
 % 
@@ -105,16 +107,8 @@ T = dx_robot/v;
 
 tau = (0:timestep:T)/T;
 
-
-
-
 % Position 
 S = dx_robot*(-20*tau.^7+70*tau.^6-84*tau.^5+35*tau.^4);
-
-
-
-disp(size(1:ceil(T/(timestep))+offset));
-disp(size(S));
 
 position(1:ceil(T/(timestep))+offset) = S;       
 position(1+ceil(T/timestep):end) = dx_robot;
@@ -125,9 +119,6 @@ V = v*(-7*20*tau.^6 + 6*70*tau.^5 -5*84*tau.^4 +4*35*tau.^3);
 
 velocity(1:ceil(T/(timestep))+offset) = V;      
 velocity(1+ceil(T/timestep):end) = 0;
-
-disp(size(1:ceil(T/(timestep))+offset));
-disp(size(velocity));
 
  writematrix(position,'poly_position.csv')
  writematrix(velocity,'poly_velocity.csv')
