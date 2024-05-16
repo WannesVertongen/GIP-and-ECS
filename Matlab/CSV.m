@@ -12,13 +12,13 @@ if v_max == 0.2
 else
     offset = 0;
 end
-offset = 1;
+offset = 0;
 
 % Experiment opstelling:
 l = 1; %cable length
 theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
 %theta_opt = pi/4;
-dx_robot = 1.8;  %horizontale verplaatsing robot [m]
+dx_robot = 0.92134*2;  %horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 position = dx_robot*ones(1,length(time));
 velocity = zeros(1,length(time));
@@ -114,21 +114,26 @@ S = dx_robot*(-20*tau.^7+70*tau.^6-84*tau.^5+35*tau.^4);
 position(1:ceil(T/(timestep))+offset) = S;       
 position(1+ceil(T/timestep):end) = dx_robot;
 
+position_abrupt = zeros(1,ceil(T/(timestep)));
+position_abrupt(1:ceil(T/(timestep*2))) = position(1:ceil(T/(timestep*2)));
+position_abrupt(ceil(T/(timestep*2))+1:end) = position_abrupt(ceil(T/(timestep*2)));
 
 % Velocity
 V = v*(-7*20*tau.^6 + 6*70*tau.^5 -5*84*tau.^4 +4*35*tau.^3);
 
 velocity(1:ceil(T/(timestep))+offset) = V;      
 velocity(1+ceil(T/timestep):end) = 0;
+
 velocity_abrupt = zeros(1,ceil(T/(timestep)));
 velocity_abrupt(1:ceil(T/(timestep*2))) = velocity(1:ceil(T/(timestep*2)));
 
- writematrix(position,'poly_position.csv')
-     writematrix(velocity_abrupt,'poly_velocity_abrupt_06_90.csv')
+ writematrix(position_abrupt,'poly_position_abrupt_06_92.csv')
+ writematrix(velocity_abrupt,'poly_velocity_abrupt_06_92.csv')
+
 figure
 plot(time(1:ceil(T/(timestep))),velocity_abrupt)
 title("velocity profile poly")
 figure 
-plot(time,position)
+plot(time(1:ceil(T/(timestep))),position_abrupt)
 title("position profile poly ")
 
