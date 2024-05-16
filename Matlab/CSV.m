@@ -31,7 +31,15 @@ plot(time,velocity)
  writematrix(velocity,'ramp_velocity.csv')
 
 %% 2. BANG BANG INPUT
-v = 0.3;
+v_max = 0.3;
+v = v_max/2;
+
+
+
+frequency = 50;
+timestep = 1/frequency;
+time = 0:timestep:15;
+dx_robot = 0.8;  %horizontale verplaatsing robot [m]
 T = dx_robot/v;
 
 tau1 = (0:timestep:T/2)/T;
@@ -41,8 +49,13 @@ tau2 = (T/2:timestep:T)/T;
 S1 = dx_robot*2*(tau1).^2;
 S2 = dx_robot*(-2*tau2.^2+4*tau2-1);
 
-position(1:ceil(T/(2*timestep))) = S1;
-position(ceil(T/(2*timestep)):ceil(T/(timestep))-1) = S2;        
+disp(size(position(ceil(T/(2*timestep)):(ceil(T/timestep)))));
+
+disp(size(S2));
+
+
+position(1:ceil(T/(2*timestep))) = S1;   
+position(ceil(T/(2*timestep)):(ceil(T/timestep))) = S2;
 position(ceil(T/timestep):end) = dx_robot;
 
 
@@ -52,7 +65,7 @@ V1 = v*4*tau1;
 V2 = v*(-4*tau2 + 4);
 
 velocity(1:ceil(T/(2*timestep))) = V1;
-velocity(ceil(T/(2*timestep)):ceil(T/(timestep))-1) = V2;        
+velocity(ceil(T/(2*timestep)):ceil(T/(timestep))) = V2;        
 velocity(ceil(T/timestep):end) = 0;
 figure
 plot(time,velocity)
