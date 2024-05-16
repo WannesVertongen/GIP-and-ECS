@@ -1,9 +1,9 @@
 clear all
 syms  x xdot xdotdot theta thetadot thetadotdot l ldot ldotdot m M g F s 
 
-eq1 = (M+m)*xdotdot+M*(thetadotdot*l*cos(theta)+ldot*thetadot*cos(theta)-thetadot^2*l*sin(theta))==0;
+eq1 = (M+m)*xdotdot+M*(thetadotdot*l*cos(theta)+ldot*thetadot*cos(theta)-thetadot^2*l*sin(theta))==F;
 eq2 = 0.5*M*(4*l*ldot*thetadot+2*l^2*thetadotdot+2*xdotdot*l*cos(theta)+2*xdot*ldot*cos(theta)-2*xdot*l*thetadot*sin(theta)+2*xdot*l*thetadot*sin(theta)+2*g*l*sin(theta))==0;
-eq3 = 2*ldotdot-0.5*M*(2*l*thetadot^2+2*xdot*thetadot*cos(theta)+g*cos(theta))==0;
+eq3 = M*ldotdot-0.5*M*(2*l*thetadot^2+2*xdot*thetadot*cos(theta)+g*cos(theta))==0;
 
 sol = solve([eq1,eq2,eq3],[xdotdot,thetadotdot,ldotdot])
 %laplace_eq = s^2*theta == -(F*l+2*m*s^2*l^2*theta+M*g*l*theta+M*s^2*l*x+m*g*l*theta+m*s^2*x*l+2*M*s^2*l^2*theta+M*s^2*l^2*theta^3-M*s^2*l*theta)/(m*l^2);
