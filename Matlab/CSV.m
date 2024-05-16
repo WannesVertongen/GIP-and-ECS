@@ -26,6 +26,11 @@ velocity(1,1:round(t_eind/timestep)+1) = v;
 
 figure
 plot(time,velocity)
+title("velocity profile ramp")
+figure 
+plot(time,position)
+title("position profile ramp ")
+
 
  writematrix(position,'ramp_position.csv')
  writematrix(velocity,'ramp_velocity.csv')
@@ -69,14 +74,26 @@ velocity(ceil(T/(2*timestep)):ceil(T/(timestep))) = V2;
 velocity(ceil(T/timestep):end) = 0;
 figure
 plot(time,velocity)
+title("velocity profile bangbang")
+figure 
+plot(time,position)
+title("position profile bangbang ")
+
 
  writematrix(position,'bangbang_position.csv')
  writematrix(velocity,'bangbang_velocity.csv')
 
 %% 3. POLYNOOM INPUT
+v_max =0.3; 
+v = v_max/2.2;
 
-v = 0.3;
+
+frequency = 50;
+timestep = 1/frequency;
+time = 0:timestep:15;
+dx_robot = 0.8;  %horizontale verplaatsing robot [m]
 T = dx_robot/v;
+
 
 tau = (0:timestep:T)/T;
 
@@ -95,3 +112,10 @@ velocity(1+ceil(T/timestep):end) = 0;
 
  writematrix(position,'poly_position.csv')
  writematrix(velocity,'poly_velocity.csv')
+figure
+plot(time,velocity)
+title("velocity profile poly")
+figure 
+plot(time,position)
+title("position profile poly ")
+
