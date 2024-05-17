@@ -8,20 +8,19 @@ time = 0:timestep:15;
 
 v_max = 0.3*2;
 if v_max == 0.2
-    offset_1 = 1;
+    offset = 1;
 else
-    offset_1 = 0;
+    offset = 0;
 end
-offset_1 = 0;
-offset_2 = 0;
+offset = 0;
+
 % Experiment opstelling:
 l = 1; %cable length
 theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
 %theta_opt = pi/4;
-dx_robot = 0.6018*2; % 1 periode 
-%0.6018*2; % 1 periode 
-%0.753*2;  %1.25 periode
-%0.903*2;  % 1.5 periode
+dx_robot = 0.602*2;  %1 periode
+%%   0.903*2;  % 1.5 periode
+%%   0.753*2;  1.25 periode
 %horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 position = dx_robot*ones(1,length(time));
@@ -115,30 +114,30 @@ tau = (0:timestep:T)/T;
 % Position 
 S = dx_robot*(-20*tau.^7+70*tau.^6-84*tau.^5+35*tau.^4);
 
-position(1:ceil(T/(timestep))+offset_1) = S;       
+position(1:ceil(T/(timestep))+offset) = S;       
 position(1+ceil(T/timestep):end) = dx_robot;
 
-position_abrupt = zeros(1,2*ceil(T/(timestep)));
+position_abrupt = zeros(1,ceil(T/(timestep)));
 position_abrupt(1:ceil(T/(timestep*2))) = position(1:ceil(T/(timestep*2)));
 position_abrupt(ceil(T/(timestep*2))+1:end) = position_abrupt(ceil(T/(timestep*2)));
 
 % Velocity
 V = v*(-7*20*tau.^6 + 6*70*tau.^5 -5*84*tau.^4 +4*35*tau.^3);
 
-velocity(1:ceil(T/(timestep))+offset_2) = V;      
+velocity(1:ceil(T/(timestep))+offset) = V;      
 velocity(1+ceil(T/timestep):end) = 0;
 
-velocity_abrupt = zeros(1,2*ceil(T/(timestep)));
+velocity_abrupt = zeros(1,ceil(T/(timestep)));
 velocity_abrupt(1:ceil(T/(timestep*2))) = velocity(1:ceil(T/(timestep*2)));
 
- writematrix(position_abrupt,'poly_position_abrupt_060_0602.csv')
- writematrix(velocity_abrupt,'poly_velocity_abrupt_060_0602.csv')
+ writematrix(position_abrupt,'poly_position_abrupt_060_0903.csv')
+ writematrix(velocity_abrupt,'poly_velocity_abrupt_060_0903.csv')
 
 figure(1)
-plot(time(1:2*ceil(T/(timestep))),velocity_abrupt)
+plot(time(1:ceil(T/(timestep))),velocity_abrupt)
 title("velocity profile poly")
 
 figure(2)
-plot(time(1:2*ceil(T/(timestep))),position_abrupt)
+plot(time(1:ceil(T/(timestep))),position_abrupt)
 title("position profile poly ")
 
