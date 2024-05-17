@@ -18,7 +18,9 @@ offset = 0;
 l = 1; %cable length
 theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
 %theta_opt = pi/4;
-dx_robot = 0.753*2;  %horizontale verplaatsing robot [m]
+dx_robot = 0.903*2; 
+%%   0.753*2;  1.25 periode
+%horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
 position = dx_robot*ones(1,length(time));
 velocity = zeros(1,length(time));
@@ -127,8 +129,8 @@ velocity(1+ceil(T/timestep):end) = 0;
 velocity_abrupt = zeros(1,ceil(T/(timestep)));
 velocity_abrupt(1:ceil(T/(timestep*2))) = velocity(1:ceil(T/(timestep*2)));
 
- writematrix(position_abrupt,'poly_position_abrupt_060_075.csv')
- writematrix(velocity_abrupt,'poly_velocity_abrupt_060_075.csv')
+ writematrix(position_abrupt,'poly_position_abrupt_060_0903.csv')
+ writematrix(velocity_abrupt,'poly_velocity_abrupt_060_0903.csv')
 
 figure(1)
 plot(time(1:ceil(T/(timestep))),velocity_abrupt)
