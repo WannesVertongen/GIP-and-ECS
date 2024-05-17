@@ -6,7 +6,7 @@ g = 9.81;
 
 
 % Pendulum properties
-l = 1.5; %cable length
+l = 1; %cable length
 omega = sqrt(g/l);
 period = 2*pi/omega;
 
@@ -16,9 +16,10 @@ omega_init = 0;
 
 %Duration of the robot motion
 if theta_init == 0
-    T = 1.5*period; 
+    %T = 1.5*period; %amplitude gain
+    T = period; %amplitude attenuation
 else
-    T = 1.25*period;
+    T = 1.25*period; %amplitude gain/ attenuation depending on theta_init
 end
 
 
