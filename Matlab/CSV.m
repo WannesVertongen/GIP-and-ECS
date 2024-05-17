@@ -18,7 +18,7 @@ offset = 0;
 l = 1; %cable length
 theta_opt = 60.85*pi/180; %optimale eindhoek kabel [rad]
 %theta_opt = pi/4;
-dx_robot = 0.903*2; 
+dx_robot = 0.903*2;  % 1.5 periode
 %%   0.753*2;  1.25 periode
 %horizontale verplaatsing robot [m]
 dx_object = dx_robot + l*sin(theta_opt); %horizontale verplaatsing bak [m]
