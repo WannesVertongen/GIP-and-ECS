@@ -1,7 +1,7 @@
 clear all
 %gegevens
 syms x_m y_g 
-cl1 = 2;
+cl1 = 1.5;
 h = 0.24;
 B = 0.4;
 
@@ -69,8 +69,8 @@ best_angle_2 = theta_opt(I2)*180/pi
 
 %% 
 
-%trade_off = (-dy)./y_eind;
-trade_off = y_eind./(-dy);
+trade_off = (-dy)./y_eind;
+%trade_off = y_eind./(-dy);
 ylim([0,3])
 [M,I]= min(trade_off);
 figure
