@@ -22,7 +22,7 @@ theta_init = -pi/4;
 omega_init = 0;
 
 x = 0:0.1:dx_robot; %m
-time = 0:0.01:10; %s
+time = 0:0.01:15; %s
 
 
 %% 
@@ -31,24 +31,25 @@ time = 0:0.01:10; %s
 
 % 1 = ramp input constant speed
 % 2 = bang-bang motion law (1e orde continu)
-
-% 3 = 7de graads polynoom (4e orde continu, heel smooth dus eig hoop ik dat
+% 3 = minimal rms (2e orde continu)
+% 4 = 7de graads polynoom (4e orde continu, heel smooth dus eig hoop ik dat
 % dit minder goed werkt)
 
+input_type = 2;
 
 
+% Loop for different velocities
+iterations = 4;
 
 
-
-
-for input_type = 1:3
+for i = 0.3:0.3
 
     input = zeros(length(time),1);
     velocity = zeros(length(time),1);
 
     if input_type == 1
         % snelheid robot = v
-        v = 0.3; %m/s
+        v = i; %m/s
         
 
         % t = x/v: tijd vd beweging vd robot voor constante v
@@ -71,7 +72,7 @@ for input_type = 1:3
     if input_type == 2
 
         % Duratie beweging zelf te kiezen. Neem zelfde tijden als ramp
-        T = dx_robot/0.3;
+        T = dx_robot/i;
         tau1 = time(1:ceil(T/(2*0.01)))/T;
         tau2 = time(ceil(T/(2*0.01)):ceil(T/0.01))/T;
         % bang-bang
@@ -85,7 +86,7 @@ for input_type = 1:3
         %constant position at end
         input(ceil(T/0.01):end) = dx_robot;
         
-        v = 0.3;
+        v = i;
         V1 = v*4*tau1;
         V2 = v*(-4*tau2 + 4);
 
@@ -97,10 +98,10 @@ for input_type = 1:3
     
 
 
-    if input_type == 3
+    if input_type == 4
 
         % Duratie beweging zelf te kiezen. Neem zelfde tijden als ramp
-        T = dx_robot/0.3;
+        T = dx_robot/i;
         tau = time(1:ceil(T/0.01))/T;
         % 7th degree polynomial
         S = dx_robot*(-20*tau.^7+70*tau.^6-84*tau.^5+35*tau.^4);
@@ -111,11 +112,6 @@ for input_type = 1:3
         
         %constant position at end
         input(ceil(T/0.01):end) = dx_robot;
-        v=0.3;
-        V = v*(-7*20*tau.^6 + 6*70*tau.^5 -5*84*tau.^4 +4*35*tau.^3);
-
-        velocity(1:ceil(T/0.01),1) = V;      
-        velocity(1+ceil(T/0.01):end) = 0;
     end
     
    
@@ -145,7 +141,7 @@ for input_type = 1:3
 
     %time = timeindex / 100
     disp('SPEED = ')
-    disp(0.3)
+    disp(i)
     
     if max_angle >= theta_opt
         disp('VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV')
@@ -174,7 +170,7 @@ for input_type = 1:3
     xlabel('Time [s]')
     ylabel('Angle [°]')
     hold on
-    xline(x(end)/0.3, 'Color', 'r', 'LineStyle', '--');
+    xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
     %yline(theta_opt, 'Color', 'g', 'LineStyle', '--');
     
     
