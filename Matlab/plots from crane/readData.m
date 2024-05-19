@@ -1,6 +1,6 @@
 function [data,input_data_pos, input_data_vel, current_file, reverse] = readData(configuration)
     switch configuration
-        case 'cl1_no_angle_down'
+        case 'cl1_no_angle_up'
             crane_file = csvread('crane_cl1_0903.csv',1);
             input_data_pos = csvread('cl1_pos_0903.csv');
             input_data_vel = csvread('cl1_vel_0903.csv');
@@ -13,7 +13,7 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             data = crane_file(6580:end,:);
             %data = crane_file(last_zro_index+10:end,:);
             
-        case 'cl1_no_angle_up'
+        case 'cl1_no_angle_down'
             crane_file = csvread('crane_cl1_0602.csv',1);
             input_data_pos = csvread('cl1_pos_0602.csv');
             input_data_vel = csvread('cl1_vel_0602.csv');
@@ -25,7 +25,7 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
             data = crane_file(6580:end,:);
             
-        case 'cl2_no_angle_down'
+        case 'cl2_no_angle_up'
             crane_file = csvread('crane_cl2_1100.csv',1);
             input_data_pos = csvread('cl2_pos_1100.csv');
             input_data_vel = csvread('cl2_vel_1100.csv');
@@ -38,7 +38,7 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
             data = crane_file(6580:end,:);
 
-        case 'cl2_no_angle_up'
+        case 'cl2_no_angle_down'
             crane_file = csvread('crane_cl2_0737.csv',1);
             input_data_pos = csvread('cl2_pos_0737.csv');
             input_data_vel = csvread('cl2_vel_0737.csv');
