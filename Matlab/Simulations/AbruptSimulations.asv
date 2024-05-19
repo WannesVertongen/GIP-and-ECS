@@ -1,17 +1,17 @@
 %% Newest simulation file 
 clear all
-
+close all
 clc
 g = 9.81;
 
 
 % Pendulum properties
-l = 1.5; %cable length
+l = 1; %cable length
 omega = sqrt(g/l);
 period = 2*pi/omega;
 
 %Initial conditions
-theta_init = pi/12;
+theta_init = 0;
 omega_init = 0;
 
 %Duration of the robot motion
@@ -50,7 +50,7 @@ tau = (0:timestep:T)/T;
 
 S = dx_robot*(-20*tau.^7+70*tau.^6-84*tau.^5+35*tau.^4);
 
-position(1:ceil(T/(timestep))) = S;       
+position(1:ceil(T/(timestep))+offset) = S;       
 position(1+ceil(T/timestep):end) = dx_robot;
 
 position_abrupt = zeros(1,length(time));
@@ -60,7 +60,7 @@ position_abrupt(ceil(T/(timestep*2))+1:end) = position_abrupt(ceil(T/(timestep*2
 % Velocity
 V = v*(-7*20*tau.^6 + 6*70*tau.^5 -5*84*tau.^4 +4*35*tau.^3);
 
-velocity(1:ceil(T/(timestep))) = V;      
+velocity(1:ceil(T/(timestep))+offset) = V;      
 velocity(1+ceil(T/timestep):end) = 0;
 
 velocity_abrupt = zeros(1,length(time));
@@ -116,53 +116,43 @@ title('Robot velocity')
 
 
 subplot(3,1,2)
-plot(time,theta1*180/pi)
+plot(time,theta1)
 xlabel('Time [s]')
-ylabel('Angle [°]')
+ylabel('Angle [rad]')
 xline(T, 'r', '--')
 hold on
 % xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
 % yline(theta_opt, 'Color', 'g', 'LineStyle', '--');
-title('Cable angle')
+title('Cable angle \theta - method 1')
 legend('Simulation result','Abrupt stop')
 
-subplot(3,1,3)
+subplot(2,1,2)
 plot(x_obj1,y_obj1)
 xlabel('x-distance [m]')
 ylabel('y-distance [m]')
 xline(position_abrupt(1,end), 'r', '--')
-title('Object position')
-%axis([0 0.9 0 0.06]);
+title('Object position - method 1')
+axis([0 0.9 0 0.06]);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Output for method 2
 figure
-subplot(3,1,1)
-plot(time,velocity_abrupt)
+subplot(2,1,1)
+plot(time,theta2)
 xlabel('Time [s]')
-ylabel('Velocity [m/s]')
-title('Robot velocity')
-
-
-subplot(3,1,2)
-plot(time,theta2*180/pi)
-xlabel('Time [s]')
-ylabel('Angle [°]')
+ylabel('Angle [rad]')
 xline(T, 'r', '--')
-hold on
-% xline(x(end)/i, 'Color', 'r', 'LineStyle', '--');
-% yline(theta_opt, 'Color', 'g', 'LineStyle', '--');
-title('Cable angle')
+title('Cable angle \theta - method 2')
 legend('Simulation result','Abrupt stop')
 
-subplot(3,1,3)
+subplot(2,1,2)
 plot(x_obj2,y_obj2)
 xlabel('x-distance [m]')
 ylabel('y-distance [m]')
 xline(position_abrupt(1,end), 'r', '--')
-title('Object position')
-%axis([0 0.9 0 0.06]);
+title('Object position - method 2')
+axis([0 0.9 0 0.06]);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 

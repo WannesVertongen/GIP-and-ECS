@@ -167,6 +167,7 @@ for input_type = 1:3
     plot(time, velocity)
     xlabel('Time [s]')
     ylabel('Velocity [m/s]')
+    title('Robot velocity')
     
 
     subplot(3,1,2)
@@ -174,7 +175,8 @@ for input_type = 1:3
     xlabel('Time [s]')
     ylabel('Angle [°]')
     hold on
-    xline(x(end)/0.3, 'Color', 'r', 'LineStyle', '--');
+    xline(x(end)/0.3, 'Color', 'r', 'LineStyle', '--')
+    title('Cable angle')
     %yline(theta_opt, 'Color', 'g', 'LineStyle', '--');
     
     
@@ -184,5 +186,6 @@ for input_type = 1:3
     ylabel('z-distance [m]')
     hold on
     xline(x(end), 'Color', 'r', 'LineStyle', '--');
+    title('Object position')
 end
 
