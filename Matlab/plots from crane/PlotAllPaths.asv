@@ -1,6 +1,16 @@
     % Configuration
 set(0,'DefaultFigureWindowStyle','docked')
-configuration = 'cl2_angle_up';
+configuration = 'cl2_angle_down';
+% cl1_no_angle_down
+% cl1_no_angle_up
+% cl2_no_angle_down
+% cl2_no_angle_up
+% cl1_angle_down
+% cl1_angle_up
+% cl2_angle_down
+% cl2_angle_up
+
+% pickup
 clc 
 close all
 
@@ -32,28 +42,32 @@ freq = 50;
 time_step = 1/freq;
 R_x = 0.04;  % Distance from motor axis to motion line
 R_z = 0.1;
-
 % Extract and preprocess data
 time = data(:, 1) - data(1, 1);
+
 x_position = data(:, 4);
 x_velocity = data(:, 5);
 angle = smoothdata(data(:, 15));
 z_position = data(:, 8) * 100;
 
 % Find zero crossing and collision index
-first_zero_index = find(x_position < 0.01 & x_position > -0.01, 1, 'last');
+first_zero_index = find(x_position < 0.04 & x_position > -0.01, 1, 'last');
 
 
 %shift all data
+
+
 time = time(first_zero_index:end);
 x_position = x_position(first_zero_index:end);
 x_velocity = x_velocity(first_zero_index:end);
 angle = angle(first_zero_index:end);
 z_position = z_position(first_zero_index:end);
 
-last_zero_index =  find(x_position > 0.001 & x_position > -0.01, 1, 'first');
-ids = find(x_position >max(x_position)-1,1,'first')
-time_shift = time(find(x_position <0.01,1,'first'));
+[~, collision_index] = max(x_position);
+last_zero_index =  find(x_position < 0.01 & x_position > -0.01, 1, 'first');
+ids = find(x_position <0.01 ,1,'last');
+time_shift = time(find(x_position <0.04,1,'last'))-0.30;
+
 [~, collision_index] = max(x_position);
 
 % Adjust for pickup configuration
@@ -77,6 +91,7 @@ load_angle = current_file(:, 2) / 1000;
 
 % Plot X Position and X Velocity
 figure;
+subplot(2,1,1)
 plot(time, x_position);
 xlabel('Time (s)');
 ylabel('X Position (cm)');
@@ -84,10 +99,13 @@ hold on;
 scatter(input_time/freq + time_shift - pickup_shift, input_position * 100, 2, 'r', 'filled');
 hold off;
 legend('Measured data', 'Expected data', 'Location', 'best');
-xlim([time(1), time(end)]);
-title('X Position vs Time');
+xlim([time(1), time(collision_index*2)]);
+ax = gca; 
+ax.FontSize = 14; 
+ax.FontWeight = 'bold';
+%title('X Position vs Time');
 
-figure;
+subplot(2,1,2)
 plot(time, x_velocity);
 xlabel('Time (s)');
 ylabel('X Velocity (cm/s)');
@@ -95,84 +113,104 @@ hold on;
 scatter(input_time(1+pickup_shift_2:end)/freq + time_shift - pickup_shift, input_velocity * 100, 2, 'r', 'filled');
 hold off;
 legend('Measured data', 'Expected data', 'Location', 'best');
-xlim([time(1), time(end)]);
-title('X Velocity vs Time');
+xlim([time(1), time(collision_index*2)]);
+ax = gca; 
+ax.FontSize = 14; 
+ax.FontWeight = 'bold';
+%title('X Velocity vs Time');
 
-% Plot Current and Load Angle
-figure;
-plot(current_time / freq, current_amp);
-xlabel('Time (s)');
-ylabel('Current (mA)');
-xlim([time(1), time(end)]);
-xline(current_time(collision_index_input) / freq + time_shift);
-title('Current vs Time');
-
-figure;
-plot(current_time / freq, load_angle);
-xlabel('Time (s)');
-ylabel('Load Angle (rad)');
-xlim([time(1), time(end)]);
-title('Load Angle vs Time');
-
-% Calculate and plot Power and Energy
-current = current_amp .* cos(load_angle);
-index_min = min(length(input_velocity), length(current));
-power = current(end-index_min+1:end)' .* input_velocity(end-index_min+1:end) / (R_x * 60);
-current_time_adjusted = current_time(end-index_min+1:end);
-energy = cumtrapz(power);
-
-figure;
-plot(current_time_adjusted / freq, power);
-xlabel('Time (s)');
-ylabel('Power (W)');
-xlim([time(1), time(end)]);
-title('Power Relation');
-
-figure;
-plot(current_time_adjusted / freq, energy);
-xlabel('Time (s)');
-ylabel('Energy (J)');
-xlim([time(1), time(end)]);
-title('Energy Relation');
 
 % Plot Object Angle over Time
-
-
+TwoPeriodShift= find(time >2*T+time(collision_index), 1, 'first');
+figure
 plot(time(1:TwoPeriodShift), angle(1:TwoPeriodShift));
 xlabel('Time (s)');
 ylabel('Object Angle (deg)');
 hold on;
 xline(time(collision_index));
-start_angle = min(angle(1:collision_index-1));
-new_angle = max(angle(collision_index:TwoPeriodShift));
+start_angle = min(angle(1:collision_index-1))
+new_angle = max(angle(collision_index:TwoPeriodShift))
 gain = abs(new_angle / start_angle);
+
 if reverse
     new_angle = max(angle(collision_index+1000:end));
 end
+dh1 = cos(start_angle) - cos(new_angle)
+
 yline(0, 'r');
 yline(start_angle);
 yline(new_angle);
 hold off;
-title('Object Angle vs Time');
+ax = gca; 
+ax.FontSize = 14; 
+ax.FontWeight = 'bold';
+%title('Object Angle vs Time');
 
-% Plot Object Angle vs X Position
-figure;
-plot(x_position, angle);
-xlabel('X Position (cm)');
-ylabel('Object Angle (deg)');
-title('Object Angle vs X Position');
 
-% Plot Z Position
-figure;
-if strcmp(configuration, 'pickup')
-    plot(x_position, -z_position);
-    xlabel('X Position (cm)');
-    ylabel('Z Position (cm)');
-    xlim([-5, 85]);
-    ylim([-155, -100]);
-else
-    plot(smoothdata(x_position + sin(angle)), -z_position .* cos(angle * pi / 180));
-    xlabel('X Position (cm)');
-    ylabel('Z Position (cm)');
-end
-title('Object Position');
+% Plot Current and Load Angle
+% figure;
+% subplot(2,1,1)
+% plot(current_time / freq, current_amp);
+% xlabel('Time (s)');
+% ylabel('Current (mA)');
+% xlim([time(1), time(end)]);
+% xline(current_time(collision_index_input) / freq + time_shift);
+% title('Current vs Time');
+% 
+% subplot(2,1,2)
+% plot(current_time / freq, load_angle);
+% xlabel('Time (s)');
+% ylabel('Load Angle (rad)');
+% xlim([time(1), time(end)]);
+% title('Load Angle vs Time');
+% 
+% % Calculate and plot Power and Energy
+% current = current_amp .* cos(load_angle);
+% index_min = min(length(input_velocity), length(current));
+% power = current(end-index_min+1:end)' .* input_velocity(end-index_min+1:end) / (R_x * 60);
+% current_time_adjusted = current_time(end-index_min+1:end);
+% energy = cumtrapz(power);
+% 
+% figure;
+% subplot(2,1,1)
+% plot(current_time_adjusted / freq, power);
+% xlabel('Time (s)');
+% ylabel('Power (W)');
+% xlim([time(1), time(end)]);
+% title('Power Relation');
+% 
+% 
+% subplot(2,1,2)
+% plot(current_time_adjusted / freq, energy);
+% xlabel('Time (s)');
+% ylabel('Energy (J)');
+% xlim([time(1), time(end)]);
+% title('Energy Relation');
+% 
+% 
+% 
+% % Plot Object Angle vs X Position
+% figure;
+% subplot(2,1,1)
+% plot(x_position, angle);
+% xlabel('X Position (cm)');
+% ylabel('Object Angle (deg)');
+% title('Object Angle vs X Position');
+% 
+% % Plot Z Position
+% 
+% if strcmp(configuration, 'pickup')
+% 
+%     subplot(2,1,2)
+%     plot(x_position, -z_position);
+%     xlabel('X Position (cm)');
+%     ylabel('Z Position (cm)');
+%     xlim([-5, 85]);
+%     ylim([-155, -100]);
+% else
+%     subplot(2,1,2)
+%     plot(smoothdata(x_position + sin(angle)), -z_position .* cos(angle * pi / 180));
+%     xlabel('X Position (cm)');
+%     ylabel('Z Position (cm)');
+% end
+% title('Object Position');
