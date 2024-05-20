@@ -1,6 +1,7 @@
-%% TRANSFER FUNCTION 
+%% TRANSFER FUNCTION
 clear all
 clc
+set(0,'DefaultFigureWindowStyle','docked')
 g = 9.81;
 l = 1.5; %cable length
 
@@ -9,7 +10,7 @@ omega = sqrt(g/l);
 period = 2*pi/omega;
 T = 1.5*period;
 
-v_avg = 0.3;
+v_avg = 0.2;
 
 % Experiment opstelling:
 theta_opt = 65.5*pi/180; %optimale eindhoek kabel [rad]
@@ -48,7 +49,7 @@ for input_type = 1:3
 
     if input_type == 1
         % snelheid robot = v
-        v = 0.3; %m/s
+        v = 0.2; %m/s
         
 
         % t = x/v: tijd vd beweging vd robot voor constante v
@@ -71,7 +72,7 @@ for input_type = 1:3
     if input_type == 2
 
         % Duratie beweging zelf te kiezen. Neem zelfde tijden als ramp
-        T = dx_robot/0.3;
+        T = dx_robot/0.2;
         tau1 = time(1:ceil(T/(2*0.01)))/T;
         tau2 = time(ceil(T/(2*0.01)):ceil(T/0.01))/T;
         % bang-bang
@@ -85,7 +86,7 @@ for input_type = 1:3
         %constant position at end
         input(ceil(T/0.01):end) = dx_robot;
         
-        v = 0.3;
+        v = 0.2;
         V1 = v*4*tau1;
         V2 = v*(-4*tau2 + 4);
 
@@ -100,7 +101,7 @@ for input_type = 1:3
     if input_type == 3
 
         % Duratie beweging zelf te kiezen. Neem zelfde tijden als ramp
-        T = dx_robot/0.3;
+        T = dx_robot/0.2;
         tau = time(1:ceil(T/0.01))/T;
         % 7th degree polynomial
         S = dx_robot*(-20*tau.^7+70*tau.^6-84*tau.^5+35*tau.^4);
@@ -111,7 +112,7 @@ for input_type = 1:3
         
         %constant position at end
         input(ceil(T/0.01):end) = dx_robot;
-        v=0.3;
+        v=0.2;
         V = v*(-7*20*tau.^6 + 6*70*tau.^5 -5*84*tau.^4 +4*35*tau.^3);
 
         velocity(1:ceil(T/0.01),1) = V;      
@@ -145,7 +146,7 @@ for input_type = 1:3
 
     %time = timeindex / 100
     disp('SPEED = ')
-    disp(0.3)
+    disp(0.2)
     
     if max_angle >= theta_opt
         disp('VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV')
@@ -175,9 +176,10 @@ for input_type = 1:3
     xlabel('Time [s]')
     ylabel('Angle [°]')
     hold on
-    xline(x(end)/0.3, 'Color', 'r', 'LineStyle', '--')
+    xline(input(end)/0.2, 'Color', 'r', 'LineStyle', '--')
     title('Cable angle')
     %yline(theta_opt, 'Color', 'g', 'LineStyle', '--');
+    legend('Simulation result', 'End of robot movement')
     
     
     subplot(3,1,3)
@@ -185,7 +187,7 @@ for input_type = 1:3
     xlabel('x-distance [m]')
     ylabel('z-distance [m]')
     hold on
-    xline(x(end), 'Color', 'r', 'LineStyle', '--');
+    xline(input(end), 'Color', 'r', 'LineStyle', '--');
     title('Object position')
 end
 
