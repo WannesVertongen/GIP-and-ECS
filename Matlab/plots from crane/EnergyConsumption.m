@@ -1,6 +1,6 @@
 % Configuration
 set(0,'DefaultFigureWindowStyle','docked')
-configuration = 'pickup';
+configuration = 'experiment1';
 clc 
 close all
 
@@ -24,6 +24,28 @@ if strcmp(configuration, 'pickup')
     path_pickup(t_pickup > t3 & t_pickup <= t4) = 80 * (t_pickup(t_pickup > t3 & t_pickup <= t4) - t3) / (t4 - t3);
     
     input_data_pos = path_pickup / 100;
+    input_data_vel = diff(input_data_pos) / (1/fs);
+end
+
+if strcmp(configuration, 'experiment1')
+    fs = 50;
+    total_time = 21;
+    t0 = 7.032;
+    t1 = 7.7 - t0;
+    t2 = 12.4768 -t0;
+    t3 = 13.5 -t0;
+    t4 = 16.6 -t0;
+    t5 = 20.6224 -t0;
+    t_exp1 = 0:1/fs:t5;
+    path_exp1 = zeros(size(t_exp1));
+    
+    path_exp1(t_exp1 <= t1) = 85;
+    path_exp1(t_exp1 > t1 & t_exp1 <= t2) = 85 * (1 - (t_exp1(t_exp1 > t1 & t_exp1 <= t2) - t1) / (t2 - t1));
+    path_exp1(t_exp1 > t2 & t_exp1 <= t3) = 15 *(t_exp1(t_exp1 > t2 & t_exp1 <= t3) - t2) / (t3 - t2);
+    path_exp1(t_exp1 > t3 & t_exp1< t4) = 15;
+    path_exp1(t_exp1 > t4 & t_exp1 <= t5) = 15+ 70 * (t_exp1(t_exp1 > t4 & t_exp1 <= t5) - t4) / (t5 - t4);
+    
+    input_data_pos = path_exp1 / 100;
     input_data_vel = diff(input_data_pos) / (1/fs);
 end
 
@@ -78,6 +100,9 @@ end
 if strcmp(configuration, 'cl1_angle_up')
     start_index = 235;
 end
+if strcmp(configuration, 'experiment1')
+    start_index = 296;
+end
 
 current_time_adjusted = current_time(start_index:end);
 
@@ -102,7 +127,7 @@ plot(current_time_adjusted / freq, current_amp(start_index:end));
 xlabel('Time (s)');
 ylabel('Current (mA)');
 
-xline(current_time(collision_index_input) / freq + time_shift);
+%xline(current_time(collision_index_input) / freq + time_shift);
 title('Current vs Time');
 
 figure;

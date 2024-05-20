@@ -1,6 +1,6 @@
 % Configuration
 set(0,'DefaultFigureWindowStyle','docked')
-configuration = 'cl2_no_angle_down';
+configuration = 'pickup';
 clc 
 close all
 
@@ -24,6 +24,28 @@ if strcmp(configuration, 'pickup')
     path_pickup(t_pickup > t3 & t_pickup <= t4) = 80 * (t_pickup(t_pickup > t3 & t_pickup <= t4) - t3) / (t4 - t3);
     
     input_data_pos = path_pickup / 100;
+    input_data_vel = diff(input_data_pos) / (1/fs);
+end
+
+if strcmp(configuration, 'experiment1')
+    fs = 50;
+    total_time = 21;
+    t0 = 7.032;
+    t1 = 7.7 - t0;
+    t2 = 12.4768 -t0;
+    t3 = 13.5 -t0;
+    t4 = 16.6 -t0;
+    t5 = 20.6224 -t0;
+    t_exp1 = 0:1/fs:t4;
+    path_exp1 = zeros(size(t_exp1));
+    
+    path_exp1(t_exp1 <= t1) = 85;
+    path_exp1(t_exp1 > t1 & t_exp1 <= t2) = 85 * (1 - (t_exp1(t_exp1 > t1 & t_exp1 <= t2) - t1) / (t2 - t1));
+    path_exp1(t_exp1 > t2 & t_exp1 <= t3) = 15 *(t_exp1(t_exp1 > t2 & t_exp1 <= t3) - t2) / (t3 - t2);
+    path_exp1(t_exp1 > t3 & t_exp1< t4) = 15;
+    path_exp1(t_exp1 > 4 & t_exp1 <= t5) = 15+ 70 * (t_exp1(t_exp1 > t4 & t_exp1 <= t5) - t4) / (t5 - t4);
+    
+    input_data_pos = path_exp1 / 100;
     input_data_vel = diff(input_data_pos) / (1/fs);
 end
 
@@ -53,6 +75,7 @@ if strcmp(configuration, 'pickup')
     pickup_shift_2 = 1;
 end
 
+
 % Prepare input data for plotting
 input_time = 1:length(input_data_pos);
 current_time = 1:length(current_file);
@@ -71,7 +94,13 @@ current_x_velocity = [diff(current_x_pos);zeros(1,1)];
 starting_time = 4;
 ending_time = 7.5;
 start_index = starting_time*freq + find(load_angle(starting_time*freq:ending_time*freq)==0,1,"last")-1;
-start_index = 1;
+if strcmp(configuration, 'cl2_no_angle_down')
+    start_index = 1;
+end
+if strcmp(configuration, 'cl1_angle_up')
+    start_index = 235;
+end
+
 current_time_adjusted = current_time(start_index:end);
 
 % Plot Current and Load Angle
