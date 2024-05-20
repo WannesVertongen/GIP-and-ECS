@@ -1,4 +1,4 @@
-function [data,input_data_pos, input_data_vel, current_file, reverse] = readData(configuration)
+function [data,input_data_pos, input_data_vel, current_file, reverse, T] = readData(configuration)
     switch configuration
         case 'cl1_no_angle_up'
             crane_file = csvread('crane_cl1_0903.csv',1);
@@ -7,6 +7,7 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             current_file = csvread('crane_cl1_0903_current.csv',1);
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = false;
+            T = 2*pi/(sqrt(9.81/1)) * 1.5;
 
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
@@ -20,6 +21,7 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             current_file = csvread('crane_cl1_0602_current.csv',1);
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = false;
+            T = 2*pi/(sqrt(9.81/1)) * 1;
 
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
@@ -33,10 +35,11 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = true;
             
-            
+            T = 2*pi/(sqrt(9.81/1.5)) * 1.5;
+
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
-            data = crane_file(6580:end,:);
+            data = crane_file(8000:end,:);
 
         case 'cl2_no_angle_down'
             crane_file = csvread('crane_cl2_0737.csv',1);
@@ -45,7 +48,7 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             current_file = csvread('crane_cl2_0737_current.csv',1);
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = false;
-
+            T = 2*pi/(sqrt(9.81/1.5)) * 1;
 
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
@@ -58,10 +61,11 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             current_file = csvread('crane_cl1_0753_current_down.csv',1);
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = true;
+            T = 2*pi/(sqrt(9.81/1)) * 1.25;
 
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
-            data = crane_file(6580:end,:);
+            data = crane_file(8000:end,:);
             
         case 'cl1_angle_up'
             crane_file = csvread('crane_cl1_0753_up.csv',1);
@@ -70,10 +74,11 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             current_file = csvread('crane_cl1_0753_current_up.csv',1);
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = false;
+            T = 2*pi/(sqrt(9.81/1)) * 1.25;
 
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
-            data = crane_file(6580:end,:);
+            data = crane_file(8000:end,:);
             
         case 'cl2_angle_down'
             crane_file = csvread('crane_cl2_0921_down.csv',1);
@@ -82,10 +87,11 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             current_file = csvread('crane_cl2_0921_current_down.csv',1);
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = true;
+            T = 2*pi/(sqrt(9.81/1.5)) * 1.25;
 
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
-            data = crane_file(7000:end,:);
+            data = crane_file(8000:end,:);
             
         case 'cl2_angle_up'
              crane_file = csvread('crane_cl2_0921_up.csv',1);
@@ -94,12 +100,13 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             current_file = csvread('crane_cl2_0921_current_up.csv',1);
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = false;
+            T = 2*pi/(sqrt(9.81/1.5)) * 1.25;
 
 
 
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
-            data = crane_file(7000:end,:);
+            data = crane_file(8000:end,:);
             
         case 'pickup'
             crane_file = csvread('pickup.csv',1);
@@ -108,6 +115,7 @@ function [data,input_data_pos, input_data_vel, current_file, reverse] = readData
             current_file = csvread('pickup_current.csv',1);
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = false;
+            T = 5;
 
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');

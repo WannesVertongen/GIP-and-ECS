@@ -67,7 +67,7 @@ v = v_max;
 disp(dx_robot)
 
  %horizontale verplaatsing robot [m]
-T = dx_robot/v
+T = dx_robot/v;
 
 tau1 = (0:timestep:T/2)/T;
 tau2 = (T/2:timestep:T)/T;
