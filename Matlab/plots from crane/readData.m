@@ -133,6 +133,45 @@ function [data,input_data_pos, input_data_vel, current_file, reverse, T] = readD
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
             data = crane_file(6580:end,:);
+        
+        case 'ramp'
+            crane_file = csvread('data_ramp.csv',1);
+            input_data_pos = csvread('ramp_position.csv');
+            input_data_vel = csvread('ramp_velocity.csv');
+            current_file = csvread('current_ramp.csv',1);
+            %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
+            reverse = false;
+            T = 2*pi/(sqrt(9.81/1.5)) * 1.5;
+
+            x_position_full = crane_file(:, 4);
+            last_zero_index = find(x_position_full <0.0001, 1, 'last');
+            data = crane_file(10894:end,:);
+
+        case 'bangbang'
+            crane_file = csvread('data_bang.csv',1);
+            input_data_pos = csvread('bangbang_position.csv');
+            input_data_vel = csvread('bangbang_velocity.csv');
+            current_file = csvread('current_bang.csv',1);
+            %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
+            reverse = false;
+            T = 2*pi/(sqrt(9.81/1.5)) * 1.5;
+
+            x_position_full = crane_file(:, 4);
+            last_zero_index = find(x_position_full <0.0001, 1, 'last');
+            data = crane_file(10526:end,:);
+            
+        case 'poly'
+            crane_file = csvread('data_poly.csv',1);
+            input_data_pos = csvread('poly_position.csv');
+            input_data_vel = csvread('poly_velocity.csv');
+            current_file = csvread('current_poly.csv',1);
+            %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
+            reverse = false;
+            T = 2*pi/(sqrt(9.81/1.5)) * 1.5;
+
+            x_position_full = crane_file(:, 4);
+            last_zero_index = find(x_position_full <0.0001, 1, 'last');
+            data = crane_file(10987:end,:);
 
         otherwise
             error('Invalid configuration');

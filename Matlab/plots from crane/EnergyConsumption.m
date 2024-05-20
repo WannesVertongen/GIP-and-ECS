@@ -1,6 +1,6 @@
 % Configuration
 set(0,'DefaultFigureWindowStyle','docked')
-configuration = 'experiment1';
+configuration = 'ramp';
 clc 
 close all
 
@@ -87,7 +87,11 @@ input_velocity = input_data_vel(1, :);
 current_x_pos = current_file(:, 1);
 current_amp = current_file(:, 2) / 1000;
 load_angle = current_file(:, 3) / 1000;
-z_torque = current_file(:,4);
+if ismember(configuration, {'ramp', 'bangbang', 'poly'})
+    z_torque = zeros(length(current_x_pos),1);
+else
+    z_torque = current_file(:,4);
+end
 current_x_velocity = [diff(current_x_pos);zeros(1,1)];
 
 %Find starting point
@@ -96,12 +100,14 @@ ending_time = 7.5;
 start_index = starting_time*freq + find(load_angle(starting_time*freq:ending_time*freq)==0,1,"last")-1;
 if strcmp(configuration, 'cl2_no_angle_down')
     start_index = 1;
-end
-if strcmp(configuration, 'cl1_angle_up')
+elseif strcmp(configuration, 'cl1_angle_up')
     start_index = 235;
-end
-if strcmp(configuration, 'experiment1')
+
+elseif strcmp(configuration, 'experiment1')
     start_index = 296;
+
+elseif strcmp(configuration, 'ramp')
+     start_index = 262;
 end
 
 current_time_adjusted = current_time(start_index:end);
