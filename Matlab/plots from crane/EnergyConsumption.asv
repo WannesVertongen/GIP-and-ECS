@@ -1,6 +1,6 @@
 % Configuration
 set(0,'DefaultFigureWindowStyle','docked')
-configuration = 'cl1_angle_up';
+configuration = 'cl2_no_angle_down';
 clc 
 close all
 
@@ -41,7 +41,7 @@ angle = smoothdata(data(:, 15));
 z_position = data(:, 8) * 100;
 
 % Find zero crossing and collision index
-first_zero_index = find(x_position < 0.01 & x_position > -0.01, 1, 'last');
+first_zero_index = find(x_position < 0.01 & x_position > -0.01, 1, 'first');
 time_shift = time(first_zero_index);
 [~, collision_index] = max(x_position(first_zero_index:end));
 
@@ -67,57 +67,69 @@ load_angle = current_file(:, 3) / 1000;
 z_torque = current_file(:,4);
 current_x_velocity = [diff(current_x_pos);zeros(1,1)];
 
+%Find starting point
+starting_time = 4;
+ending_time = 7.5;
+start_index = starting_time*freq + find(load_angle(starting_time*freq:ending_time*freq)==0,1,"last")-1;
+start_index = 1;
+current_time_adjusted = current_time(start_index:end);
 
 % Plot Current and Load Angle
 figure;
-plot(current_time / freq, current_x_pos);
+plot(current_time_adjusted / freq, current_x_pos(start_index:end));
 xlabel('Time (s)');
 ylabel('X-position (m)');
-xlim([time(1), time(end)]);
+
 title('X-position vs time')
 
 figure;
-plot(current_time / freq, current_x_velocity);
+plot(current_time_adjusted / freq, current_x_velocity(start_index:end));
 xlabel('Time (s)');
 ylabel('X-velocity (m/s)');
-xlim([time(1), time(end)]);
+
 ylim([-5, 10]);
 title('X-velocity vs time')
 
 figure;
-plot(current_time / freq, current_amp);
+plot(current_time_adjusted / freq, current_amp(start_index:end));
 xlabel('Time (s)');
 ylabel('Current (mA)');
-xlim([time(1), time(end)]);
+
 xline(current_time(collision_index_input) / freq + time_shift);
 title('Current vs Time');
 
 figure;
-plot(current_time / freq, load_angle);
+plot(current_time_adjusted / freq, load_angle(start_index:end));
 xlabel('Time (s)');
 ylabel('Load Angle (rad)');
-xlim([time(1), time(end)]);
+
 title('Load Angle vs Time');
+
+figure;
+plot(current_time_adjusted / freq, z_torque(start_index:end));
+xlabel('Time (s)');
+ylabel('Z - torque (Nm)');
+
+title('Cable torque vs Time');
 
 % Calculate and plot Power and Energy
 angular_velocity = current_x_velocity/R_x;
-current = current_amp .* cos(load_angle);
-index_min = min(length(input_velocity), length(current));
-power = current(end-index_min+1:end)' .* angular_velocity;
-current_time_adjusted = current_time(end-index_min+1:end);
-energy = cumtrapz(power);
+current = abs(current_amp .* cos(load_angle));
+power = (current(start_index:end)' + z_torque(start_index:end)') .* angular_velocity(start_index:end)';
+energy_plot = cumtrapz(power)*time_step;
+energy = trapz(power)*time_step
 
 figure;
 plot(current_time_adjusted / freq, power);
 xlabel('Time (s)');
 ylabel('Power (W)');
-xlim([time(1), time(end)]);
+
 title('Power Relation');
 
 figure;
-plot(current_time_adjusted / freq, energy);
+plot(current_time_adjusted / freq, energy_plot);
 xlabel('Time (s)');
 ylabel('Energy (J)');
-xlim([time(1), time(end)]);
-title('Energy Relation');
+
+title('Cumulative Energy consumption [J]');
 
