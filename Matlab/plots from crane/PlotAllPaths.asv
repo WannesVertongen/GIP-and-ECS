@@ -1,6 +1,6 @@
     % Configuration
 set(0,'DefaultFigureWindowStyle','docked')
-configuration = 'cl1_angle_up';
+configuration = 'cl2_angle_up';
 clc 
 close all
 
@@ -52,8 +52,8 @@ angle = angle(first_zero_index:end);
 z_position = z_position(first_zero_index:end);
 
 last_zero_index =  find(x_position > 0.001 & x_position > -0.01, 1, 'first');
-ids = find(x_position <0.01 ,1,'last');
-time_shift = time(find(x_position <0.01,1,'last'));
+ids = find(x_position >max(x_position)-1,1,'first')
+time_shift = time(find(x_position <0.01,1,'first'));
 [~, collision_index] = max(x_position);
 
 % Adjust for pickup configuration
@@ -77,7 +77,6 @@ load_angle = current_file(:, 2) / 1000;
 
 % Plot X Position and X Velocity
 figure;
-subplot(2,1,1)
 plot(time, x_position);
 xlabel('Time (s)');
 ylabel('X Position (cm)');
@@ -88,7 +87,7 @@ legend('Measured data', 'Expected data', 'Location', 'best');
 xlim([time(1), time(end)]);
 title('X Position vs Time');
 
-subplot(2,1,2)
+figure;
 plot(time, x_velocity);
 xlabel('Time (s)');
 ylabel('X Velocity (cm/s)');
@@ -99,10 +98,46 @@ legend('Measured data', 'Expected data', 'Location', 'best');
 xlim([time(1), time(end)]);
 title('X Velocity vs Time');
 
+% Plot Current and Load Angle
+figure;
+plot(current_time / freq, current_amp);
+xlabel('Time (s)');
+ylabel('Current (mA)');
+xlim([time(1), time(end)]);
+xline(current_time(collision_index_input) / freq + time_shift);
+title('Current vs Time');
+
+figure;
+plot(current_time / freq, load_angle);
+xlabel('Time (s)');
+ylabel('Load Angle (rad)');
+xlim([time(1), time(end)]);
+title('Load Angle vs Time');
+
+% Calculate and plot Power and Energy
+current = current_amp .* cos(load_angle);
+index_min = min(length(input_velocity), length(current));
+power = current(end-index_min+1:end)' .* input_velocity(end-index_min+1:end) / (R_x * 60);
+current_time_adjusted = current_time(end-index_min+1:end);
+energy = cumtrapz(power);
+
+figure;
+plot(current_time_adjusted / freq, power);
+xlabel('Time (s)');
+ylabel('Power (W)');
+xlim([time(1), time(end)]);
+title('Power Relation');
+
+figure;
+plot(current_time_adjusted / freq, energy);
+xlabel('Time (s)');
+ylabel('Energy (J)');
+xlim([time(1), time(end)]);
+title('Energy Relation');
 
 % Plot Object Angle over Time
-TwoPeriodShift= find(time >2*T+time(collision_index), 1, 'first');
-figure
+
+
 plot(time(1:TwoPeriodShift), angle(1:TwoPeriodShift));
 xlabel('Time (s)');
 ylabel('Object Angle (deg)');
@@ -120,69 +155,22 @@ yline(new_angle);
 hold off;
 title('Object Angle vs Time');
 
-
-% Plot Current and Load Angle
-figure;
-subplot(2,1,1)
-plot(current_time / freq, current_amp);
-xlabel('Time (s)');
-ylabel('Current (mA)');
-xlim([time(1), time(end)]);
-xline(current_time(collision_index_input) / freq + time_shift);
-title('Current vs Time');
-
-subplot(2,1,2)
-plot(current_time / freq, load_angle);
-xlabel('Time (s)');
-ylabel('Load Angle (rad)');
-xlim([time(1), time(end)]);
-title('Load Angle vs Time');
-
-% Calculate and plot Power and Energy
-current = current_amp .* cos(load_angle);
-index_min = min(length(input_velocity), length(current));
-power = current(end-index_min+1:end)' .* input_velocity(end-index_min+1:end) / (R_x * 60);
-current_time_adjusted = current_time(end-index_min+1:end);
-energy = cumtrapz(power);
-
-figure;
-subplot(2,1,1)
-plot(current_time_adjusted / freq, power);
-xlabel('Time (s)');
-ylabel('Power (W)');
-xlim([time(1), time(end)]);
-title('Power Relation');
-
-
-subplot(2,1,2)
-plot(current_time_adjusted / freq, energy);
-xlabel('Time (s)');
-ylabel('Energy (J)');
-xlim([time(1), time(end)]);
-title('Energy Relation');
-
-
-
 % Plot Object Angle vs X Position
 figure;
-subplot(2,1,1)
 plot(x_position, angle);
 xlabel('X Position (cm)');
 ylabel('Object Angle (deg)');
 title('Object Angle vs X Position');
 
 % Plot Z Position
-
+figure;
 if strcmp(configuration, 'pickup')
-   
-    subplot(2,1,2)
     plot(x_position, -z_position);
     xlabel('X Position (cm)');
     ylabel('Z Position (cm)');
     xlim([-5, 85]);
     ylim([-155, -100]);
 else
-    subplot(2,1,2)
     plot(smoothdata(x_position + sin(angle)), -z_position .* cos(angle * pi / 180));
     xlabel('X Position (cm)');
     ylabel('Z Position (cm)');
