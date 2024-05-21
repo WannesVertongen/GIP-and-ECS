@@ -136,8 +136,8 @@ function [data,input_data_pos, input_data_vel, current_file, reverse, T] = readD
         
         case 'ramp'
             crane_file = csvread('data_ramp.csv',1);
-            input_data_pos = csvread('ramp_position.csv');
-            input_data_vel = csvread('ramp_velocity.csv');
+            input_data_pos = csvread('pos_15_ramp.csv');
+            input_data_vel = csvread('vel_15_ramp.csv');
             current_file = csvread('current_ramp.csv',1);
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = false;
@@ -146,11 +146,11 @@ function [data,input_data_pos, input_data_vel, current_file, reverse, T] = readD
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
             data = crane_file(10894:end,:);
-
+            data = crane_file(8000:end,:);
         case 'bangbang'
             crane_file = csvread('data_bang.csv',1);
-            input_data_pos = csvread('bangbang_position.csv');
-            input_data_vel = csvread('bangbang_velocity.csv');
+            input_data_pos = csvread('pos_15_bang.csv');
+            input_data_vel = csvread('vel_15_bang.csv');
             current_file = csvread('current_bang.csv',1);
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = false;
@@ -159,11 +159,12 @@ function [data,input_data_pos, input_data_vel, current_file, reverse, T] = readD
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
             data = crane_file(10526:end,:);
+            data = crane_file(8000:end,:);
             
         case 'poly'
             crane_file = csvread('data_poly.csv',1);
-            input_data_pos = csvread('poly_position.csv');
-            input_data_vel = csvread('poly_velocity.csv');
+            input_data_pos = csvread('pos_15_poly.csv');
+            input_data_vel = csvread('vel_15_poly.csv');
             current_file = csvread('current_poly.csv',1);
             %current =current_file((length(current_file)-length(input_data_vel))+1:end,:);
             reverse = false;
@@ -172,6 +173,7 @@ function [data,input_data_pos, input_data_vel, current_file, reverse, T] = readD
             x_position_full = crane_file(:, 4);
             last_zero_index = find(x_position_full <0.0001, 1, 'last');
             data = crane_file(10987:end,:);
+            data = crane_file(8000:end,:);
 
         otherwise
             error('Invalid configuration');
